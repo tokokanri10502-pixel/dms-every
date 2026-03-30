@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DMS 会議資料 第10回 | 2026年3月31日</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
 :root {
   --navy: #0d2145;
@@ -479,6 +480,13 @@ body {
   </div>
 
 
+  <!-- ===== QR CODE ===== -->
+  <div class="section section--white" style="text-align:center; padding:32px 40px;">
+    <div class="section-label">QR Code</div>
+    <div id="qrcode" style="display:inline-block; margin-top:12px;"></div>
+    <p style="font-size:12px; color:var(--text2); margin-top:8px;">スマートフォンでこの資料を表示できます</p>
+  </div>
+
   <!-- ===== FOOTER ===== -->
   <div class="footer">
     DMS Digital Media Strategy Meeting | ©2026
@@ -508,6 +516,38 @@ document.querySelectorAll('.quiz-opts').forEach(function(ul) {
   });
 });
 
+// QR Code
+var BASE_URL = 'https://tokokanri10502-pixel.github.io/dms-every/';
+var fileName = location.pathname.split('/').pop() || 'index.html';
+new QRCode(document.getElementById('qrcode'), {
+  text: BASE_URL + fileName,
+  width: 200,
+  height: 200,
+  colorDark: '#000000',
+  colorLight: '#ffffff',
+  correctLevel: QRCode.CorrectLevel.H
+});
+
+// LocalStorage auto-save for contenteditable fields
+(function() {
+  var pageKey = 'dms_' + fileName.replace('.html', '');
+  var editables = document.querySelectorAll('[contenteditable="true"]');
+
+  // Restore saved content
+  editables.forEach(function(el, i) {
+    var saved = localStorage.getItem(pageKey + '_field_' + i);
+    if (saved !== null && saved !== '') {
+      el.innerHTML = saved;
+    }
+  });
+
+  // Save on input
+  editables.forEach(function(el, i) {
+    el.addEventListener('input', function() {
+      localStorage.setItem(pageKey + '_field_' + i, el.innerHTML);
+    });
+  });
+})();
 </script>
 </body>
 </html>
