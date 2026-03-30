@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DMS 会議資料 第10回 | 2026年3月31日</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0d2145;
+  --gold: #b8922a;
+  --gold2: #d4aa50;
+  --gold3: #f0d080;
+  --bg: #f8f7f4;
+  --bg2: #ffffff;
+  --bg3: #f0ede8;
+  --line: #ddd8ce;
+  --text: #1a1a2a;
+  --text2: #4a4a5a;
+  --green: #1a6b45;
+  --red: #9b2020;
+  --pink: #c0306a;
+  --sky: #2277cc;
+  --plum: #6a3080;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 400;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+}
+.container { max-width: 900px; margin: 0 auto; }
+
+/* ===== HEADER ===== */
+.header {
+  background: var(--navy);
+  color: #fff;
+  padding: 48px 40px 40px;
+  position: relative;
+  overflow: hidden;
+}
+.header-big-no {
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 160px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.06);
+  line-height: 1;
+  pointer-events: none;
+}
+.header-eyebrow {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  letter-spacing: 3px;
+  color: var(--gold2);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+.header-eyebrow::after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: var(--gold);
+  margin-top: 8px;
+  margin-bottom: 16px;
+}
+.header-title {
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+.theme-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.theme-label, .next-theme-label {
+  background: var(--gold);
+  color: var(--navy);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 2px;
+  letter-spacing: 1px;
+  flex-shrink: 0;
+}
+.header [contenteditable] {
+  outline: none;
+  border: 1px solid transparent;
+  padding: 4px 8px;
+  border-radius: 3px;
+  transition: border-color .2s, background .2s;
+  min-width: 180px;
+}
+.header [contenteditable]:hover {
+  border-color: var(--gold2);
+}
+.header [contenteditable]:focus {
+  border-color: var(--gold);
+  background: rgba(184,146,42,0.1);
+}
+.header-meta {
+  display: flex;
+  gap: 24px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.75);
+  margin-top: 4px;
+}
+.header-meta span { display: flex; align-items: center; gap: 6px; }
+
+/* ===== SECTIONS ===== */
+.section {
+  padding: 40px;
+}
+.section--white { background: var(--bg2); }
+.section--beige { background: var(--bg3); }
+.section-label {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 12px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.section-title {
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--navy);
+  margin-bottom: 24px;
+}
+
+/* ===== NEWS CARDS ===== */
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.news-card {
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--navy);
+  padding: 20px;
+  transition: box-shadow .2s, transform .2s;
+  text-decoration: none;
+  color: var(--text);
+  display: block;
+}
+.news-card:hover {
+  box-shadow: 0 8px 24px rgba(13,33,69,.12);
+  transform: translateY(-3px);
+}
+.news-card[data-cat="navy"]   { border-top-color: var(--navy); }
+.news-card[data-cat="gold"]   { border-top-color: var(--gold); }
+.news-card[data-cat="green"]  { border-top-color: var(--green); }
+.news-card[data-cat="pink"]   { border-top-color: var(--pink); }
+.news-card[data-cat="sky"]    { border-top-color: var(--sky); }
+.news-card[data-cat="plum"]   { border-top-color: var(--plum); }
+.news-cat {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  padding: 2px 8px;
+  display: inline-block;
+  border-radius: 2px;
+}
+.news-cat--navy  { background: rgba(13,33,69,.08); color: var(--navy); }
+.news-cat--gold  { background: rgba(184,146,42,.1); color: var(--gold); }
+.news-cat--green { background: rgba(26,107,69,.08); color: var(--green); }
+.news-cat--pink  { background: rgba(192,48,106,.08); color: var(--pink); }
+.news-cat--sky   { background: rgba(34,119,204,.08); color: var(--sky); }
+.news-cat--plum  { background: rgba(106,48,128,.08); color: var(--plum); }
+.news-title {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.5;
+  margin-bottom: 8px;
+  color: var(--navy);
+}
+.news-desc {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.6;
+}
+.news-link {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--gold);
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: .5px;
+}
+.news-link:hover { text-decoration: underline; }
+
+/* ===== QUIZ ===== */
+.quiz-item {
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 20px 24px;
+  margin-bottom: 16px;
+}
+.quiz-q {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 12px;
+}
+.quiz-q .q-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  color: var(--gold);
+  margin-right: 8px;
+}
+.quiz-opts { list-style: none; }
+.quiz-opts li {
+  padding: 10px 14px;
+  margin-bottom: 6px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background .15s, border-color .15s;
+}
+.quiz-opts li:hover { background: rgba(184,146,42,.06); border-color: var(--gold2); }
+.quiz-opts li.correct {
+  background: rgba(26,107,69,.1);
+  border-color: var(--green);
+  color: var(--green);
+  font-weight: 700;
+}
+.quiz-opts li.wrong {
+  background: rgba(155,32,32,.06);
+  border-color: var(--red);
+  color: var(--red);
+}
+.quiz-explanation {
+  display: none;
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: rgba(184,146,42,.06);
+  border-left: 3px solid var(--gold);
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.6;
+}
+.quiz-explanation.show { display: block; }
+
+/* ===== NEXT SCHEDULE ===== */
+.next-schedule {
+  position: relative;
+  overflow: hidden;
+}
+.next-big-no {
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 120px;
+  font-weight: 600;
+  color: rgba(13,33,69,.05);
+  line-height: 1;
+  pointer-events: none;
+}
+.next-info { position: relative; z-index: 1; }
+.next-info [contenteditable] {
+  outline: none;
+  border: 1px solid transparent;
+  padding: 4px 8px;
+  border-radius: 3px;
+  transition: border-color .2s, background .2s;
+  min-width: 180px;
+  display: inline-block;
+}
+.next-info [contenteditable]:hover {
+  border-color: var(--gold2);
+}
+.next-info [contenteditable]:focus {
+  border-color: var(--gold);
+  background: rgba(184,146,42,.08);
+}
+.next-meta {
+  font-size: 14px;
+  color: var(--text2);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
+/* ===== FOOTER ===== */
+.footer {
+  text-align: center;
+  padding: 24px 40px;
+  font-size: 11px;
+  color: var(--text2);
+  border-top: 1px solid var(--line);
+  background: var(--bg2);
+}
+
+@media (max-width: 700px) {
+  .news-grid { grid-template-columns: 1fr; }
+  .header { padding: 32px 20px; }
+  .section { padding: 32px 20px; }
+  .header-big-no { font-size: 80px; right: 10px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ===== HEADER ===== -->
+  <div class="header">
+    <div class="header-big-no">10</div>
+    <div class="header-eyebrow">Digital Media Strategy Meeting</div>
+    <h1 class="header-title">DMS 会議資料　第10回</h1>
+    <div class="theme-row">
+      <span class="theme-label">Theme</span>
+      <span contenteditable="true" style="color:#fff; font-size:16px; font-weight:700;"></span>
+    </div>
+    <div class="header-meta">
+      <span>📅 <span contenteditable="true">2026年3月31日（火）13:00〜</span></span>
+      <span>📍 <span contenteditable="true">会議室</span></span>
+    </div>
+  </div>
+
+  <!-- ===== AI TOPICS ===== -->
+  <div class="section section--white">
+    <div class="section-label">AI Topics</div>
+    <div class="section-title">AIトピックス</div>
+    <div class="news-grid">
+
+      <div class="news-card" data-cat="navy">
+        <span class="news-cat news-cat--navy">生成AI</span>
+        <div class="news-title">Google Cloud、国内120社のAI活用事例集を更新</div>
+        <div class="news-desc">イオンリテールがGeminiで商品登録の工数を90%削減するなど、AIエージェント活用の最前線を紹介。</div>
+        <a class="news-link" href="https://cloud.google.com/blog/ja/products/ai-machine-learning/120-case-studies-on-the-latest-generative-ai-applications-released?hl=ja" target="_blank">→ 記事を読む</a>
+      </div>
+
+      <div class="news-card" data-cat="plum">
+        <span class="news-cat news-cat--plum">政策・行政</span>
+        <div class="news-title">デジタル庁「ガバメントAI源内」10万人規模で展開へ</div>
+        <div class="news-desc">政府専用AI基盤の全府省庁展開計画を発表。2026年5月から10万人以上の政府職員が利用開始予定。</div>
+        <a class="news-link" href="https://www.digital.go.jp/assets/contents/node/information/field_ref_resources/2d69c287-2897-46d8-a28f-ea5a1fc9bce9/86f43a74/20260306_policies_ai_gennai_mass_deployment.pdf" target="_blank">→ 記事を読む</a>
+      </div>
+
+      <div class="news-card" data-cat="green">
+        <span class="news-cat news-cat--green">中小企業DX</span>
+        <div class="news-title">「デジタル化・AI導入補助金2026」本日より申請受付開始</div>
+        <div class="news-desc">中小企業庁が公募要領を公開。AIを含むITツール導入を支援し、年6〜7回の締切を予定。</div>
+        <a class="news-link" href="https://www.chusho.meti.go.jp/koukai/hojyokin/kobo/2026/260310001.html" target="_blank">→ 記事を読む</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== SNS TOPICS ===== -->
+  <div class="section section--beige">
+    <div class="section-label">SNS Topics</div>
+    <div class="section-title">SNSトピックス</div>
+    <div class="news-grid">
+
+      <div class="news-card" data-cat="sky">
+        <span class="news-cat news-cat--sky">デジタル広告</span>
+        <div class="news-title">Meta、AI広告完全自動化を2026年中に実現へ</div>
+        <div class="news-desc">画像と予算を入力するだけでAIが広告全体を自動生成。ターゲティングや配分も自動最適化。</div>
+        <a class="news-link" href="https://blog.google/intl/ja-jp/company-news/technology/digital-advertising-commerce-2026/" target="_blank">→ 記事を読む</a>
+      </div>
+
+      <div class="news-card" data-cat="pink">
+        <span class="news-cat news-cat--pink">Instagram</span>
+        <div class="news-title">Instagram 2026年アルゴリズム変更の重要ポイント</div>
+        <div class="news-desc">視聴時間・いいね・シェア（DM含む）が重要指標に。UGC風ショート動画のエンゲージメント率が3〜5倍。</div>
+        <a class="news-link" href="https://www.comnico.jp/we-love-social/2026-sns-trends" target="_blank">→ 記事を読む</a>
+      </div>
+
+      <div class="news-card" data-cat="gold">
+        <span class="news-cat news-cat--gold">SNS活用</span>
+        <div class="news-title">中小企業SNS成功事例：60代未経験でも成果</div>
+        <div class="news-desc">AIツールと研修を組み合わせ、1名体制で月間リーチ800件超を達成。年齢・規模を問わない成功モデル。</div>
+        <a class="news-link" href="https://snsschool.net/column/industry-small-business/success" target="_blank">→ 記事を読む</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== QUIZ ===== -->
+  <div class="section section--white">
+    <div class="section-label">Terminology Quiz</div>
+    <div class="section-title">用語テスト</div>
+
+    <!-- Q1 -->
+    <div class="quiz-item">
+      <div class="quiz-q"><span class="q-num">Q1</span>ユーザーが自発的に企業へ提供する情報（アンケート回答・好みの設定など）を何と呼ぶか？</div>
+      <ul class="quiz-opts" data-answer="2">
+        <li data-idx="0">ファーストパーティデータ</li>
+        <li data-idx="1">セカンドパーティデータ</li>
+        <li data-idx="2">ゼロパーティデータ</li>
+        <li data-idx="3">サードパーティデータ</li>
+      </ul>
+      <div class="quiz-explanation">ゼロパーティデータとは、顧客が意図的・自発的に企業と共有するデータのこと。アンケート回答や好みの設定などが該当し、サードパーティクッキー廃止後のマーケティングで重要性が高まっています。ファーストパーティデータは企業が自社で収集したデータを指します。</div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="quiz-item">
+      <div class="quiz-q"><span class="q-num">Q2</span>AIが自律的に判断・行動し、複数のタスクを連携して処理する仕組みを何と呼ぶか？</div>
+      <ul class="quiz-opts" data-answer="1">
+        <li data-idx="0">プロンプトエンジニアリング</li>
+        <li data-idx="1">AIエージェント</li>
+        <li data-idx="2">ファインチューニング</li>
+        <li data-idx="3">RAG（検索拡張生成）</li>
+      </ul>
+      <div class="quiz-explanation">AIエージェントとは、人間の指示に基づきAIが自律的に計画を立て、ツールを使い分けながらタスクを実行する仕組みです。2026年は「AIエージェント元年」とも呼ばれ、Google Cloud事例集でも多数の導入事例が紹介されています。</div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="quiz-item">
+      <div class="quiz-q"><span class="q-num">Q3</span>SNSマーケティングで「UGC」とは何の略称か？</div>
+      <ul class="quiz-opts" data-answer="3">
+        <li data-idx="0">Universal Growth Campaign</li>
+        <li data-idx="1">User Goal Conversion</li>
+        <li data-idx="2">Unified Global Content</li>
+        <li data-idx="3">User Generated Content</li>
+      </ul>
+      <div class="quiz-explanation">UGC（User Generated Content）は、一般ユーザーが自発的に作成・投稿するコンテンツのこと。口コミ投稿、レビュー、SNS投稿などが含まれます。2026年のSNS広告トレンドでは、プロ制作の広告よりUGC風クリエイティブの方がエンゲージメント率が高いとされています。</div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="quiz-item">
+      <div class="quiz-q"><span class="q-num">Q4</span>Instagramの2026年アルゴリズムで重視される3つの指標として正しい組み合わせはどれか？</div>
+      <ul class="quiz-opts" data-answer="0">
+        <li data-idx="0">視聴時間・いいね・シェア</li>
+        <li data-idx="1">フォロワー数・投稿数・保存数</li>
+        <li data-idx="2">リーチ数・コメント数・プロフィール閲覧数</li>
+        <li data-idx="3">インプレッション・クリック率・離脱率</li>
+      </ul>
+      <div class="quiz-explanation">2026年1月のInstagramアルゴリズム変更で重視されるようになった3要素は「視聴時間」「いいね」「シェア（DMでのシェアを含む）」です。特にDMでのシェアが指標に含まれた点が注目されています。</div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="quiz-item">
+      <div class="quiz-q"><span class="q-num">Q5</span>フォロワー数は少ないが特定ジャンルで高い影響力を持つ発信者を何と呼ぶか？</div>
+      <ul class="quiz-opts" data-answer="2">
+        <li data-idx="0">メガインフルエンサー</li>
+        <li data-idx="1">ナノインフルエンサー</li>
+        <li data-idx="2">マイクロインフルエンサー</li>
+        <li data-idx="3">KOL（Key Opinion Leader）</li>
+      </ul>
+      <div class="quiz-explanation">マイクロインフルエンサーは一般的にフォロワー数1万〜10万人程度で、特定ジャンルに強い熱量を持つ発信者を指します。2026年のSNSマーケティングでは、大型インフルエンサーよりもマイクロインフルエンサーとの協業が主軸になると予測されています。</div>
+    </div>
+
+  </div>
+
+  <!-- ===== NEXT SCHEDULE ===== -->
+  <div class="section section--beige next-schedule">
+    <div class="next-big-no">11</div>
+    <div class="next-info">
+      <div class="section-label">Next Session</div>
+      <div class="section-title">次回スケジュール</div>
+      <div class="next-meta">📅 <span contenteditable="true">2026年4月7日（火）13:00〜</span></div>
+      <div class="next-meta">📍 <span contenteditable="true">会議室</span></div>
+      <div class="theme-row" style="margin-top: 12px;">
+        <span class="next-theme-label">Theme</span>
+        <span contenteditable="true" style="font-size:15px; font-weight:700; color:var(--navy);"></span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ===== FOOTER ===== -->
+  <div class="footer">
+    DMS Digital Media Strategy Meeting | ©2026
+  </div>
+
+</div>
+
+<script>
+// Quiz interactivity
+document.querySelectorAll('.quiz-opts').forEach(function(ul) {
+  var answered = false;
+  var correctIdx = parseInt(ul.getAttribute('data-answer'));
+  ul.querySelectorAll('li').forEach(function(li) {
+    li.addEventListener('click', function() {
+      if (answered) return;
+      answered = true;
+      var idx = parseInt(li.getAttribute('data-idx'));
+      if (idx === correctIdx) {
+        li.classList.add('correct');
+      } else {
+        li.classList.add('wrong');
+        ul.querySelector('li[data-idx="' + correctIdx + '"]').classList.add('correct');
+      }
+      var explanation = ul.parentElement.querySelector('.quiz-explanation');
+      if (explanation) explanation.classList.add('show');
+    });
+  });
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DMS 会議資料｜第9回　2026年3月24日（火）</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Cormorant+Garamond:wght@600&display=swap');
+
+    :root {
+      --navy:   #0d2145;
+      --navy2:  #1a3460;
+      --gold:   #b8922a;
+      --gold2:  #d4aa50;
+      --gold3:  #f0d080;
+      --bg:     #f8f7f4;
+      --bg2:    #ffffff;
+      --bg3:    #f0ede8;
+      --line:   #ddd8ce;
+      --text:   #1a1a2a;
+      --text2:  #4a4a5a;
+      --text3:  #9a9aaa;
+      --green:  #1a6b45;
+      --red:    #9b2020;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Sans JP', "Hiragino Kaku Gothic ProN", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+      font-weight: 400;
+    }
+
+    /* ══════════════ HERO ══════════════ */
+    .hero {
+      background: var(--navy);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 340px; height: 100%;
+      background: linear-gradient(135deg, transparent 40%, rgba(184,146,42,.12) 100%);
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold2), transparent);
+    }
+
+    .hero-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 52px 40px 44px;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 32px;
+    }
+    @media (max-width: 640px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-no-block { display: none; }
+    }
+
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .hero-eyebrow .rule { width: 32px; height: 1px; background: var(--gold2); }
+    .hero-eyebrow span {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold2);
+    }
+
+    .hero h1 {
+      font-size: clamp(24px, 4vw, 38px);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+    .hero h1 .session {
+      display: inline-block;
+      color: var(--gold3);
+      font-size: .65em;
+      font-weight: 400;
+      margin-left: 12px;
+      vertical-align: middle;
+      border-left: 1px solid rgba(255,255,255,.2);
+      padding-left: 12px;
+    }
+
+    /* ── テーマ（編集可能） ── */
+    .hero-theme {
+      margin: 10px 0 16px;
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+    .theme-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold2);
+      flex-shrink: 0;
+    }
+    .theme-text {
+      font-size: 15px;
+      font-weight: 700;
+      color: rgba(255,255,255,.9);
+      min-width: 120px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 20px;
+    }
+    .hero-meta-item {
+      font-size: 13px;
+      color: rgba(255,255,255,.7);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .hero-meta-item::before {
+      content: '';
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--gold2);
+      flex-shrink: 0;
+    }
+
+    .hero-no-block { text-align: right; }
+    .hero-no-label {
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.3);
+      margin-bottom: 4px;
+    }
+    .hero-no-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 72px;
+      font-weight: 600;
+      color: rgba(255,255,255,.06);
+      line-height: 1;
+    }
+
+    /* ══════════════ EDITABLE ══════════════ */
+    [contenteditable] {
+      outline: none;
+      border-radius: 3px;
+      transition: background .15s, box-shadow .15s;
+      cursor: text;
+    }
+    [contenteditable]:hover {
+      box-shadow: 0 0 0 2px rgba(184,146,42,.4);
+    }
+    [contenteditable]:focus {
+      box-shadow: 0 0 0 2px var(--gold2);
+      background: rgba(255,255,255,.08);
+    }
+    /* 明るい背景上の編集フィールド */
+    .editable-light {
+      outline: none;
+      border-radius: 3px;
+      transition: background .15s, box-shadow .15s;
+      cursor: text;
+    }
+    .editable-light:hover { box-shadow: 0 0 0 2px rgba(13,33,69,.2); }
+    .editable-light:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--navy);
+      background: rgba(13,33,69,.04);
+    }
+    .edit-hint {
+      font-size: 10px;
+      color: var(--gold2);
+      opacity: .6;
+      margin-left: 6px;
+      font-weight: 400;
+      letter-spacing: 0;
+      text-transform: none;
+      vertical-align: middle;
+      pointer-events: none;
+    }
+
+    /* ══════════════ SECTION ══════════════ */
+    .section {
+      padding: 52px 40px;
+      border-bottom: 1px solid var(--line);
+    }
+    .section.alt { background: var(--bg3); }
+    .section.white { background: var(--bg2); }
+    .container { max-width: 900px; margin: 0 auto; }
+
+    .sec-header {
+      margin-bottom: 32px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .sec-sub {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 5px;
+    }
+    .sec-title {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sec-title .icon { font-size: 18px; }
+    .sec-count {
+      font-size: 11px;
+      color: var(--text3);
+      border: 1px solid var(--line);
+      border-radius: 100px;
+      padding: 3px 12px;
+    }
+
+    /* ══════════════ NEWS CARDS ══════════════ */
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 680px) { .news-grid { grid-template-columns: 1fr; } }
+
+    .news-card {
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-top: 3px solid var(--navy);
+      padding: 22px 20px 18px;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .news-card:hover {
+      box-shadow: 0 8px 28px rgba(13,33,69,.1);
+      transform: translateY(-2px);
+    }
+    .news-card.c-navy  { border-top-color: var(--navy); }
+    .news-card.c-gold  { border-top-color: var(--gold); }
+    .news-card.c-green { border-top-color: var(--green); }
+    .news-card.c-pink  { border-top-color: #c0306a; }
+    .news-card.c-sky   { border-top-color: #2277cc; }
+    .news-card.c-plum  { border-top-color: #6a3080; }
+
+    .news-tag {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text3);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .news-tag::before {
+      content: '';
+      width: 16px; height: 1px;
+      background: currentColor;
+      flex-shrink: 0;
+    }
+    .news-card h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.65;
+      margin-bottom: 10px;
+      flex: 1;
+    }
+    .news-card p {
+      font-size: 13px;
+      color: var(--text2);
+      line-height: 1.8;
+      margin-bottom: 14px;
+    }
+    .news-link {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--navy);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+    }
+    .news-link::after { content: '→'; }
+    .news-link:hover { color: var(--gold); }
+
+    /* ══════════════ QUIZ ══════════════ */
+    .quiz-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+
+    .quiz-item {
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      padding: 22px 26px;
+      position: relative;
+    }
+    .quiz-item::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: linear-gradient(to bottom, var(--gold2), var(--gold));
+    }
+    .quiz-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+    .q-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--gold);
+      line-height: 1;
+      min-width: 36px;
+      padding-top: 2px;
+    }
+    .q-text {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.6;
+      padding-top: 4px;
+    }
+    .choices {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      padding-left: 52px;
+    }
+    @media (max-width: 600px) { .choices { grid-template-columns: 1fr; } }
+
+    .choice {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      padding: 11px 16px;
+      font-size: 13px;
+      color: var(--text);
+      cursor: pointer;
+      text-align: left;
+      font-family: inherit;
+      font-weight: 400;
+      transition: background .15s, border-color .15s, color .15s;
+      line-height: 1.6;
+    }
+    .choice:hover:not(:disabled) {
+      background: #eef2fa;
+      border-color: var(--navy);
+      color: var(--navy);
+    }
+    .choice.correct {
+      background: #e8f5ee;
+      border-color: var(--green);
+      color: var(--green);
+      font-weight: 700;
+    }
+    .choice.wrong {
+      background: #fdf0f0;
+      border-color: var(--red);
+      color: var(--red);
+    }
+    .quiz-answer {
+      display: none;
+      margin-top: 14px;
+      margin-left: 52px;
+      padding: 12px 16px;
+      background: #f5f0e8;
+      border-left: 2px solid var(--gold2);
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.85;
+    }
+    .quiz-answer strong { color: var(--navy); font-weight: 700; }
+
+    /* ══════════════ NEXT CARD ══════════════ */
+    .next-card {
+      background: var(--navy);
+      padding: 32px 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .next-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(to right, var(--gold2), transparent);
+    }
+    .next-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(to right, var(--gold2), transparent);
+    }
+    .next-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold2);
+      margin-bottom: 8px;
+    }
+    .next-date {
+      font-size: 22px;
+      font-weight: 900;
+      color: #fff;
+    }
+    .next-sub {
+      font-size: 12px;
+      color: rgba(255,255,255,.5);
+      margin-top: 2px;
+    }
+    .next-theme-row {
+      margin-top: 10px;
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+    .next-theme-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold2);
+      flex-shrink: 0;
+    }
+    .next-theme-text {
+      font-size: 14px;
+      font-weight: 700;
+      color: rgba(255,255,255,.85);
+      min-width: 100px;
+    }
+    .next-badge {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px;
+      font-weight: 600;
+      color: var(--gold2);
+      opacity: .9;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    /* ══════════════ QR ══════════════ */
+    .qr-wrap {
+      display: flex;
+      align-items: center;
+      gap: 48px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .qr-box {
+      background: #fff;
+      padding: 14px;
+      border: 1px solid var(--line);
+      box-shadow: 0 4px 20px rgba(0,0,0,.08);
+    }
+    #qrcode canvas, #qrcode img { display: block; }
+    .qr-text { max-width: 300px; }
+    .qr-text h3 {
+      font-size: 15px;
+      font-weight: 900;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .qr-text p { font-size: 13px; color: var(--text2); line-height: 1.8; }
+    .qr-url {
+      font-size: 10px;
+      color: var(--text3);
+      word-break: break-all;
+      margin-top: 10px;
+      border-top: 1px solid var(--line);
+      padding-top: 8px;
+    }
+
+    /* ══════════════ FOOTER ══════════════ */
+    .site-footer {
+      background: var(--navy);
+      text-align: center;
+      padding: 24px;
+      font-size: 10px;
+      color: rgba(255,255,255,.25);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-eyebrow">
+          <div class="rule"></div>
+          <span>Digital Media Strategy Meeting</span>
+        </div>
+        <h1>DMS 会議資料<span class="session">第9回</span></h1>
+
+        <div class="hero-theme">
+          <span class="theme-label">Theme</span>
+          <span class="theme-text" contenteditable="true" spellcheck="false">今回のテーマをここに入力</span>
+        </div>
+
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span contenteditable="true" spellcheck="false">2026年3月24日（火）13:00〜</span>
+          </div>
+          <div class="hero-meta-item">
+            <span contenteditable="true" spellcheck="false">会議室 / オンライン併用</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-no-block">
+        <div class="hero-no-label">Session</div>
+        <div class="hero-no-num">09</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI TOPICS -->
+  <div class="section white">
+    <div class="container">
+      <div class="sec-header">
+        <div>
+          <div class="sec-sub">Weekly Intelligence</div>
+          <div class="sec-title"><span class="icon">🤖</span> AI・デジタルトピックス</div>
+        </div>
+        <div class="sec-count">3 Topics</div>
+      </div>
+      <div class="news-grid">
+
+        <div class="news-card c-navy">
+          <div class="news-tag">AI Case Study</div>
+          <h3>Google Cloud、生成AI活用事例120社を公開（2026年3月更新）</h3>
+          <p>AIエージェントが実業務に入り込む事例が急増。旅行・広告・流通など各業種の具体的な導入事例が一挙公開された。</p>
+          <a class="news-link" href="https://cloud.google.com/blog/ja/products/ai-machine-learning/120-case-studies-on-the-latest-generative-ai-applications-released?hl=ja" target="_blank">記事を読む</a>
+        </div>
+
+        <div class="news-card c-gold">
+          <div class="news-tag">AI &amp; Advertising</div>
+          <h3>2026年広告7大予測：AIエージェント×動画広告の自動生成が加速</h3>
+          <p>日経クロストレンドが「AIエージェントによる広告自動生成」「詐欺広告対策の強化」など2026年の広告業界7大トレンドを発表。</p>
+          <a class="news-link" href="https://xtrend.nikkei.com/atcl/contents/18/01301/00003/" target="_blank">記事を読む（日経）</a>
+        </div>
+
+        <div class="news-card c-green">
+          <div class="news-tag">SME &amp; DX</div>
+          <h3>「AIを入れるだけ」では真のDXに届かない──2026年、中小企業の課題</h3>
+          <p>日経XTECHの分析では、ツール導入止まりで業務変革が進まない企業が多数。組織・プロセスの再設計がDX成功の鍵とされる。</p>
+          <a class="news-link" href="https://xtech.nikkei.com/atcl/nxt/column/18/00849/00176/" target="_blank">記事を読む（日経）</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SNS TOPICS -->
+  <div class="section alt">
+    <div class="container">
+      <div class="sec-header">
+        <div>
+          <div class="sec-sub">Social Media Update</div>
+          <div class="sec-title"><span class="icon">📱</span> SNSトピックス</div>
+        </div>
+        <div class="sec-count">3 Topics</div>
+      </div>
+      <div class="news-grid">
+
+        <div class="news-card c-pink">
+          <div class="news-tag">Instagram</div>
+          <h3>Instagramは「探す場所」へ変化──レコメンド主体で運用戦略の見直しが急務</h3>
+          <p>フォロワーへの情報発信からアルゴリズムによるレコメンド中心へ移行。「フォロワーを増やせば届く」時代は終わりつつある。</p>
+          <a class="news-link" href="https://xtrend.nikkei.com/atcl/contents/18/01293/00002/" target="_blank">記事を読む（日経）</a>
+        </div>
+
+        <div class="news-card c-sky">
+          <div class="news-tag">TikTok</div>
+          <h3>TikTok国内利用者4,200万人超──中小事業者支援「TikTok Shop Local」開始へ</h3>
+          <p>地域の特産品・中小事業者を支援する新プロジェクトが2026年3月スタート。生活者・ブランド・クリエイターをつなぐ"経済圏"へと成長中。</p>
+          <a class="news-link" href="https://www.comnico.jp/we-love-social/sns-news" target="_blank">SNSニュースまとめ</a>
+        </div>
+
+        <div class="news-card c-plum">
+          <div class="news-tag">SNS Strategy</div>
+          <h3>2026年はマイクロインフルエンサー×UGCが主軸に──バズ偏重から脱却を</h3>
+          <p>特定ジャンルで強い熱量を持つマイクロインフルエンサーとの協業や、UGCをいかに生み出すかが企業SNS戦略の鍵となる。</p>
+          <a class="news-link" href="https://tatap.jp/knowledge/2026-snsmkt-192/" target="_blank">記事を読む</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="section white">
+    <div class="container">
+      <div class="sec-header">
+        <div>
+          <div class="sec-sub">Workshop</div>
+          <div class="sec-title"><span class="icon">📝</span> WEBメディア用語テスト</div>
+        </div>
+        <div class="sec-count">5 Questions</div>
+      </div>
+      <ul class="quiz-list">
+
+        <li class="quiz-item">
+          <div class="quiz-header">
+            <div class="q-num">01</div>
+            <div class="q-text">「インプレッション」の正しい意味はどれ？</div>
+          </div>
+          <div class="choices">
+            <button class="choice" onclick="answer(this,false)">① 広告がクリックされた回数</button>
+            <button class="choice" onclick="answer(this,true)">② 広告や投稿が表示された回数</button>
+            <button class="choice" onclick="answer(this,false)">③ ページが読み込まれた時間</button>
+            <button class="choice" onclick="answer(this,false)">④ ユーザーがサイトに滞在した時間</button>
+          </div>
+          <div class="quiz-answer">✅ <strong>② 広告や投稿が表示された回数</strong>。クリックの有無を問わず「1回画面に表示された」＝1インプレッション。CTR（クリック率）= クリック数÷インプレッション数で計算する。</div>
+        </li>
+
+        <li class="quiz-item">
+          <div class="quiz-header">
+            <div class="q-num">02</div>
+            <div class="q-text">「CPM」広告の課金の仕組みとして正しいのは？</div>
+          </div>
+          <div class="choices">
+            <button class="choice" onclick="answer(this,false)">① クリックごとに課金</button>
+            <button class="choice" onclick="answer(this,false)">② コンバージョンごとに課金</button>
+            <button class="choice" onclick="answer(this,true)">③ 1,000インプレッションごとに課金</button>
+            <button class="choice" onclick="answer(this,false)">④ 月額固定課金</button>
+          </div>
+          <div class="quiz-answer">✅ <strong>③ 1,000インプレッションごとに課金</strong>。CPM＝Cost Per Mille（Milleはラテン語で1000）。認知拡大を目的とした広告でよく使われる。</div>
+        </li>
+
+        <li class="quiz-item">
+          <div class="quiz-header">
+            <div class="q-num">03</div>
+            <div class="q-text">SNS運用で「エンゲージメント率」が高い投稿とは？</div>
+          </div>
+          <div class="choices">
+            <button class="choice" onclick="answer(this,false)">① フォロワー数が最も多い投稿</button>
+            <button class="choice" onclick="answer(this,false)">② インプレッション数が最も多い投稿</button>
+            <button class="choice" onclick="answer(this,true)">③ いいね・コメント・保存などのリアクションがインプレッションに対して多い投稿</button>
+            <button class="choice" onclick="answer(this,false)">④ リンクのクリック数が多い投稿</button>
+          </div>
+          <div class="quiz-answer">✅ <strong>③</strong>。エンゲージメント率＝（いいね＋コメント＋シェアなど）÷インプレッション×100。数字よりも「共感・行動」を測る指標。</div>
+        </li>
+
+        <li class="quiz-item">
+          <div class="quiz-header">
+            <div class="q-num">04</div>
+            <div class="q-text">「ファーストパーティデータ」とは何を指す？</div>
+          </div>
+          <div class="choices">
+            <button class="choice" onclick="answer(this,false)">① Googleが収集した検索データ</button>
+            <button class="choice" onclick="answer(this,true)">② 自社サイトやアプリで直接取得した顧客データ</button>
+            <button class="choice" onclick="answer(this,false)">③ 広告代理店から購入したデータ</button>
+            <button class="choice" onclick="answer(this,false)">④ SNSプラットフォームが提供するデータ</button>
+          </div>
+          <div class="quiz-answer">✅ <strong>② 自社サイトやアプリで直接取得した顧客データ</strong>。Cookie規制強化により、ファーストパーティデータの活用が業界全体で急務になっている。</div>
+        </li>
+
+        <li class="quiz-item">
+          <div class="quiz-header">
+            <div class="q-num">05</div>
+            <div class="q-text">「RAG（Retrieval-Augmented Generation）」とは何のための技術？</div>
+          </div>
+          <div class="choices">
+            <button class="choice" onclick="answer(this,false)">① 動画を高速圧縮する技術</button>
+            <button class="choice" onclick="answer(this,false)">② 広告のA/Bテストを自動化する技術</button>
+            <button class="choice" onclick="answer(this,true)">③ 外部の最新情報をAIに検索・参照させて回答精度を上げる技術</button>
+            <button class="choice" onclick="answer(this,false)">④ ユーザーの行動ログを解析する技術</button>
+          </div>
+          <div class="quiz-answer">✅ <strong>③</strong>。RAGはAIが自社ドキュメントや最新情報をリアルタイムで参照しながら回答を生成する仕組み。社内FAQや営業提案書への応用が進んでいる。</div>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+
+  <!-- NEXT SESSION -->
+  <div class="section alt">
+    <div class="container">
+      <div class="sec-header">
+        <div>
+          <div class="sec-sub">Schedule</div>
+          <div class="sec-title"><span class="icon">📅</span> 次回スケジュール</div>
+        </div>
+      </div>
+      <div class="next-card">
+        <div>
+          <div class="next-label">Next Session</div>
+          <div class="next-date" contenteditable="true" spellcheck="false">3月31日（火）13:00〜</div>
+          <div class="next-sub" contenteditable="true" spellcheck="false">会議室 / オンライン併用</div>
+          <div class="next-theme-row">
+            <span class="next-theme-label">Theme</span>
+            <span class="next-theme-text" contenteditable="true" spellcheck="false">次回のテーマをここに入力</span>
+          </div>
+        </div>
+        <div class="next-badge">10</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QR -->
+  <div class="section white">
+    <div class="container">
+      <div class="sec-header">
+        <div>
+          <div class="sec-sub">Mobile Access</div>
+          <div class="sec-title"><span class="icon">📲</span> この資料をスマホで開く</div>
+        </div>
+      </div>
+      <div class="qr-wrap">
+        <div class="qr-box">
+          <div id="qrcode"></div>
+        </div>
+        <div class="qr-text">
+          <h3>QRコードで即アクセス</h3>
+          <p>カメラアプリでコードをスキャンするとこのページが開きます。会議中にスマホで確認しながらご参加ください。</p>
+          <div class="qr-url" id="qr-url-text"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="site-footer">
+    DMS Digital Media Strategy Meeting &nbsp;|&nbsp; ©2026
+  </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+  function answer(btn, isCorrect) {
+    const choices = btn.closest('.choices').querySelectorAll('.choice');
+    choices.forEach(c => c.disabled = true);
+    btn.classList.add(isCorrect ? 'correct' : 'wrong');
+    if (!isCorrect) {
+      choices.forEach(c => {
+        if (c.onclick.toString().includes('true')) c.classList.add('correct');
+      });
+    }
+    btn.closest('.quiz-item').querySelector('.quiz-answer').style.display = 'block';
+  }
+
+  window.addEventListener('DOMContentLoaded', function () {
+    var url = window.location.href;
+    document.getElementById('qr-url-text').textContent = url;
+    new QRCode(document.getElementById('qrcode'), {
+      text: url,
+      width: 160,
+      height: 160,
+      colorDark: '#0d2145',
+      colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.M
+    });
+  });
+</script>
+</body>
+</html>
