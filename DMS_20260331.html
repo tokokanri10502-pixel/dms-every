@@ -235,14 +235,49 @@ body {
 }
 .quiz-opts li:hover { background: rgba(184,146,42,.06); border-color: var(--gold2); }
 .quiz-opts li.correct {
-  background: rgba(26,107,69,.1);
-  border-color: var(--green);
+  background: linear-gradient(135deg, #e6f9ee 0%, #b8f0d0 100%);
+  border: 3px solid var(--green);
   color: var(--green);
-  font-weight: 700;
+  font-weight: 900;
+  font-size: 15px;
+  position: relative;
+  padding-left: 48px;
+  animation: correctPop .4s ease;
+}
+.quiz-opts li.correct::before {
+  content: '⭕';
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 22px;
+  animation: circleIn .5s ease;
+}
+@keyframes correctPop {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.05); box-shadow: 0 0 20px rgba(26,107,69,.3); }
+  100% { transform: scale(1); box-shadow: none; }
+}
+@keyframes circleIn {
+  0% { transform: translateY(-50%) scale(0) rotate(-90deg); opacity: 0; }
+  50% { transform: translateY(-50%) scale(1.4) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(-50%) scale(1) rotate(0deg); opacity: 1; }
 }
 .quiz-opts li.wrong {
   background: rgba(155,32,32,.06);
   border-color: var(--red);
+  color: var(--red);
+  position: relative;
+  padding-left: 48px;
+}
+.quiz-opts li.wrong::before {
+  content: '✕';
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  font-weight: 900;
   color: var(--red);
 }
 .quiz-explanation {
