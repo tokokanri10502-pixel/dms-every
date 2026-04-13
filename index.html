@@ -1,192 +1,66 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DMS アーカイブ | Digital Media Strategy Meeting</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
-<style>
-:root {
-  --navy: #0d2145;
-  --gold: #b8922a;
-  --gold2: #d4aa50;
-  --bg: #f8f7f4;
-  --bg2: #ffffff;
-  --line: #ddd8ce;
-  --text: #1a1a2a;
-  --text2: #4a4a5a;
-}
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  font-family: 'Noto Sans JP', sans-serif;
-  font-weight: 400;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.7;
-}
-.container { max-width: 900px; margin: 0 auto; }
-.header {
-  background: var(--navy);
-  color: #fff;
-  padding: 48px 40px 40px;
-}
-.header-eyebrow {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 14px;
-  letter-spacing: 3px;
-  color: var(--gold2);
-  text-transform: uppercase;
-  margin-bottom: 4px;
-}
-.header-eyebrow::after {
-  content: '';
-  display: block;
-  width: 40px;
-  height: 2px;
-  background: var(--gold);
-  margin-top: 8px;
-  margin-bottom: 16px;
-}
-.header-title {
-  font-size: 28px;
-  font-weight: 900;
-  letter-spacing: 1px;
-}
-.header-sub {
-  font-size: 14px;
-  color: rgba(255,255,255,.6);
-  margin-top: 8px;
-}
-.content {
-  padding: 40px;
-}
-.archive-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
-}
-.archive-card {
-  background: #fff;
-  border: 1px solid var(--line);
-  border-top: 3px solid var(--navy);
-  padding: 20px;
-  text-decoration: none;
-  color: var(--text);
-  display: block;
-  transition: box-shadow .2s, transform .2s;
-}
-.archive-card:hover {
-  box-shadow: 0 8px 24px rgba(13,33,69,.12);
-  transform: translateY(-2px);
-  border-top-color: var(--gold);
-}
-.card-no {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 36px;
-  font-weight: 600;
-  color: var(--gold);
-  line-height: 1;
-  margin-bottom: 8px;
-}
-.card-date {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--navy);
-  margin-bottom: 4px;
-}
-.card-label {
-  font-size: 11px;
-  color: var(--text2);
-}
-.footer {
-  text-align: center;
-  padding: 24px 40px;
-  font-size: 11px;
-  color: var(--text2);
-  border-top: 1px solid var(--line);
-  background: var(--bg2);
-}
-@media (max-width: 600px) {
-  .header, .content { padding: 32px 20px; }
-  .archive-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DMS アーカイブ | Digital Media Strategy Meeting</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Cormorant+Garamond:wght@600&display=swap" rel="stylesheet">
+  <style>
+    :root { --navy:#0d2145; --gold:#b8922a; --gold2:#d4aa50; --bg:#f8f7f4; --bg2:#ffffff; --line:#ddd8ce; --text:#1a1a2a; --text2:#4a4a5a; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Noto Sans JP', sans-serif; font-weight: 400; background: var(--bg); color: var(--text); line-height: 1.7; }
+    .header { background: var(--navy); padding: 48px 0 44px; position: relative; overflow: hidden; }
+    .header-ghost { position: absolute; right: 32px; bottom: -10px; font-family: 'Cormorant Garamond', serif; font-size: 120px; font-weight: 600; color: rgba(255,255,255,0.04); line-height: 1; pointer-events: none; user-select: none; letter-spacing: 0.05em; }
+    .header-inner { max-width: 900px; margin: 0 auto; padding: 0 40px; position: relative; z-index: 2; }
+    .eyebrow { display: inline-block; font-family: 'Cormorant Garamond', serif; font-size: 12px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold2); padding-bottom: 10px; border-bottom: 1px solid var(--gold); margin-bottom: 18px; }
+    .header-title { font-size: 28px; font-weight: 900; color: #fff; line-height: 1.2; margin-bottom: 8px; }
+    .header-sub { font-size: 13px; color: rgba(255,255,255,0.55); font-weight: 400; }
+    .main { max-width: 900px; margin: 0 auto; padding: 48px 24px 64px; }
+    .section-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 28px; }
+    .section-eyebrow { font-family: 'Cormorant Garamond', serif; font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
+    .section-title { font-size: 20px; font-weight: 900; color: var(--navy); }
+    .session-count { margin-left: auto; font-size: 12px; color: var(--text2); font-weight: 700; }
+    .archive-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+    .archive-card { background: var(--bg2); border: 1px solid var(--line); border-top: 3px solid var(--navy); padding: 20px; text-decoration: none; color: var(--text); display: block; transition: box-shadow 0.2s, transform 0.2s, border-top-color 0.2s; position: relative; }
+    .archive-card:hover { box-shadow: 0 8px 24px rgba(13,33,69,.12); transform: translateY(-2px); border-top-color: var(--gold); }
+    .archive-card.latest { border-top-color: var(--gold); }
+    .latest-badge { position: absolute; top: 12px; right: 12px; font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; background: var(--gold); padding: 2px 7px; border-radius: 2px; }
+    .card-no { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 600; color: var(--gold); line-height: 1; margin-bottom: 8px; }
+    .card-date { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+    .card-label { font-size: 11px; color: var(--text2); }
+    .footer { background: var(--navy); color: rgba(255,255,255,0.45); text-align: center; padding: 20px; font-size: 11px; letter-spacing: 0.1em; }
+  </style>
 </head>
 <body>
-<div class="container">
-  <div class="header">
-    <div class="header-eyebrow">Digital Media Strategy Meeting</div>
+<header class="header">
+  <div class="header-ghost">DMS</div>
+  <div class="header-inner">
+    <div class="eyebrow">Digital Media Strategy Meeting</div>
     <h1 class="header-title">DMS アーカイブ</h1>
-    <p class="header-sub">過去の会議資料一覧（全10回）</p>
+    <p class="header-sub">毎週火曜13:00 開催 ／ 第1回：2026年1月27日〜</p>
   </div>
-  <div class="content">
-    <div class="archive-grid">
-
-      <a class="archive-card" href="DMS_20260331.html">
-        <div class="card-no">10</div>
-        <div class="card-date">2026年3月31日（火）</div>
-        <div class="card-label">第10回</div>
-      </a>
-
-      <a class="archive-card" href="DMS_20260324.html">
-        <div class="card-no">09</div>
-        <div class="card-date">2026年3月24日（火）</div>
-        <div class="card-label">第9回</div>
-      </a>
-
-      <a class="archive-card" href="DMS_20260317.html">
-        <div class="card-no">08</div>
-        <div class="card-date">2026年3月17日（火）</div>
-        <div class="card-label">第8回</div>
-      </a>
-
-      <a class="archive-card" href="DMS_20260310.html">
-        <div class="card-no">07</div>
-        <div class="card-date">2026年3月10日（火）</div>
-        <div class="card-label">第7回</div>
-      </a>
-
-      <a class="archive-card" href="DMS_20260303.html">
-        <div class="card-no">06</div>
-        <div class="card-date">2026年3月3日（火）</div>
-        <div class="card-label">第6回</div>
-      </a>
-
-      <a class="archive-card" href="DMS_20260224.html">
-        <div class="card-no">05</div>
-        <div class="card-date">2026年2月24日（火）</div>
-        <div class="card-label">第5回</div>
-      </a>
-
-      <a class="archive-card" href="DMS_20260217.html">
-        <div class="card-no">04</div>
-        <div class="card-date">2026年2月17日（火）</div>
-        <div class="card-label">第4回</div>
-      </a>
-
-      <a class="archive-card" href="DMS_20260210.html">
-        <div class="card-no">03</div>
-        <div class="card-date">2026年2月10日（火）</div>
-        <div class="card-label">第3回</div>
-      </a>
-
-      <a class="archive-card" href="DMS_20260203.html">
-        <div class="card-no">02</div>
-        <div class="card-date">2026年2月3日（火）</div>
-        <div class="card-label">第2回</div>
-      </a>
-
-      <a class="archive-card" href="DMS_20260127.html">
-        <div class="card-no">01</div>
-        <div class="card-date">2026年1月27日（火）</div>
-        <div class="card-label">第1回</div>
-      </a>
-
-    </div>
+</header>
+<main class="main">
+  <div class="section-header">
+    <span class="section-eyebrow">Archive</span>
+    <h2 class="section-title">全セッション一覧</h2>
+    <span class="session-count">全12回</span>
   </div>
-  <div class="footer">
-    DMS Digital Media Strategy Meeting | ©2026
+  <div class="archive-grid">
+    <a class="archive-card latest" href="DMS_20260414.html"><span class="latest-badge">Latest</span><div class="card-no">12</div><div class="card-date">2026年4月14日（火）</div><div class="card-label">第12回</div></a>
+    <a class="archive-card" href="DMS_20260407.html"><div class="card-no">11</div><div class="card-date">2026年4月7日（火）</div><div class="card-label">第11回</div></a>
+    <a class="archive-card" href="DMS_20260331.html"><div class="card-no">10</div><div class="card-date">2026年3月31日（火）</div><div class="card-label">第10回</div></a>
+    <a class="archive-card" href="DMS_20260324.html"><div class="card-no">09</div><div class="card-date">2026年3月24日（火）</div><div class="card-label">第9回</div></a>
+    <a class="archive-card" href="DMS_20260317.html"><div class="card-no">08</div><div class="card-date">2026年3月17日（火）</div><div class="card-label">第8回</div></a>
+    <a class="archive-card" href="DMS_20260310.html"><div class="card-no">07</div><div class="card-date">2026年3月10日（火）</div><div class="card-label">第7回</div></a>
+    <a class="archive-card" href="DMS_20260303.html"><div class="card-no">06</div><div class="card-date">2026年3月3日（火）</div><div class="card-label">第6回</div></a>
+    <a class="archive-card" href="DMS_20260224.html"><div class="card-no">05</div><div class="card-date">2026年2月24日（火）</div><div class="card-label">第5回</div></a>
+    <a class="archive-card" href="DMS_20260217.html"><div class="card-no">04</div><div class="card-date">2026年2月17日（火）</div><div class="card-label">第4回</div></a>
+    <a class="archive-card" href="DMS_20260210.html"><div class="card-no">03</div><div class="card-date">2026年2月10日（火）</div><div class="card-label">第3回</div></a>
+    <a class="archive-card" href="DMS_20260203.html"><div class="card-no">02</div><div class="card-date">2026年2月3日（火）</div><div class="card-label">第2回</div></a>
+    <a class="archive-card" href="DMS_20260127.html"><div class="card-no">01</div><div class="card-date">2026年1月27日（火）</div><div class="card-label">第1回</div></a>
   </div>
-</div>
+</main>
+<footer class="footer">DMS Digital Media Strategy Meeting | ©2026</footer>
 </body>
-</html>
+  </html>
