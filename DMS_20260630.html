@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DMS 会議資料 第22回 | 2026.06.30</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Cormorant+Garamond:wght@600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:  #0d2145;
+      --gold:  #b8922a;
+      --gold2: #d4aa50;
+      --gold3: #f0d080;
+      --bg:    #f8f7f4;
+      --bg2:   #ffffff;
+      --bg3:   #f0ede8;
+      --line:  #ddd8ce;
+      --text:  #1a1a2a;
+      --text2: #4a4a5a;
+      --green: #1a6b45;
+      --red:   #9b2020;
+      --pink:  #c0306a;
+      --sky:   #2277cc;
+      --plum:  #6a3080;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 400;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ========== HEADER ========== */
+    .header {
+      background: var(--navy);
+      padding: 48px 0 44px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .session-ghost {
+      position: absolute;
+      right: 32px;
+      top: 10px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 160px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.05);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .header-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 40px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold2);
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--gold);
+      margin-bottom: 18px;
+    }
+
+    .header-title {
+      font-size: 30px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 18px;
+    }
+
+    .theme-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .theme-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold2);
+      border: 1px solid var(--gold);
+      padding: 2px 9px;
+      border-radius: 2px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .theme-value {
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      flex: 1;
+      padding: 4px 10px;
+      border-radius: 2px;
+      outline: none;
+      min-width: 180px;
+    }
+    .theme-value[contenteditable="true"]:hover { outline: 1px solid var(--gold); }
+    .theme-value[contenteditable="true"]:focus  { outline: 2px solid var(--gold); background: rgba(184,146,42,0.1); }
+
+    .header-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .meta-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold3);
+    }
+
+    .meta-value {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 2px;
+      outline: none;
+      min-width: 120px;
+    }
+    .meta-value[contenteditable="true"]:hover { outline: 1px solid var(--gold); }
+    .meta-value[contenteditable="true"]:focus  { outline: 2px solid var(--gold); background: rgba(184,146,42,0.1); }
+
+    /* ========== SECTION COMMON ========== */
+    .section { padding: 48px 0; }
+    .section-white { background: var(--bg2); }
+    .section-beige { background: var(--bg3); }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .section-eyebrow {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--navy);
+    }
+
+    /* ========== NEWS CARDS ========== */
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    @media (max-width: 680px) {
+      .news-grid { grid-template-columns: 1fr; }
+    }
+
+    .news-card {
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-radius: 3px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .news-card:hover {
+      box-shadow: 0 8px 24px rgba(13,33,69,.12);
+      transform: translateY(-3px);
+    }
+
+    .card-color-bar { height: 3px; width: 100%; }
+
+    .card-body {
+      padding: 18px 16px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-category {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .card-headline {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.55;
+      margin-bottom: 8px;
+    }
+
+    .card-summary {
+      font-size: 12px;
+      color: var(--text2);
+      line-height: 1.75;
+      flex: 1;
+    }
+
+    .card-link {
+      display: inline-block;
+      margin-top: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--gold);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+    .card-link:hover { text-decoration: underline; }
+
+    /* ========== QUIZ ========== */
+    .quiz-container { display: flex; flex-direction: column; gap: 24px; }
+
+    .quiz-item {
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 24px;
+    }
+
+    .quiz-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .quiz-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .quiz-theme-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--navy);
+      background: rgba(13,33,69,0.07);
+      padding: 3px 9px;
+      border-radius: 2px;
+    }
+
+    .quiz-question {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.65;
+      margin-bottom: 14px;
+    }
+
+    .quiz-choices {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    @media (max-width: 580px) {
+      .quiz-choices { grid-template-columns: 1fr; }
+    }
+
+    .quiz-choice {
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      font-size: 13px;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 400;
+      cursor: pointer;
+      background: var(--bg);
+      color: var(--text);
+      text-align: left;
+      line-height: 1.55;
+      position: relative;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .quiz-choice:hover {
+      border-color: var(--gold);
+      background: rgba(184,146,42,0.05);
+    }
+
+    .quiz-choice.correct {
+      background: linear-gradient(135deg, #e6f9ee 0%, #b8f0d0 100%) !important;
+      border: 3px solid var(--green) !important;
+      color: var(--green) !important;
+      font-weight: 900;
+      font-size: 14px;
+      padding-left: 48px;
+      animation: correctPop .4s ease;
+    }
+
+    .quiz-choice.correct::before {
+      content: '⭕';
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 22px;
+      animation: circleIn .5s ease;
+    }
+
+    @keyframes correctPop {
+      0%   { transform: scale(1); }
+      30%  { transform: scale(1.04); box-shadow: 0 0 18px rgba(26,107,69,.3); }
+      100% { transform: scale(1); box-shadow: none; }
+    }
+
+    @keyframes circleIn {
+      0%   { transform: translateY(-50%) scale(0) rotate(-90deg); opacity: 0; }
+      50%  { transform: translateY(-50%) scale(1.4) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-50%) scale(1) rotate(0deg); opacity: 1; }
+    }
+
+    .quiz-choice.incorrect {
+      background: rgba(155,32,32,0.06) !important;
+      border-color: var(--red) !important;
+      color: var(--red) !important;
+      padding-left: 48px;
+    }
+
+    .quiz-choice.incorrect::before {
+      content: '✕';
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--red);
+    }
+
+    /* 正誤テキストバッジ */
+    .answer-badge {
+      display: inline-block;
+      margin-left: 10px;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 2px;
+      vertical-align: middle;
+      letter-spacing: 0.05em;
+    }
+    .badge-correct   { background: var(--green); color: #fff; }
+    .badge-incorrect { background: var(--red);   color: #fff; }
+
+    .quiz-explanation {
+      display: none;
+      margin-top: 14px;
+      padding: 10px 14px;
+      background: rgba(13,33,69,0.05);
+      border-left: 3px solid var(--navy);
+      border-radius: 0 4px 4px 0;
+      font-size: 12px;
+      color: var(--text2);
+      line-height: 1.75;
+    }
+
+    /* ========== NEXT SCHEDULE ========== */
+    .next-section { position: relative; }
+
+    .next-ghost {
+      position: absolute;
+      right: 36px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 120px;
+      font-weight: 600;
+      color: rgba(13,33,69,0.06);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .next-info { display: flex; flex-direction: column; gap: 14px; }
+
+    .next-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .next-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      width: 64px;
+      flex-shrink: 0;
+    }
+
+    .next-value {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--navy);
+      padding: 4px 10px;
+      border-radius: 2px;
+      outline: none;
+      min-width: 160px;
+    }
+    .next-value[contenteditable="true"]:hover { outline: 1px solid var(--gold); }
+    .next-value[contenteditable="true"]:focus  { outline: 2px solid var(--gold); background: rgba(184,146,42,0.08); }
+
+    .next-theme-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      padding: 2px 9px;
+      border-radius: 2px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ========== QR CODE ========== */
+    .qr-section { text-align: center; padding: 44px 0; }
+    .qr-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text2);
+      margin-bottom: 18px;
+    }
+    #qrcode { display: inline-block; }
+
+    /* ========== FOOTER ========== */
+    .footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.45);
+      text-align: center;
+      padding: 20px;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header">
+  <div class="session-ghost">22</div>
+  <div class="header-inner">
+    <div class="eyebrow">Digital Media Strategy Meeting</div>
+    <h1 class="header-title">DMS 会議資料　第22回</h1>
+    <div class="theme-row">
+      <span class="theme-label">Theme</span>
+      <div class="theme-value" contenteditable="true">AI実装は「人へ」── 6割が未活用の今こそ、フィジカルAIとマルチエージェントを見据えて印刷現場の小さな一歩を踏み出す</div>
+    </div>
+    <div class="header-meta">
+      <div class="meta-item">
+        <span class="meta-label">Date</span>
+        <div class="meta-value" contenteditable="true">2026年6月30日（火）13:00〜</div>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Room</span>
+        <div class="meta-value" contenteditable="true">会議室名を入力</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== AI TOPICS ===== -->
+<section class="section section-white">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">Topics</span>
+      <h2 class="section-title">AIトピックス</h2>
+    </div>
+    <div class="news-grid">
+
+      <div class="news-card">
+        <div class="card-color-bar" style="background:var(--navy)"></div>
+        <div class="card-body">
+          <div class="card-category" style="color:var(--navy)">導入実態</div>
+          <div class="card-headline">中小の約6割が生成AIを「未活用」。日常活用はわずか13%、2026年の勝負は"使い始め"の差</div>
+          <div class="card-summary">複数調査で、中小企業の約6割が生成AIを「活用していない／使ったことがない」と回答し、「日常的に活用」はわずか13%にとどまることが分かった。導入意欲は高いものの、人材不足とノウハウ不足が壁になっている。裏を返せば、いま小さく着手するだけで同規模の多数派に対し明確な差をつけられる局面。170名規模の当社でも、まず一部署で見積・校正・社内検索などの定型業務にAIを試し、効果を数字で確認してから横展開するのが堅実な進め方になる。</div>
+          <a class="card-link" href="https://www.jagat.or.jp/archives/478243" target="_blank">詳細を読む →</a>
+        </div>
+      </div>
+
+      <div class="news-card">
+        <div class="card-color-bar" style="background:var(--gold)"></div>
+        <div class="card-body">
+          <div class="card-category" style="color:var(--gold)">技術トレンド</div>
+          <div class="card-headline">2026年は「フィジカルAI」と組織変革の年。PwCは"オーグメンテッド・エンタープライズ"への転換を提言</div>
+          <div class="card-summary">2026年は、画面の中だけでなくロボットや製造機器など物理世界で働く「フィジカルAI」が本格化する年とされる。同時にPwCは、AIエージェントが個人の生産性を飛躍させ、人とAIが協働する次世代組織「オーグメンテッド・エンタープライズ」への転換を提言。単一AIから複数の専門AIが連携するマルチエージェントへ移行が進む。印刷業でも検品・後加工など"物理"の工程にAIが及び始める前提で、人の役割の再設計を今から議論しておきたい。</div>
+          <a class="card-link" href="https://www.pwc.com/jp/ja/knowledge/thoughtleadership/generative-ai-survey2026-consideration.html" target="_blank">詳細を読む →</a>
+        </div>
+      </div>
+
+      <div class="news-card">
+        <div class="card-color-bar" style="background:var(--green)"></div>
+        <div class="card-body">
+          <div class="card-category" style="color:var(--green)">中小企業×印刷</div>
+          <div class="card-headline">page2026で見えた印刷DXの主流。AIで作業スケジューリングと品質管理を自動化し"収益構造"を変える</div>
+          <div class="card-summary">印刷業界最大の展示会page2026では、AIによる作業スケジューリングの自動最適化や品質検査の自動化で、収益構造そのものをDXする事例が注目を集めた。人材不足・市場縮小・原材料高という三重苦に対し、AI×自動化で生産効率と安定品質を両立しつつ高付加価値サービスへ人を振り向ける流れが主流に。重要なのは大型投資より着手順序で、最も時間を奪う工程からスモールスタートし、空いた時間を企画提案に回す設計が当社にも効く。</div>
+          <a class="card-link" href="https://jp.ext.hp.com/printers/digital-presses/indigo/contents/indgo_column202507/" target="_blank">詳細を読む →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== SNS TOPICS ===== -->
+<section class="section section-beige">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">Topics</span>
+      <h2 class="section-title">SNSトピックス</h2>
+    </div>
+    <div class="news-grid">
+
+      <div class="news-card">
+        <div class="card-color-bar" style="background:var(--pink)"></div>
+        <div class="card-body">
+          <div class="card-category" style="color:var(--pink)">Instagram</div>
+          <div class="card-headline">Instagramが新アプリ「Instants」を投入、Xはアルゴリズムを公開。"中身の透明化"が進む</div>
+          <div class="card-summary">2026年6月、Instagramが新アプリ「Instants」を提供開始し、有料の「Instagram Plus」も登場するなど機能拡充が続く。一方X（旧Twitter）はレコメンドアルゴリズムを公開し、何が表示を左右するかの透明化が進んだ。プラットフォーム側の仕様変更が速い今、流行り機能を追うより「公開された評価軸（保存・共有・滞在）に沿った良質な一次情報」を出す姿勢が安定して効く。自社・顧客アカウントの運用方針を四半期で見直す体制づくりがカギになる。</div>
+          <a class="card-link" href="https://www.comnico.jp/we-love-social/sns-news" target="_blank">詳細を読む →</a>
+        </div>
+      </div>
+
+      <div class="news-card">
+        <div class="card-color-bar" style="background:var(--sky)"></div>
+        <div class="card-body">
+          <div class="card-category" style="color:var(--sky)">TikTok・動画</div>
+          <div class="card-headline">短尺動画は"UGC風"が主流に。リール広告はフィードの約2.5倍エンゲージ、ハッシュタグは5個厳選へ</div>
+          <div class="card-summary">2026年のSNS広告で最も効くのは依然リール／ショート動画で、エンゲージメント率はフィード広告の約2.5倍。スマホ手持ちで撮った「UGC風」クリエイティブが、作り込んだ広告より自然に伸びる。一方ハッシュタグはInstagram・TikTokとも実質5個までが推奨で、量より厳選の時代に。印刷会社でも、現場や製品の使い方を飾らず短尺で見せ、関連性の高いタグを少数だけ付ける運用が、広告費をかけずにリーチを広げる近道になる。</div>
+          <a class="card-link" href="https://marketingone.co.jp/sns-ads-trends-instagram-tiktok-comparison-2025/" target="_blank">詳細を読む →</a>
+        </div>
+      </div>
+
+      <div class="news-card">
+        <div class="card-color-bar" style="background:var(--plum)"></div>
+        <div class="card-body">
+          <div class="card-category" style="color:var(--plum)">コミュニティ</div>
+          <div class="card-headline">"クローズドコミュニティ回帰"が鮮明に。拡散一辺倒からDM・少人数共有へ、計測しにくい流入が増加</div>
+          <div class="card-summary">2026年のSNSトレンドとして、リールをDMで送り合うなど「クローズドなコミュニティへの回帰」が各社から指摘されている。BeRealやDiscord的な仲間内のやり取りが存在感を増し、不特定多数への拡散一辺倒ではなくなった。こうしたDM・チャット経由の計測しにくい流入（ダークソーシャル）が無視できない規模に。印刷会社にとっては、紙のDMやQR、限定コミュニティへの招待など"閉じた接点"で深く関係を築く設計が、むしろ自社の強みと噛み合う。</div>
+          <a class="card-link" href="https://www.comnico.jp/we-love-social/2026-sns-trends" target="_blank">詳細を読む →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== QUIZ ===== -->
+<section class="section section-white">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">Quiz</span>
+      <h2 class="section-title">用語テスト</h2>
+    </div>
+    <div class="quiz-container">
+
+      <!-- Q1: AI技術用語 -->
+      <div class="quiz-item">
+        <div class="quiz-meta">
+          <span class="quiz-num">Q1</span>
+          <span class="quiz-theme-tag">AI技術用語</span>
+        </div>
+        <div class="quiz-question">生成AIに渡す「指示文・参考資料・過去のやり取り・ツール情報」など"文脈全体"を、目的に合わせて設計・最適化する取り組みを何と呼ぶか？単発の指示文づくり（プロンプト）より広い概念として2026年に重視されている。</div>
+        <div class="quiz-choices">
+          <button class="quiz-choice" data-correct="false" onclick="answerQuiz(this)">プロンプトインジェクション</button>
+          <button class="quiz-choice" data-correct="true"  onclick="answerQuiz(this)">コンテキストエンジニアリング</button>
+          <button class="quiz-choice" data-correct="false" onclick="answerQuiz(this)">ファインチューニング</button>
+          <button class="quiz-choice" data-correct="false" onclick="answerQuiz(this)">トークナイゼーション</button>
+        </div>
+        <div class="quiz-explanation">コンテキストエンジニアリングは、AIに与える「文脈（コンテキスト）」全体——指示文、参考データ、過去の会話、使えるツールやその説明——を、目的に合わせて取捨選択し最適に組み立てる取り組みです。1回の指示文を工夫する「プロンプトエンジニアリング」より広い概念で、AIエージェントが複数ステップで動く2026年には成果を左右する中核スキルとされます。印刷会社でも、自社の見積基準・過去事例・用語集をAIに正しく"渡す"設計をすれば、汎用AIが一気に"自社専用の戦力"に変わります。</div>
+      </div>
+
+      <!-- Q2: AI活用用語 -->
+      <div class="quiz-item">
+        <div class="quiz-meta">
+          <span class="quiz-num">Q2</span>
+          <span class="quiz-theme-tag">AI活用用語</span>
+        </div>
+        <div class="quiz-question">プログラミングの専門知識がなくても、自然言語で「こういうものを作って」とAIに指示し、対話しながらアプリやツールを組み上げる開発スタイルを何と呼ぶか？</div>
+        <div class="quiz-choices">
+          <button class="quiz-choice" data-correct="false" onclick="answerQuiz(this)">ペアプログラミング</button>
+          <button class="quiz-choice" data-correct="false" onclick="answerQuiz(this)">ノーコード</button>
+          <button class="quiz-choice" data-correct="true"  onclick="answerQuiz(this)">バイブコーディング（Vibe Coding）</button>
+          <button class="quiz-choice" data-correct="false" onclick="answerQuiz(this)">スクラム開発</button>
+        </div>
+        <div class="quiz-explanation">バイブコーディング（Vibe Coding）は、コードを自分で書く代わりに、AIに自然言語で目的や"こんな雰囲気"を伝え、対話しながら修正を重ねてソフトを作る開発スタイルです。2025年にAI研究者が広めた言葉で、Claude CodeなどのAIエージェントの普及で一気に現実的になりました。あらかじめ部品を組み合わせる「ノーコード」と違い、AIが都度コードを生成する点が特徴。当社のニュース要約サイトのような社内ツールも、現場担当者が自分のアイデアを直接形にできる時代になっています。</div>
+      </div>
+
+      <!-- Q3: マーケティング用語 -->
+      <div class="quiz-item">
+        <div class="quiz-meta">
+          <span class="quiz-num">Q3</span>
+          <span class="quiz-theme-tag">マーケティング用語</span>
+        </div>
+        <div class="quiz-question">LINEやDM、メール、口コミなど「外から計測しにくい非公開の経路」を通じて情報やリンクが共有され、流入が発生する現象を何と呼ぶか？SNSの"クローズド化"で重要性が増している。</div>
+        <div class="quiz-choices">
+          <button class="quiz-choice" data-correct="false" onclick="answerQuiz(this)">オーガニック検索</button>
+          <button class="quiz-choice" data-correct="true"  onclick="answerQuiz(this)">ダークソーシャル</button>
+          <button class="quiz-choice" data-correct="false" onclick="answerQuiz(this)">ペイドメディア</button>
+          <button class="quiz-choice" data-correct="false" onclick="answerQuiz(this)">バイラル係数</button>
+        </div>
+        <div class="quiz-explanation">ダークソーシャルは、LINE・DM・メール・チャットなど、解析ツールでは出所を追えない"非公開の共有経路"による流入を指します。アクセス解析では「直接流入」などに紛れ、実際は口コミで広がっているのに見えにくいのが特徴。2026年はSNSがクローズド化し、この比率がさらに高まっています。対策は、共有されやすい一次情報を用意し、計測用URLやQR、「友だちに送る」導線を意図的に設けること。紙のDMやQRを扱う印刷会社は、むしろ"閉じた経路"を設計しやすい立場にあります。</div>
+      </div>
+
+      <!-- Q4: SNS運用用語 -->
+      <div class="quiz-item">
+        <div class="quiz-meta">
+          <span class="quiz-num">Q4</span>
+          <span class="quiz-theme-tag">SNS運用用語</span>
+        </div>
+        <div class="quiz-question">実在しないが、CGや生成AIで作られた架空の人物として発信し、企業のPRやブランド広告に起用されるSNS上のキャラクターを何と呼ぶか？</div>
+        <div class="quiz-choices">
+          <button class="quiz-choice" data-correct="false" onclick="answerQuiz(this)">アンバサダー</button>
+          <button class="quiz-choice" data-correct="false" onclick="answerQuiz(this)">マイクロインフルエンサー</button>
+          <button class="quiz-choice" data-correct="false" onclick="answerQuiz(this)">アバター認証</button>
+          <button class="quiz-choice" data-correct="true"  onclick="answerQuiz(this)">バーチャルインフルエンサー</button>
+        </div>
+        <div class="quiz-explanation">バーチャルインフルエンサーは、CGや生成AIで作られた実在しない人物がSNSで発信し、企業PRやブランド広告に起用される存在です。24時間・世界中で稼働でき、スキャンダルや高齢化のリスクがなく、世界観を完全にコントロールできるのが利点。一方で「実在しないと明示する」誠実な開示が信頼の前提になります。生成AIの進化で制作コストが下がり中小でも検討余地が出てきましたが、まずは自社らしさをどう表現するかという目的の明確化が先決です。</div>
+      </div>
+
+      <!-- Q5: 経営指標 -->
+      <div class="quiz-item">
+        <div class="quiz-meta">
+          <span class="quiz-num">Q5</span>
+          <span class="quiz-theme-tag">経営指標</span>
+        </div>
+        <div class="quiz-question">売上高に対して、売上から売上原価を引いた「売上総利益（粗利）」がどれだけの割合を占めるかを示す指標を何と呼ぶか？「売上総利益 ÷ 売上高」で算出し、商品・サービスの基礎的な稼ぐ力を表す。</div>
+        <div class="quiz-choices">
+          <button class="quiz-choice" data-correct="true"  onclick="answerQuiz(this)">売上総利益率（粗利率）</button>
+          <button class="quiz-choice" data-correct="false" onclick="answerQuiz(this)">自己資本比率</button>
+          <button class="quiz-choice" data-correct="false" onclick="answerQuiz(this)">ROE（自己資本利益率）</button>
+          <button class="quiz-choice" data-correct="false" onclick="answerQuiz(this)">流動比率</button>
+        </div>
+        <div class="quiz-explanation">売上総利益率（粗利率）は、「売上総利益（売上高−売上原価）÷ 売上高」で求め、その商品・サービスがどれだけ基礎的な利益を生むかを示す指標です。価格設定の妥当性や事業の収益体質を映す根幹の数字で、ここが薄いとどれだけ売っても利益が残りません。印刷業は受注競争で粗利が圧迫されがちですが、AIで定型業務を効率化して原価を下げ、企画・デザイン・データ活用などの高付加価値サービスを上乗せすれば、粗利率を直接押し上げられます。前回学んだ「労働生産性」を高める土台にもなる指標です。</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== NEXT SCHEDULE ===== -->
+<section class="section section-beige next-section">
+  <div class="next-ghost">23</div>
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">Next</span>
+      <h2 class="section-title">次回スケジュール</h2>
+    </div>
+    <div class="next-info">
+      <div class="next-row">
+        <span class="next-label">Date</span>
+        <div class="next-value" contenteditable="true">2026年7月7日（火）13:00〜</div>
+      </div>
+      <div class="next-row">
+        <span class="next-label">Room</span>
+        <div class="next-value" contenteditable="true">会議室名を入力</div>
+      </div>
+      <div class="next-row">
+        <span class="next-theme-label">Theme</span>
+        <div class="next-value" contenteditable="true">次回テーマをここに入力</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== QR CODE ===== -->
+<section class="section section-white qr-section">
+  <div class="container">
+    <div class="qr-label">この資料のQRコード / GitHub Pages</div>
+    <div id="qrcode"></div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  DMS Digital Media Strategy Meeting | ©2026
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+  // ===== QUIZ =====
+  function answerQuiz(btn) {
+    var choices = btn.closest('.quiz-choices');
+    if (choices.style.pointerEvents === 'none') return;
+
+    var allBtns = choices.querySelectorAll('.quiz-choice');
+    var isCorrect = btn.dataset.correct === 'true';
+
+    allBtns.forEach(function(b) {
+      b.style.cursor = 'default';
+      if (b.dataset.correct === 'true') {
+        b.classList.add('correct');
+        var badge = document.createElement('span');
+        badge.className = 'answer-badge badge-correct';
+        badge.textContent = '正解！';
+        b.appendChild(badge);
+      }
+    });
+
+    if (!isCorrect) {
+      btn.classList.add('incorrect');
+      var badge = document.createElement('span');
+      badge.className = 'answer-badge badge-incorrect';
+      badge.textContent = '不正解';
+      btn.appendChild(badge);
+    }
+
+    choices.style.pointerEvents = 'none';
+
+    var explanation = btn.closest('.quiz-item').querySelector('.quiz-explanation');
+    if (explanation) explanation.style.display = 'block';
+  }
+
+  // ===== QR CODE =====
+  var BASE_URL = 'https://tokokanri10502-pixel.github.io/dms-every/';
+  var fileName = location.pathname.split('/').pop() || 'DMS_20260630.html';
+  if (!fileName) fileName = 'DMS_20260630.html';
+
+  new QRCode(document.getElementById('qrcode'), {
+    text: BASE_URL + fileName,
+    width: 200,
+    height: 200,
+    colorDark: '#000000',
+    colorLight: '#ffffff',
+    correctLevel: QRCode.CorrectLevel.H
+  });
+
+  // ===== LOCALSTORAGE AUTO-SAVE =====
+  (function() {
+    var pageKey = 'dms_' + fileName.replace('.html', '');
+    var editables = document.querySelectorAll('[contenteditable="true"]');
+    editables.forEach(function(el, i) {
+      var saved = localStorage.getItem(pageKey + '_field_' + i);
+      if (saved !== null && saved !== '') el.innerHTML = saved;
+    });
+    editables.forEach(function(el, i) {
+      el.addEventListener('input', function() {
+        localStorage.setItem(pageKey + '_field_' + i, el.innerHTML);
+      });
+    });
+  })();
+</script>
+</body>
+</html>
