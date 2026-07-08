@@ -1,0 +1,1617 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WEBメディア用語テスト 総集編 | DMS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Cormorant+Garamond:wght@600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:  #0d2145;
+      --gold:  #b8922a;
+      --gold2: #d4aa50;
+      --gold3: #f0d080;
+      --bg:    #f8f7f4;
+      --bg2:   #ffffff;
+      --bg3:   #f0ede8;
+      --line:  #ddd8ce;
+      --text:  #1a1a2a;
+      --text2: #4a4a5a;
+      --green: #1a6b45;
+      --red:   #9b2020;
+      --pink:  #c0306a;
+      --sky:   #2277cc;
+      --plum:  #6a3080;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 400;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ========== HEADER ========== */
+    .header {
+      background: var(--navy);
+      padding: 48px 0 44px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .session-ghost {
+      position: absolute;
+      right: 32px;
+      top: 10px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 160px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.05);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .header-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 40px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold2);
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--gold);
+      margin-bottom: 18px;
+    }
+
+    .header-title {
+      font-size: 30px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+
+    .header-sub {
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 16px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gold2);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+    .back-link:hover { text-decoration: underline; }
+
+    /* ========== TAB BAR ========== */
+    .tab-bar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 2px 8px rgba(13,33,69,.06);
+    }
+
+    .tab-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 10px 24px;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .tab-btn {
+      flex-shrink: 0;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      padding: 7px 16px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--bg);
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text2);
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+
+    .tab-btn:hover { border-color: var(--gold); color: var(--navy); }
+
+    .tab-btn.active {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: #fff;
+    }
+
+    .tab-btn .tab-count {
+      font-size: 11px;
+      font-weight: 400;
+      opacity: 0.75;
+      margin-left: 3px;
+    }
+
+    /* ========== SCORE BAR ========== */
+    .score-bar {
+      background: var(--bg3);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .score-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .score-item {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .score-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .score-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1;
+    }
+
+    .score-actions { margin-left: auto; display: flex; gap: 8px; }
+
+    .action-btn {
+      padding: 6px 14px;
+      border: 1px solid var(--line);
+      border-radius: 3px;
+      background: var(--bg2);
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text2);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .action-btn:hover { border-color: var(--gold); color: var(--navy); }
+
+    /* ========== QUIZ ========== */
+    .section { padding: 40px 0 56px; }
+
+    .quiz-container { display: flex; flex-direction: column; gap: 24px; }
+
+    .quiz-item {
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 24px;
+    }
+
+    .quiz-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .quiz-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .quiz-cat-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #fff;
+      padding: 3px 10px;
+      border-radius: 2px;
+    }
+
+    .quiz-src-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text2);
+      background: rgba(13,33,69,0.06);
+      padding: 3px 9px;
+      border-radius: 2px;
+    }
+
+    .quiz-question {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.65;
+      margin-bottom: 14px;
+    }
+
+    .quiz-choices {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    @media (max-width: 580px) {
+      .quiz-choices { grid-template-columns: 1fr; }
+    }
+
+    .quiz-choice {
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      font-size: 13px;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 400;
+      cursor: pointer;
+      background: var(--bg);
+      color: var(--text);
+      text-align: left;
+      line-height: 1.55;
+      position: relative;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .quiz-choice:hover {
+      border-color: var(--gold);
+      background: rgba(184,146,42,0.05);
+    }
+
+    .quiz-choice.correct {
+      background: linear-gradient(135deg, #e6f9ee 0%, #b8f0d0 100%) !important;
+      border: 3px solid var(--green) !important;
+      color: var(--green) !important;
+      font-weight: 900;
+      font-size: 14px;
+      padding-left: 48px;
+      animation: correctPop .4s ease;
+    }
+
+    .quiz-choice.correct::before {
+      content: '⭕';
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 22px;
+      animation: circleIn .5s ease;
+    }
+
+    @keyframes correctPop {
+      0%   { transform: scale(1); }
+      30%  { transform: scale(1.04); box-shadow: 0 0 18px rgba(26,107,69,.3); }
+      100% { transform: scale(1); box-shadow: none; }
+    }
+
+    @keyframes circleIn {
+      0%   { transform: translateY(-50%) scale(0) rotate(-90deg); opacity: 0; }
+      50%  { transform: translateY(-50%) scale(1.4) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-50%) scale(1) rotate(0deg); opacity: 1; }
+    }
+
+    .quiz-choice.incorrect {
+      background: rgba(155,32,32,0.06) !important;
+      border-color: var(--red) !important;
+      color: var(--red) !important;
+      padding-left: 48px;
+    }
+
+    .quiz-choice.incorrect::before {
+      content: '✕';
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--red);
+    }
+
+    .answer-badge {
+      display: inline-block;
+      margin-left: 10px;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 2px;
+      vertical-align: middle;
+      letter-spacing: 0.05em;
+    }
+    .badge-correct   { background: var(--green); color: #fff; }
+    .badge-incorrect { background: var(--red);   color: #fff; }
+
+    .quiz-explanation {
+      display: none;
+      margin-top: 14px;
+      padding: 10px 14px;
+      background: rgba(13,33,69,0.05);
+      border-left: 3px solid var(--navy);
+      border-radius: 0 4px 4px 0;
+      font-size: 12px;
+      color: var(--text2);
+      line-height: 1.75;
+    }
+
+    /* ========== MOBILE ========== */
+    @media (max-width: 680px) {
+      .header { padding: 32px 0 28px; }
+      .header-inner { padding: 0 20px; }
+      .header-title { font-size: 21px; }
+      .header-sub { font-size: 12px; }
+      .session-ghost { font-size: 96px; right: 14px; top: 6px; }
+      .container { padding: 0 14px; }
+      .section { padding: 24px 0 40px; }
+      .tab-inner { padding: 8px 14px; gap: 6px; }
+      .tab-btn { padding: 8px 14px; font-size: 12px; }
+      .score-inner { padding: 10px 14px; gap: 12px; }
+      .score-value { font-size: 18px; }
+      .action-btn { padding: 8px 12px; }
+      .quiz-container { gap: 14px; }
+      .quiz-item { padding: 16px 14px; }
+      .quiz-num { font-size: 22px; }
+      .quiz-question { font-size: 13.5px; }
+      .quiz-choice { padding: 12px 14px; }
+      .quiz-choice.correct { padding-left: 44px; }
+      .quiz-choice.incorrect { padding-left: 44px; }
+      .quiz-explanation { font-size: 11.5px; padding: 10px 12px; }
+    }
+
+    /* ========== QR CODE ========== */
+    .qr-section { text-align: center; padding: 44px 0; background: var(--bg2); }
+    .qr-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text2);
+      margin-bottom: 18px;
+    }
+    #qrcode { display: inline-block; }
+
+    /* ========== FOOTER ========== */
+    .footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.45);
+      text-align: center;
+      padding: 20px;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header">
+  <div class="session-ghost">68</div>
+  <div class="header-inner">
+    <div class="eyebrow">Digital Media Strategy Meeting</div>
+    <h1 class="header-title">WEBメディア用語テスト 総集編</h1>
+    <p class="header-sub">第9回〜第23回で出題した用語テストを、重複を除く全68問に再編してカテゴリ別に収録。選択肢をタップして腕試しできます。</p>
+    <a class="back-link" href="index.html">← アーカイブ一覧へ戻る</a>
+  </div>
+</header>
+
+<!-- ===== TAB BAR ===== -->
+<nav class="tab-bar">
+  <div class="tab-inner" id="tabBar"></div>
+</nav>
+
+<!-- ===== SCORE BAR ===== -->
+<div class="score-bar">
+  <div class="score-inner">
+    <div class="score-item"><span class="score-label">回答</span><span class="score-value" id="scoreAnswered">0</span><span class="score-label" id="scoreTotal">/ 68</span></div>
+    <div class="score-item"><span class="score-label">正解</span><span class="score-value" id="scoreCorrect">0</span></div>
+    <div class="score-item"><span class="score-label">正答率</span><span class="score-value" id="scoreRate">－</span></div>
+    <div class="score-actions">
+      <button class="action-btn" onclick="shuffleQuestions()">シャッフル</button>
+      <button class="action-btn" onclick="resetQuiz()">リセット</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== QUIZ ===== -->
+<section class="section">
+  <div class="container">
+    <div class="quiz-container" id="quizContainer"></div>
+  </div>
+</section>
+
+<!-- ===== QR CODE ===== -->
+<section class="qr-section">
+  <div class="container">
+    <div class="qr-label">このページのQRコード / GitHub Pages</div>
+    <div id="qrcode"></div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  DMS Digital Media Strategy Meeting | ©2026
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+  // 収録データ：第9回(2026/3/24)〜第23回(2026/7/7)の出題から重複用語を除いた全68問
+  // data内の session はファイル順(1〜15)。実際の開催回は session + 8。
+  var QUIZ_DATA = [
+  {
+    "session": 1,
+    "date": "2026-03-24",
+    "question": "「インプレッション」の正しい意味はどれ？",
+    "choices": [
+      "広告がクリックされた回数",
+      "広告や投稿が表示された回数",
+      "ページが読み込まれた時間",
+      "ユーザーがサイトに滞在した時間"
+    ],
+    "correctIndex": 1,
+    "explanation": "② 広告や投稿が表示された回数。クリックの有無を問わず「1回画面に表示された」＝1インプレッション。CTR（クリック率）= クリック数÷インプレッション数で計算する。",
+    "category": "WEB"
+  },
+  {
+    "session": 2,
+    "date": "2026-03-31",
+    "question": "ユーザーが自発的に企業へ提供する情報（アンケート回答・好みの設定など）を何と呼ぶか？",
+    "choices": [
+      "ファーストパーティデータ",
+      "セカンドパーティデータ",
+      "ゼロパーティデータ",
+      "サードパーティデータ"
+    ],
+    "correctIndex": 2,
+    "explanation": "ゼロパーティデータとは、顧客が意図的・自発的に企業と共有するデータのこと。アンケート回答や好みの設定などが該当し、サードパーティクッキー廃止後のマーケティングで重要性が高まっています。ファーストパーティデータは企業が自社で収集したデータを指します。",
+    "category": "マーケ"
+  },
+  {
+    "session": 2,
+    "date": "2026-03-31",
+    "question": "Instagramの2026年アルゴリズムで重視される3つの指標として正しい組み合わせはどれか？",
+    "choices": [
+      "視聴時間・いいね・シェア",
+      "フォロワー数・投稿数・保存数",
+      "リーチ数・コメント数・プロフィール閲覧数",
+      "インプレッション・クリック率・離脱率"
+    ],
+    "correctIndex": 0,
+    "explanation": "2026年1月のInstagramアルゴリズム変更で重視されるようになった3要素は「視聴時間」「いいね」「シェア（DMでのシェアを含む）」です。特にDMでのシェアが指標に含まれた点が注目されています。",
+    "category": "SNS"
+  },
+  {
+    "session": 3,
+    "date": "2026-04-07",
+    "question": "検索エンジンで特定のページを上位表示させるための一連の施策を何と呼ぶか？",
+    "choices": [
+      "SEM（検索エンジンマーケティング）",
+      "SEO（検索エンジン最適化）",
+      "SSP（供給側プラットフォーム）",
+      "SDK（ソフトウェア開発キット）"
+    ],
+    "correctIndex": 1,
+    "explanation": "正解はB：SEO（Search Engine Optimization）。Googleなどの検索エンジンで上位表示を獲得するための施策。コンテンツの品質向上やキーワード最適化、被リンク獲得などが主な手段。SEMは検索広告（リスティング）を含むより広い概念。",
+    "category": "WEB"
+  },
+  {
+    "session": 3,
+    "date": "2026-04-07",
+    "question": "広告が1,000回表示されるごとにかかるコストを示す指標はどれか？",
+    "choices": [
+      "CPC（クリック単価）",
+      "CTR（クリック率）",
+      "CPM（インプレッション単価）",
+      "CVR（コンバージョン率）"
+    ],
+    "correctIndex": 2,
+    "explanation": "正解はC：CPM（Cost Per Mille）。1,000インプレッションあたりのコストで、認知拡大型キャンペーンの評価に使用。CPCはクリック1回あたりのコスト、CTRはクリック率（クリック÷表示回数）、CVRはコンバージョン率。",
+    "category": "WEB"
+  },
+  {
+    "session": 3,
+    "date": "2026-04-07",
+    "question": "ウェブサイト訪問者が最初に見たページだけで離脱した割合を示す指標は？",
+    "choices": [
+      "直帰率（バウンスレート）",
+      "離脱率（エグジットレート）",
+      "回遊率",
+      "滞在時間"
+    ],
+    "correctIndex": 0,
+    "explanation": "正解はA：直帰率（Bounce Rate）。1ページのみ閲覧して離脱したセッションの割合。「離脱率」は特定のページから離脱した割合で別概念。LP（ランディングページ）では直帰率が高くなりやすいが、必ずしも悪い指標とは限らない。",
+    "category": "WEB"
+  },
+  {
+    "session": 3,
+    "date": "2026-04-07",
+    "question": "ユーザーの指示に応じて自律的にタスクを実行し、ツール連携や意思決定も行うAIシステムを何と呼ぶか？",
+    "choices": [
+      "チャットボット",
+      "AIエージェント",
+      "RPA（ロボティック・プロセス・オートメーション）",
+      "機械学習モデル"
+    ],
+    "correctIndex": 1,
+    "explanation": "正解はB：AIエージェント。LLMを核にWeb検索・コード実行・外部API呼び出しなどのツールを自律的に使いこなし、複数ステップのタスクを自動実行するシステム。2026年は企業への本格導入が急増中のキーワード。",
+    "category": "AI"
+  },
+  {
+    "session": 3,
+    "date": "2026-04-07",
+    "question": "広告費1円あたりの売上（収益）を示す指標はどれか？",
+    "choices": [
+      "CVR（コンバージョン率）",
+      "CPA（顧客獲得単価）",
+      "CPM（1,000回表示あたりコスト）",
+      "ROAS（広告費用対効果）"
+    ],
+    "correctIndex": 3,
+    "explanation": "正解はD：ROAS（Return On Advertising Spend）。広告費に対する売上の倍率（売上÷広告費×100%で表すことが多い）。例えばROAS 500%なら広告費1円で5円の売上を生んでいる状態。ECサイトの広告運用で特に重視される指標。",
+    "category": "WEB"
+  },
+  {
+    "session": 4,
+    "date": "2026-04-14",
+    "question": "Instagram・Meta広告で用いられる「リーチ」と「インプレッション」の違いとして正しいのはどれか？",
+    "choices": [
+      "リーチは広告の表示回数で、インプレッションはユニークユーザー数を示す",
+      "リーチはユニークユーザー数、インプレッションは広告の総表示回数を示す",
+      "リーチはクリック数で、インプレッションは動画再生回数を示す",
+      "どちらも同じ意味で、使い分けは媒体によって異なる"
+    ],
+    "correctIndex": 1,
+    "explanation": "「リーチ」は広告を見たユニークユーザー（人数）、「インプレッション」は広告の総表示回数。1人が3回見た場合、リーチ=1・インプレッション=3。リーチは到達人数、インプレッションは接触回数を把握するために使い分けます。",
+    "category": "SNS"
+  },
+  {
+    "session": 4,
+    "date": "2026-04-14",
+    "question": "SEOにおいて「ゼロクリック検索（Zero-Click Search）」が増加している主な理由はどれか？",
+    "choices": [
+      "モバイル端末からの検索が増え、サイトへのアクセスが減少したから",
+      "広告が検索結果の上位を占め、自然検索のクリックが減ったから",
+      "Googleの強調スニペットやAI Overviewsが検索結果ページ上で直接回答を表示するようになったから",
+      "ユーザーの検索スキルが向上し、1回の検索で求める情報を得られるようになったから"
+    ],
+    "correctIndex": 2,
+    "explanation": "ゼロクリック検索とは、ユーザーが検索結果ページでWebサイトをクリックせずに疑問を解決する現象。GoogleのAI Overviews（旧SGE）や強調スニペット（天気・計算・定義など）が検索結果内で直接回答を表示することが主因。SEOではクリックを促すコンテンツ設計が重要です。",
+    "category": "WEB"
+  },
+  {
+    "session": 4,
+    "date": "2026-04-14",
+    "question": "GA4（Google アナリティクス4）で「ユーザーの最初の流入経路」を正確に把握するために確認すべきレポートはどれか？",
+    "choices": [
+      "セッションのデフォルトチャネルグループ",
+      "ラストクリックのトラフィックソース",
+      "参照元 / メディアのリアルタイムレポート",
+      "ユーザー獲得レポート（First user source / medium）"
+    ],
+    "correctIndex": 3,
+    "explanation": "GA4では「ユーザー獲得レポート」がユーザーが初めてサイトを訪れた際の流入元（First user source/medium）を示します。「セッション獲得レポート」は各セッションの流入元（ラストクリック）を示す点で異なります。新規ユーザー獲得の施策評価には前者を使います。",
+    "category": "WEB"
+  },
+  {
+    "session": 4,
+    "date": "2026-04-14",
+    "question": "AIに特定の役割・口調・知識を与える「プロンプト設計」において、会話の最初に設定する指示のことを何と呼ぶか？",
+    "choices": [
+      "ユーザープロンプト（User Prompt）",
+      "システムプロンプト（System Prompt）",
+      "ファインチューニング（Fine-tuning）",
+      "アシスタントプロンプト（Assistant Prompt）"
+    ],
+    "correctIndex": 1,
+    "explanation": "システムプロンプトとは、AIモデルに会話開始前に与える「前提指示」。「あなたは〇〇の専門家です」「回答は必ず箇条書きで」などの設定を行います。ユーザーの個別の質問（ユーザープロンプト）と区別され、Claude・ChatGPT等でも共通の概念です。",
+    "category": "AI"
+  },
+  {
+    "session": 4,
+    "date": "2026-04-14",
+    "question": "Web広告の効果計測で「アトリビューション」とは何を意味するか？",
+    "choices": [
+      "広告クリエイティブのA/Bテストで優れた方を選定するプロセス",
+      "ユーザーの年齢・性別・趣味などを分析してターゲットを設定する手法",
+      "広告費用を各媒体に自動的に最適配分するアルゴリズム",
+      "コンバージョンに至るまでの複数の接触点（タッチポイント）に成果を配分・評価する手法"
+    ],
+    "correctIndex": 3,
+    "explanation": "アトリビューション（Attribution）は「貢献度配分」の意味。ユーザーが購入に至るまでに複数の広告（検索・SNS・ディスプレイ等）を経由した場合、どの接触点にどれだけの成果を割り当てるかを決めるモデルです。「ラストクリック」「ファーストクリック」「線形」「データドリブン」などのモデルがあります。",
+    "category": "WEB"
+  },
+  {
+    "session": 5,
+    "date": "2026-04-21",
+    "question": "テキスト・画像・音声・動画など複数の情報形式を、単一のAIモデルで一括して扱える技術のことを何と呼ぶか？",
+    "choices": [
+      "ジェネレーティブAI（Generative AI）",
+      "マルチモーダルAI（Multimodal AI）",
+      "ディープラーニング（Deep Learning）",
+      "ハイブリッドAI（Hybrid AI）"
+    ],
+    "correctIndex": 1,
+    "explanation": "マルチモーダルAIは、テキスト・画像・音声・動画といった複数の「モダリティ（情報形式）」を横断して理解・生成できるAIです。ChatGPTの画像認識、Geminiの動画理解、Adobe Expressの会話型編集などが代表例で、2026年の制作ワークフローを大きく変える技術基盤となっています。",
+    "category": "AI"
+  },
+  {
+    "session": 5,
+    "date": "2026-04-21",
+    "question": "生成AIが社内ドキュメントや外部データベースを参照しながら回答を生成する仕組みを何と呼ぶか？",
+    "choices": [
+      "ファインチューニング（Fine-tuning）",
+      "プロンプトチェーニング（Prompt Chaining）",
+      "RAG（Retrieval-Augmented Generation）",
+      "トランスフォーマー（Transformer）"
+    ],
+    "correctIndex": 2,
+    "explanation": "RAG（検索拡張生成）は、LLMに社内規定・議事録・マニュアルなどの独自データを検索させ、その内容を根拠に回答を生成する仕組みです。モデル自体を再学習させずに最新情報やクローズドな情報を反映できるため、中小企業の社内AIヘルプデスク構築で最も導入しやすいアーキテクチャとなっています。",
+    "category": "AI"
+  },
+  {
+    "session": 5,
+    "date": "2026-04-21",
+    "question": "自社が直接顧客から取得した行動・属性データのことを何と呼ぶか？Cookie規制以降、特に重要性が高まっている概念である。",
+    "choices": [
+      "ファーストパーティデータ（First-party data）",
+      "セカンドパーティデータ（Second-party data）",
+      "サードパーティデータ（Third-party data）",
+      "オープンデータ（Open data）"
+    ],
+    "correctIndex": 0,
+    "explanation": "ファーストパーティデータは、自社サイト・アプリ・店舗POS・会員登録などから「自社が直接」取得したデータ。サードパーティCookie廃止の流れで、広告ターゲティングや顧客理解の基盤として価値が急上昇中。印刷会社が持つ顧客名簿・発注履歴も立派なファーストパーティデータです。",
+    "category": "マーケ"
+  },
+  {
+    "session": 5,
+    "date": "2026-04-21",
+    "question": "一般ユーザーが自主的に作成・投稿するコンテンツ（口コミ写真・レビュー動画など）の総称はどれか？",
+    "choices": [
+      "CGM（Consumer Generated Media）",
+      "UGC（User Generated Content）",
+      "KOL（Key Opinion Leader）",
+      "OOH（Out Of Home）"
+    ],
+    "correctIndex": 1,
+    "explanation": "UGCはユーザー生成コンテンツの総称で、Instagram・TikTok・Xの投稿、Amazonレビュー、食べログの口コミなどが該当します。企業発信より信頼されやすく、リール広告でも「UGC風」の自然な動画がエンゲージメントを高めるとされており、2026年のSNS広告運用のキーワードとなっています。",
+    "category": "SNS"
+  },
+  {
+    "session": 5,
+    "date": "2026-04-21",
+    "question": "一人の顧客が取引開始から終了までにもたらす利益の総額を示す指標はどれか？",
+    "choices": [
+      "CAC（Customer Acquisition Cost）",
+      "ARPU（Average Revenue Per User）",
+      "LTV（Life Time Value）",
+      "MRR（Monthly Recurring Revenue）"
+    ],
+    "correctIndex": 2,
+    "explanation": "LTV（顧客生涯価値）は、1顧客が取引期間中に生み出す利益の総額です。CAC（顧客獲得コスト）とセットで「LTV > CAC × 3」が健全な経営の目安とされます。印刷業でも一回きりの受注で終わらせず、関係継続で年間発注額と継続年数を伸ばす視点が、脱・下請けの鍵となります。",
+    "category": "マーケ"
+  },
+  {
+    "session": 6,
+    "date": "2026-04-28",
+    "question": "生成AIが事実と異なる情報や、もっともらしいが誤った内容を、自信ありげに生成してしまう現象を何と呼ぶか？",
+    "choices": [
+      "バイアス（Bias）",
+      "ハルシネーション（Hallucination）",
+      "オーバーフィッティング（Overfitting）",
+      "ドリフト（Drift）"
+    ],
+    "correctIndex": 1,
+    "explanation": "ハルシネーション（幻覚）は、生成AIが学習データに含まれていない情報を、もっともらしく作り出してしまう現象です。「AIが嘘をつく」原因の本丸で、対策としてはRAG（社内データ参照）・出典表示・人間による事実確認の3点セットが基本。社内利用ルール策定の最重要キーワードです。",
+    "category": "AI"
+  },
+  {
+    "session": 6,
+    "date": "2026-04-28",
+    "question": "複数のAIエージェントが役割分担しながら協調し、一つの大きなタスクを処理する2026年の最新アーキテクチャを何と呼ぶか？",
+    "choices": [
+      "シングルプロンプト（Single Prompt）",
+      "フェデレーテッドラーニング（Federated Learning）",
+      "マルチエージェント（Multi-Agent）",
+      "アンサンブル学習（Ensemble Learning）"
+    ],
+    "correctIndex": 2,
+    "explanation": "マルチエージェントは、調査担当・要約担当・実行担当など役割を持った複数のAIが連携して動く方式。2026年のAIエージェント実装の主流アプローチで、Claude Opus 4.7やGPT-5.5は長時間にわたるエージェント協調を前提に設計されています。印刷の制作工程（企画→デザイン→校正→入稿）にも応用可能な発想です。",
+    "category": "AI"
+  },
+  {
+    "session": 6,
+    "date": "2026-04-28",
+    "question": "広告（Paid）・自社メディア（Owned）・口コミやPR（Earned）の3つを統合的に設計する考え方を何と呼ぶか？",
+    "choices": [
+      "クロスチャネルマーケティング",
+      "トリプルメディア",
+      "フルファネル戦略",
+      "オムニチャネル"
+    ],
+    "correctIndex": 1,
+    "explanation": "トリプルメディアは、Paid（広告）／Owned（自社サイト・SNS・カタログ）／Earned（口コミ・UGC・メディア掲載）の3分類で施策全体を設計する古典的フレーム。印刷会社にとってはOwned（紙のカタログ・DM）の価値再評価がポイントで、近年は「シェアド（SNSでシェアされる）」を加えた4分類で語られることも増えています。",
+    "category": "マーケ"
+  },
+  {
+    "session": 6,
+    "date": "2026-04-28",
+    "question": "SNSのフィードやライブ配信から、アプリを離れずに直接商品を購入できる仕組みを何と呼ぶか？",
+    "choices": [
+      "D2C（Direct to Consumer）",
+      "オムニチャネル",
+      "ソーシャルコマース（Social Commerce）",
+      "サブスクリプションコマース"
+    ],
+    "correctIndex": 2,
+    "explanation": "ソーシャルコマースは、Instagram Shop・TikTok Shop・LIVE配信などSNS内で完結する購買体験を指します。2026年3月開始の「TikTok Shop Local」は地域中小事業者を支援する代表事例。「発見→共感→即購入」の動線設計が肝で、印刷物のQR動線と相互補完できる領域です。",
+    "category": "SNS"
+  },
+  {
+    "session": 6,
+    "date": "2026-04-28",
+    "question": "新規顧客を1人獲得するためにかかったマーケ・営業コストの総額を示す指標はどれか？",
+    "choices": [
+      "ARPU（Average Revenue Per User）",
+      "CPM（Cost Per Mille）",
+      "CAC（Customer Acquisition Cost）",
+      "CPC（Cost Per Click）"
+    ],
+    "correctIndex": 2,
+    "explanation": "CAC（顧客獲得コスト）は、広告費・営業人件費・ツール代など新規1社（1人）獲得までの全コストを合算した指標。前回学んだLTVと組み合わせ「LTV ＞ CAC × 3」が健全経営の目安。印刷業の新規開拓では、商談1件の本当のコストを可視化する第一歩としてまず計測すべき数字です。",
+    "category": "マーケ"
+  },
+  {
+    "session": 7,
+    "date": "2026-05-12",
+    "question": "悪意ある入力文を紛れ込ませることで生成AIに本来の指示を無視させ、機密情報の漏えいや不正動作を引き起こす攻撃手法を何と呼ぶか？",
+    "choices": [
+      "SQLインジェクション",
+      "プロンプトインジェクション",
+      "クロスサイトスクリプティング",
+      "フィッシング"
+    ],
+    "correctIndex": 1,
+    "explanation": "プロンプトインジェクションは、Webページや添付文書・チャット履歴などに「これまでの指示は無視せよ」といった命令を仕込み、AIに想定外の動作をさせる攻撃。AIエージェント時代には外部データを自動参照する場面が増えるため、入力サニタイズ・権限分離・監査ログがセキュリティ設計の柱になります。社内ルール策定で必ず押さえるべき新しい脅威です。",
+    "category": "AI"
+  },
+  {
+    "session": 7,
+    "date": "2026-05-12",
+    "question": "汎用の大規模言語モデルに、自社固有のデータや業界特有の表現を追加学習させ、特定用途に最適化する手法を何と呼ぶか？",
+    "choices": [
+      "プロンプトエンジニアリング",
+      "プレトレーニング（Pretraining）",
+      "ファインチューニング（Fine-tuning）",
+      "ゼロショット学習"
+    ],
+    "correctIndex": 2,
+    "explanation": "ファインチューニングは、既存の大規模モデルに自社データで追加学習を行い、業務に特化した応答に調整する技術。RAG（外部参照）が「都度引っ張る」のに対し、ファインチューニングは「モデルに覚え込ませる」アプローチ。印刷業なら自社の校正ルール・用紙仕様・営業トーンを学習させ、専用AIアシスタントを構築する選択肢があります。コストと精度のバランスでRAGと併用が一般的。",
+    "category": "AI"
+  },
+  {
+    "session": 7,
+    "date": "2026-05-12",
+    "question": "ChatGPTやPerplexityなど生成AI型の回答エンジンに自社情報を引用してもらえるよう、コンテンツを最適化する取り組みを何と呼ぶか？",
+    "choices": [
+      "SEO（Search Engine Optimization）",
+      "AEO（Answer Engine Optimization）",
+      "ASO（App Store Optimization）",
+      "CRO（Conversion Rate Optimization）"
+    ],
+    "correctIndex": 1,
+    "explanation": "AEOはAI回答エンジン時代の新しいマーケ概念。検索結果の「青いリンク」ではなく、生成AIの回答内に自社の見解・データ・固有名詞が引用されることを狙う。HubSpotが2026年春に「AEO」専用機能を投入したのも象徴的。構造化データ・出典明記・一次情報の質が要となり、印刷会社のオウンドメディアにも直結する論点です。",
+    "category": "WEB"
+  },
+  {
+    "session": 7,
+    "date": "2026-05-12",
+    "question": "顧客一人ひとりのWeb閲覧・購買履歴・属性情報などを統合・名寄せして管理し、マーケ施策に活用するためのデータ基盤を何と呼ぶか？",
+    "choices": [
+      "DMP（Data Management Platform）",
+      "CDP（Customer Data Platform）",
+      "DWH（Data Warehouse）",
+      "CMS（Contents Management System）"
+    ],
+    "correctIndex": 1,
+    "explanation": "CDPは「顧客単位」でデータを統合する基盤。DMPが匿名のCookie中心なのに対し、CDPは実在の顧客IDを軸に行動・属性・購買を一元化します。ファーストパーティデータ時代の中核基盤で、MarTech 2026の最重要トピックの1つ。印刷会社が紙DMの送付履歴・反応率を顧客IDと結びつけ、AIに学習させる際の前提インフラとなります。",
+    "category": "マーケ"
+  },
+  {
+    "session": 7,
+    "date": "2026-05-12",
+    "question": "広告に投下した費用に対し、いくらの売上が返ってきたかを示す指標はどれか？",
+    "choices": [
+      "ROI（Return on Investment）",
+      "ROAS（Return on Advertising Spend）",
+      "CPA（Cost Per Acquisition）",
+      "CVR（Conversion Rate）"
+    ],
+    "correctIndex": 1,
+    "explanation": "ROAS＝広告経由売上÷広告費（％表示）。例えば100万円の広告で500万円の売上ならROAS 500%。利益でなく売上ベースで見るのが特徴で、ROI（利益ベース）とは分母・分子が異なります。Web広告だけでなくDM・カタログ施策の評価にも応用可能で、前回のCAC・LTVと並ぶ「営業判断の3点セット」として現場に浸透させたい指標です。",
+    "category": "WEB"
+  },
+  {
+    "session": 8,
+    "date": "2026-05-19",
+    "question": "AIエージェントが外部システム（CRM・Slack・ファイルサーバー等）と安全に接続するための業界標準プロトコルとして、Anthropicが提唱し、OpenAI・Google・Microsoftも採用した規格を何と呼ぶか？",
+    "choices": [
+      "REST API",
+      "MCP（Model Context Protocol）",
+      "GraphQL",
+      "OAuth 2.1"
+    ],
+    "correctIndex": 1,
+    "explanation": "MCP（Model Context Protocol）はAnthropicが2024年末に発表し、2026年には主要AIベンダー全社が採用した「AIエージェントのUSB-C」とも呼ばれる接続標準。CRM・ファイルサーバー・社内DBなどへのアクセスを統一規格で扱え、OAuth 2.1ベースの認証や監査ログの仕組みも組み込まれる。社内のシステムをMCPサーバ化することで、AIに「やらせる仕事」を一気に増やせる土台となります。",
+    "category": "AI"
+  },
+  {
+    "session": 8,
+    "date": "2026-05-19",
+    "question": "大規模で高性能な「教師モデル」の出力を、小型で軽量な「生徒モデル」に学習させることで、低コスト・低遅延でも近い性能を出せるようにする手法を何と呼ぶか？",
+    "choices": [
+      "ファインチューニング",
+      "蒸留（Knowledge Distillation）",
+      "量子化（Quantization）",
+      "プロンプトチューニング"
+    ],
+    "correctIndex": 1,
+    "explanation": "蒸留は「先生のテスト答案を見せて、生徒に近い答え方を覚えさせる」手法。GPT-4クラスを直接動かさず、蒸留された小型モデルを社内サーバや端末で動かす「ローカルAI」運用の核となる技術。料金が出揃った2026年、コスト最適化を考えると「巨大モデル＋蒸留した社内専用小型モデル」のハイブリッドが現実解。量子化（精度を落としてサイズ圧縮）と組み合わせて使われます。",
+    "category": "AI"
+  },
+  {
+    "session": 8,
+    "date": "2026-05-19",
+    "question": "不特定多数のリードに広く施策を打つのではなく、自社にとって重要な「特定企業（アカウント）」を絞り込み、その企業の意思決定者向けに最適化したコンテンツやアプローチを展開するBtoBマーケ手法を何と呼ぶか？",
+    "choices": [
+      "インバウンドマーケティング",
+      "コンテンツマーケティング",
+      "ABM（Account-Based Marketing）",
+      "マスマーケティング"
+    ],
+    "correctIndex": 2,
+    "explanation": "ABMは「狙う企業を先に決めてから施策を設計する」逆発想のBtoBマーケ。商材単価が高く意思決定者が複数いる業界（印刷会社の法人営業もまさにこれ）で効果が高い。特定企業の役員・購買・現場担当ごとに別の切り口でDM＋ウェビナー＋営業訪問を組み合わせる設計が典型。CDPで顧客IDを束ね、AIで「次に当てるべき1社」を抽出する流れと相性が良い。",
+    "category": "マーケ"
+  },
+  {
+    "session": 8,
+    "date": "2026-05-19",
+    "question": "SNSプラットフォームがアカウントを凍結はしないものの、検索結果やレコメンドに表示されにくくする「見えない制限」のことを何と呼ぶか？",
+    "choices": [
+      "アカウント停止（Suspension）",
+      "レートリミット",
+      "シャドウバン（Shadow Ban）",
+      "ミュート"
+    ],
+    "correctIndex": 2,
+    "explanation": "シャドウバンは「凍結されていないのに、なぜか伸びない」状態。ガイドライン違反スレスレの投稿、過剰なハッシュタグ、自動化ツールの利用、短時間の大量フォローなどが引き金になる。Instagramのトライアルリールで反応が極端に低い、TikTokで再生数が伸びないといった現象の裏側にこれが潜むことがある。SNS運用担当者が「やってはいけないこと」を共有する勉強会の必須トピック。",
+    "category": "SNS"
+  },
+  {
+    "session": 8,
+    "date": "2026-05-19",
+    "question": "「この商品・サービスを友人や同僚にどの程度すすめたいか」を0〜10で問い、推奨者の割合から批判者の割合を引いた値で算出する、顧客ロイヤルティの代表指標はどれか？",
+    "choices": [
+      "CSAT（Customer Satisfaction）",
+      "NPS（Net Promoter Score）",
+      "CES（Customer Effort Score）",
+      "CSI（Customer Satisfaction Index）"
+    ],
+    "correctIndex": 1,
+    "explanation": "NPSは「9〜10＝推奨者」「7〜8＝中立者」「0〜6＝批判者」と分類し、推奨者%−批判者%で算出。−100〜+100の範囲で、業界平均と比較しやすいのが特長。CSATが「満足したか」を測るのに対し、NPSは「他人に勧めるか＝本気の支持か」を測る。BtoB印刷会社では、年1〜2回NPS調査をかけ、批判者の声を品質改善ループに、推奨者の声を事例化・営業資料化する運用が定石です。",
+    "category": "マーケ"
+  },
+  {
+    "session": 9,
+    "date": "2026-05-26",
+    "question": "テキストや画像などのデータを「意味の近さ」を表す数値ベクトルに変換し、RAGやセマンティック検索の中核を担う技術を何と呼ぶか？",
+    "choices": [
+      "トークナイズ（Tokenize）",
+      "エンベディング（Embedding／埋め込み）",
+      "アノテーション（Annotation）",
+      "ハッシュ化（Hashing）"
+    ],
+    "correctIndex": 1,
+    "explanation": "エンベディングは、文章や画像を「数百〜数千次元のベクトル」に変換する技術。意味が近いほどベクトル空間で近接するため、「言い回しが違っても意味で検索できる」セマンティック検索や、RAGの土台になります。社内文書をエンベディング化してベクトルDB（Pinecone, Weaviate, pgvector等）に格納すれば、AIエージェントが「過去の見積書から類似案件を引っ張る」ような検索が可能に。MCPやRAGの裏側で必ず使われる基幹技術です。",
+    "category": "AI"
+  },
+  {
+    "session": 9,
+    "date": "2026-05-26",
+    "question": "AIモデルが一度に処理できる入力＋出力の文字量（トークン数）の上限のことを何と呼ぶか？Claude Opus 4.6では100万まで拡大した概念である。",
+    "choices": [
+      "パラメータ数（Parameters）",
+      "レイテンシ（Latency）",
+      "コンテキストウィンドウ（Context Window）",
+      "スループット（Throughput）"
+    ],
+    "correctIndex": 2,
+    "explanation": "コンテキストウィンドウはAIが「一度に覚えていられる文章量」。20万トークン時代は「分厚い契約書1冊」が限界でしたが、100万トークンになると「中規模リポジトリ一式」「全社の見積書1年分」を一度に渡せます。長尺資料の要約、コードベース全体のレビュー、複数会議議事録の横串分析など、これまでRAGで小分けに渡していた処理が「一括投入」に置き換わる場面が出てきます。とはいえコストは依然トークン量に比例するため、「常時フル投入」ではなく「重要場面で深く読ませる」設計が肝。",
+    "category": "AI"
+  },
+  {
+    "session": 9,
+    "date": "2026-05-26",
+    "question": "小売事業者が自社の購買データ・店舗・ECサイト・デジタルサイネージなどを広告媒体として開放し、メーカーや他社が広告出稿できる仕組みを何と呼ぶか？",
+    "choices": [
+      "アドエクスチェンジ（Ad Exchange）",
+      "アフィリエイトネットワーク",
+      "リテールメディア（Retail Media）",
+      "プログラマティックTV"
+    ],
+    "correctIndex": 2,
+    "explanation": "リテールメディアは、Amazon・楽天・イオン・セブン-イレブンなどが「自社の購買データ＋自社の露出面（EC・サイネージ・チラシ）」を広告主に開放する仕組み。国内市場は2026年6,000億円、2029年1.3兆円規模へ。Cookieレス時代における「購買直前のファーストパーティデータ」の希少価値が背景。印刷会社目線では、サイネージコンテンツの企画制作、紙チラシとの連動企画、店内POPの差分印刷など、リテールメディアと相性の良い受注領域が新規開拓ポイントになります。",
+    "category": "マーケ"
+  },
+  {
+    "session": 9,
+    "date": "2026-05-26",
+    "question": "SNS投稿に対する「いいね・コメント・保存・シェアなどの反応総数」を、リーチやインプレッションで割って算出する指標を何と呼ぶか？",
+    "choices": [
+      "CVR（コンバージョン率）",
+      "CTR（クリック率）",
+      "エンゲージメント率（Engagement Rate）",
+      "バウンス率"
+    ],
+    "correctIndex": 2,
+    "explanation": "エンゲージメント率は「リーチした人のうち、何%が能動的に反応してくれたか」を測る指標。フォロワー数より重要視されるケースが増えています。Instagramの2026年アルゴリズムは「関係性スコア」を強化しており、エンゲージメント率が高いアカウントほどフィード上位・発見タブに露出しやすい。TikTokではエンゲージメント率が低い投稿はそもそも拡散されにくい。「フォロワー1万人で反応0」より「フォロワー1,000人で反応100」の方がアルゴリズム上は圧倒的に有利、というのが2026年のSNS運用の前提です。",
+    "category": "SNS"
+  },
+  {
+    "session": 9,
+    "date": "2026-05-26",
+    "question": "「達成したい大きな目標（Objectives）」と、その達成度を測る「定量的な主要成果（Key Results）」をセットで設定し、四半期ごとに見直す目標管理フレームワークを何と呼ぶか？",
+    "choices": [
+      "KPI（Key Performance Indicator）",
+      "OKR（Objectives and Key Results）",
+      "MBO（Management by Objectives）",
+      "BSC（Balanced Scorecard）"
+    ],
+    "correctIndex": 1,
+    "explanation": "OKRはGoogle・メルカリ・freeeなどが採用する目標管理手法。「Objectives＝定性的でワクワクするゴール」と「Key Results＝3〜5個の定量指標」をセットで設定し、四半期で見直し。MBO（人事評価とほぼ一体）と違い、達成率60〜70%でも合格とすることで「挑戦的な目標」を引き出す設計です。中小印刷会社では「全社OKR→部門OKR→個人OKR」と階段状に接続し、AI活用や新規領域開拓を促す梃子として有効。隔週勉強会と組み合わせれば、現場のチャレンジ精神を可視化できます。",
+    "category": "経営"
+  },
+  {
+    "session": 10,
+    "date": "2026-06-02",
+    "question": "人間が逐一指示しなくても、AI自身が目標達成のために計画を立て、ツールを呼び出し、複数ステップの作業を自律的に実行する性質を何と呼ぶか？",
+    "choices": [
+      "エージェンティックAI（Agentic AI）",
+      "ジェネレーティブAI（Generative AI）",
+      "ディスクリミネイティブAI",
+      "シンボリックAI"
+    ],
+    "correctIndex": 0,
+    "explanation": "エージェンティックAIは「指示待ちで文章や画像を作る生成AI」の一歩先で、目標を与えると自分で手順を分解し、検索・計算・社内システム操作などのツールを使い分けながらゴールまで自走するAIを指します。2026年は「業務にAIを組み込む年」から「AIに業務を委任する年」へと言われる背景がこれ。委任範囲をいきなり広げず、ノンコア業務（議事録整理・定型問い合わせ対応など）から小さく任せ、成功体験を積んで段階的に拡大するのが安全な進め方です。",
+    "category": "AI"
+  },
+  {
+    "session": 10,
+    "date": "2026-06-02",
+    "question": "AIが不適切・危険・機密漏えいにつながる出力をしないよう、入力と出力に制限やチェックを設ける「安全柵」の仕組みを何と呼ぶか？",
+    "choices": [
+      "プロンプト（Prompt）",
+      "ガードレール（Guardrails）",
+      "パイプライン（Pipeline）",
+      "フォールバック（Fallback）"
+    ],
+    "correctIndex": 1,
+    "explanation": "ガードレールは、AIの入出力に「ここから先は通さない」というルールを設ける仕組み。個人情報・機密のマスキング、禁止トピックのブロック、出力の事実チェックなどを担います。2026年は経産省・総務省ガイドラインを前提に社内AI利用ルールの明文化が進む局面で、ガードレールは「技術側の安全柵」、利用ガイドラインは「人側の安全柵」という両輪の関係。従業員170名規模でも、機密情報・APIキーは入力しない等の一枚物ルールを整え、勉強会で全社に浸透させることが第一歩になります。",
+    "category": "AI"
+  },
+  {
+    "session": 10,
+    "date": "2026-06-02",
+    "question": "サイトやLPを訪れた人のうち、購入・問い合わせ・資料請求など「目的の行動」に至った人の割合を示す指標を何と呼ぶか？",
+    "choices": [
+      "CTR（クリック率）",
+      "CPM（インプレッション単価）",
+      "CVR（コンバージョン率）",
+      "CPC（クリック単価）"
+    ],
+    "correctIndex": 2,
+    "explanation": "CVR（Conversion Rate）は「成果に至った数 ÷ 訪問・流入数」で求める、Web施策の費用対効果を左右する中核指標。同じアクセス数でもCVRが1%から2%に上がれば成果は倍になるため、広告で集客を増やす前に、まずLPやフォームの改善でCVRを引き上げる方が投資効率が良い場面は多いです。印刷会社の販促提案でも「チラシで何枚配ったか（リーチ）」だけでなく「QR読み取り後にどれだけ申込・来店に至ったか（CVR）」まで設計・計測できると、紙＋デジタルの提案価値が一段上がります。",
+    "category": "WEB"
+  },
+  {
+    "session": 10,
+    "date": "2026-06-02",
+    "question": "SNS上の投稿・口コミ・ハッシュタグなどを収集・分析し、自社や商品・競合がどう語られているかを把握する取り組みを何と呼ぶか？",
+    "choices": [
+      "バズマーケティング",
+      "ソーシャルリスニング（Social Listening）",
+      "インフルエンサーマーケティング",
+      "リターゲティング"
+    ],
+    "correctIndex": 1,
+    "explanation": "ソーシャルリスニングは、SNSやレビューの「生の声」を収集・分析し、評判・ニーズ・競合動向・炎上の予兆をつかむ手法。アンケートと違い、ユーザーが自発的に語った本音を拾えるのが強みです。2026年はDMでリールを共有するなどクローズドコミュニティへの回帰が進み、表に出る声が減る分、拾える声の分析価値は相対的に高まります。生成AIで大量の投稿を要約・分類すれば、中小企業でも低コストで実施可能。販促企画やサービス改善の起点として、印刷会社の提案メニューにも組み込みやすい領域です。",
+    "category": "SNS"
+  },
+  {
+    "session": 10,
+    "date": "2026-06-02",
+    "question": "売上高と総費用が一致し、利益がちょうどゼロになる売上水準のことを何と呼ぶか？これを上回ると黒字、下回ると赤字になる。",
+    "choices": [
+      "限界利益（Marginal Profit）",
+      "付加価値額",
+      "損益分岐点（Break-even Point）",
+      "運転資本（Working Capital）"
+    ],
+    "correctIndex": 2,
+    "explanation": "損益分岐点（BEP）は「固定費 ÷ 限界利益率」で求める、利益ゼロの売上ライン。設備投資が重く固定費の大きい印刷業では特に重要な指標で、稼働率がこの点を割ると一気に赤字化します。だからこそAIによる段取り替えロス削減・ジョブ自動割当・在庫最適化は、固定費を増やさず稼働効率を上げてBEPを引き下げる打ち手として効きます。新規設備や新サービスを検討する際は「追加固定費を回収するのに必要な売上＝新しいBEP」を先に試算しておくと、投資判断の精度が上がります。",
+    "category": "経営"
+  },
+  {
+    "session": 11,
+    "date": "2026-06-09",
+    "question": "AIに作業を任せつつ、重要な判断や最終的な承認は人間が行う「人間を工程に組み込む」仕組みを何と呼ぶか？2026年の業務AI活用で「業界標準」とされる考え方である。",
+    "choices": [
+      "Human-in-the-Loop（HITL）",
+      "エンドツーエンド自動化",
+      "ノーコード（No-Code）",
+      "フェイルセーフ（Fail-Safe）"
+    ],
+    "correctIndex": 0,
+    "explanation": "Human-in-the-Loop（HITL）は、AIに作業を進めさせつつ、要所の判断・承認・修正を人間が担う設計思想です。2026年はAIエージェントが自律実行する場面が増えた一方、誤りや責任の所在をカバーするため「人が最終確認する」HITLが業界標準とされています。中小企業がAI委任を進める際も、いきなり全自動を目指さず、AIが下書きや一次処理をして人が承認する形から始めるのが安全。委任範囲を広げるほど、どの工程に人のチェックを残すかの設計が品質と信頼の鍵になります。",
+    "category": "AI"
+  },
+  {
+    "session": 11,
+    "date": "2026-06-09",
+    "question": "生成AIで、出力の「ランダム性・創造性の高さ」を調整するパラメータを何と呼ぶか？値を高くすると多様で自由な表現に、低くすると堅実で一貫した出力になる。",
+    "choices": [
+      "トークン（Token）",
+      "温度（Temperature）",
+      "バイアス（Bias）",
+      "エポック（Epoch）"
+    ],
+    "correctIndex": 1,
+    "explanation": "Temperature（温度）は、生成AIが次の単語を選ぶ際の「ばらつきの大きさ」を制御する設定値です。値を高く（例：1.0前後）すると表現が多様でアイデア発散向きになり、低く（例：0〜0.3）すると安定して再現性の高い、堅実な出力になります。キャッチコピーやネーミングの案出しでは高め、社内マニュアルや契約文・数値を扱う業務では低め、と用途で使い分けるのがコツ。多くのAIツールでは設定画面やAPIでこの値を調整でき、出力品質のブレを抑えたい印刷会社の実務でも知っておくと便利です。",
+    "category": "AI"
+  },
+  {
+    "session": 11,
+    "date": "2026-06-09",
+    "question": "顧客が商品・サービスを認知してから購入・利用、その後の継続に至るまでの一連の体験の道筋を時系列で可視化したものを何と呼ぶか？",
+    "choices": [
+      "ファネル分析",
+      "ペルソナ（Persona）",
+      "カスタマージャーニー（Customer Journey）",
+      "バリューチェーン（Value Chain）"
+    ],
+    "correctIndex": 2,
+    "explanation": "カスタマージャーニーは、顧客が「認知→興味→比較検討→購入→利用→継続・推奨」と進む過程を、各段階の感情・行動・接点（タッチポイント）とともに地図のように描いたものです。これを描くと、どの接点で離脱が起きているか、紙の販促物・Web・SNS・店頭をどう連携させるべきかが見えてきます。2026年のMarTechの主役がパーソナライズ・行動予測へ移る中、ジャーニー上の「どこで何を届けるか」の設計はますます重要に。印刷会社の提案でも、チラシ単発でなくジャーニー全体を見据えた一貫設計が提案価値を高めます。",
+    "category": "マーケ"
+  },
+  {
+    "session": 11,
+    "date": "2026-06-09",
+    "question": "フォロワー数は数千〜数万人と多くないが、特定の分野・地域で深い信頼と高い反応率を持つ発信者を起用するマーケティング手法を何と呼ぶか？",
+    "choices": [
+      "アンバサダー独占契約",
+      "マイクロインフルエンサー活用",
+      "マスインフルエンサー戦略",
+      "アフィリエイト広告"
+    ],
+    "correctIndex": 1,
+    "explanation": "マイクロインフルエンサーは、フォロワー数こそ控えめでも、特定ジャンルや地域で濃いつながりと高いエンゲージメント率を持つ発信者です。著名インフルエンサーより低コストで、フォロワーとの距離が近く「リアルな推奨」として届きやすいのが強み。2026年はDMでリールを共有するなどクローズドコミュニティへの回帰が進み、狭くても信頼が厚い発信者の価値が相対的に高まっています。広島という地域に根ざす企業にとっては、地元の人気アカウントとの連携が、全国的な大型起用より費用対効果よく刺さる場面が多いといえます。",
+    "category": "SNS"
+  },
+  {
+    "session": 11,
+    "date": "2026-06-09",
+    "question": "一定期間に在庫が何回入れ替わったかを示し、「売上原価 ÷ 平均在庫」などで算出する指標を何と呼ぶか？高いほど在庫が効率よく現金化されていることを意味する。",
+    "choices": [
+      "流動比率（Current Ratio）",
+      "在庫回転率（Inventory Turnover）",
+      "自己資本比率",
+      "固定比率（Fixed Ratio）"
+    ],
+    "correctIndex": 1,
+    "explanation": "在庫回転率は、一定期間に在庫が何回入れ替わったかを示す指標で、高いほど在庫が滞留せず効率よく売上・現金に変わっていることを意味します。低いと、用紙やインク・資材が倉庫で眠り、保管コストや資金の固定化、品質劣化のリスクが膨らみます。印刷業はもともと在庫負担が重い業種だからこそ、この指標は重要。AIによる需要予測・自動発注・在庫のリアルタイム管理は、欠品を防ぎつつ過剰在庫を減らし、在庫回転率を引き上げてキャッシュフローを改善する打ち手として効きます。固定費削減と並ぶ、足元の収益改善の要です。",
+    "category": "経営"
+  },
+  {
+    "session": 12,
+    "date": "2026-06-16",
+    "question": "生成AIが、自分だけで答えるのではなく、外部のツールやアプリ（検索・計算・予約APIなど）を呼び出して処理を実行できる仕組みを何と呼ぶか？AIエージェントが「行動」する土台となる技術である。",
+    "choices": [
+      "ファンクションコーリング（Function Calling／ツール使用）",
+      "プロンプトチェイニング",
+      "トークナイゼーション",
+      "バッチ推論"
+    ],
+    "correctIndex": 0,
+    "explanation": "Function Calling（ツール使用／Tool Use）は、AIが文章を返すだけでなく、必要に応じて外部のツールやAPIを呼び出し、その結果を使って回答・作業を完了させる仕組みです。検索・計算・カレンダー登録・社内システム照会などをAI自身が判断して実行できるため、2026年に普及したAIエージェントが「答える」から「行動する」へ進化する土台になっています。印刷会社でも、在庫照会や見積計算、予定登録といった定型処理をAIに繋ぎ込めば、人は最終確認に専念でき、業務委任の幅が一気に広がります。",
+    "category": "AI"
+  },
+  {
+    "session": 12,
+    "date": "2026-06-16",
+    "question": "生成AIに「いきなり答えを出す」のではなく「順を追って考えてから答えて」と促し、推論の途中過程を書かせることで複雑な問題の正答率を高める手法を何と呼ぶか？",
+    "choices": [
+      "ゼロショット学習",
+      "思考の連鎖（Chain of Thought／CoT）",
+      "アンサンブル学習",
+      "プロンプトインジェクション"
+    ],
+    "correctIndex": 1,
+    "explanation": "Chain of Thought（思考の連鎖／CoT）は、AIに結論だけでなく「考える過程」を順序立てて書かせることで、計算・論理・多段階の判断を要する問題の正答率を高めるプロンプト技法です。「ステップごとに考えて」「理由を述べてから結論を」と指示するだけで効果が出ます。2026年の高性能モデルは内部で自動的に推論を行うものも増えましたが、複雑な見積根拠の説明や企画の比較検討では、過程を出させると人がチェック・修正しやすくなります。AIの答えを鵜呑みにせず検証する習慣づくりにも有効です。",
+    "category": "AI"
+  },
+  {
+    "session": 12,
+    "date": "2026-06-16",
+    "question": "すぐには購入に至らない見込み客に対し、メールやコンテンツで継続的に有益な情報を届け、信頼と購買意欲を育てて受注につなげる活動を何と呼ぶか？",
+    "choices": [
+      "リードジェネレーション",
+      "リードナーチャリング（見込み客育成）",
+      "リターゲティング",
+      "セグメンテーション"
+    ],
+    "correctIndex": 1,
+    "explanation": "リードナーチャリングは、獲得した見込み客（リード）をすぐ売り込むのではなく、役立つ情報を継続的に届けて関係を温め、購買の機が熟したタイミングで受注につなげる活動です。新規獲得（リードジェネレーション）と対になる概念で、検討期間が長いBtoBや高額商材ほど効果が大きいのが特徴。印刷会社でも、名刺交換しただけの相手や過去客に、事例紹介やノウハウをメール・ニュースで定期発信すれば、「思い出してもらえる存在」になり再受注の確率が上がります。MAツールで配信を自動化すれば、少人数でも継続しやすくなります。",
+    "category": "マーケ"
+  },
+  {
+    "session": 12,
+    "date": "2026-06-16",
+    "question": "「多くの人が良いと言っている」「行列ができている」などの周囲の評価を手がかりに、人が自分の判断を寄せていく心理を何と呼ぶか？口コミ・レビュー・フォロワー数がSNSで効く理由でもある。",
+    "choices": [
+      "アンカリング効果",
+      "バンドワゴン課金",
+      "ソーシャルプルーフ（社会的証明）",
+      "ハロー効果"
+    ],
+    "correctIndex": 2,
+    "explanation": "ソーシャルプルーフ（社会的証明）は、人が判断に迷ったとき「多くの他者の行動・評価」を正しさの手がかりにする心理です。口コミ・レビュー件数・「導入○○社」・利用者の声・フォロワー数などが購買を後押しするのはこのため。SNS時代はとりわけ強く働きます。印刷会社の営業でも、施工・納品事例、お客様の声、取引実績の見せ方を整えるだけで信頼が高まります。ただしサクラや誇張は信頼を一気に損なうため、実在の顧客の許諾を得た本物の声を、具体的な数字とともに示すことが大切です。",
+    "category": "マーケ"
+  },
+  {
+    "session": 12,
+    "date": "2026-06-16",
+    "question": "企業が生み出した付加価値のうち、どれだけを人件費として従業員に分配したかを示す指標を何と呼ぶか？「人件費 ÷ 付加価値」で算出し、高すぎても低すぎても課題となる。",
+    "choices": [
+      "売上総利益率（粗利率）",
+      "労働分配率（Labor Share）",
+      "労働生産性",
+      "損益分岐点比率"
+    ],
+    "correctIndex": 1,
+    "explanation": "労働分配率は、企業が稼いだ付加価値のうち、人件費としてどれだけ従業員に分配したかを示す指標です（人件費÷付加価値）。高すぎると利益や投資余力を圧迫し、低すぎると賃金が抑えられ人材の確保・定着が難しくなるため、バランスが重要。労働集約的な印刷業では特に注目される指標です。鍵は「分母の付加価値を増やすこと」。AIで定型業務を効率化し、空いた時間を企画提案や高付加価値サービスに振り向ければ、賃上げと収益改善を両立しながら労働分配率を健全な水準に保てます。",
+    "category": "経営"
+  },
+  {
+    "session": 13,
+    "date": "2026-06-23",
+    "question": "クラウドのサーバーに送らず、スマホ・PC・機器そのものの上でAI処理を完結させる方式を何と呼ぶか？通信不要で高速、機密データを外部に出さずに済む利点がある。",
+    "choices": [
+      "オンデバイスAI（エッジAI）",
+      "クラウドAI",
+      "量子コンピューティング",
+      "ストリーミング推論"
+    ],
+    "correctIndex": 0,
+    "explanation": "オンデバイスAI（エッジAI）は、クラウドのサーバーに頼らず、端末や機器の内部でAIの推論処理を完結させる方式です。通信が不要なため応答が速く、オフラインでも動き、入力データを外部に送らないのでプライバシー・機密保護に強いのが利点。2026年はスマホやカメラ、製造機器に小型・軽量なAIを載せる流れが加速しています。印刷現場でも、検品カメラの異常検知や機密性の高い顧客データの処理を端末側で行えば、情報を社外に出さずにAIの恩恵を受けられます。クラウドAIと役割分担して使い分けるのが現実的です。",
+    "category": "AI"
+  },
+  {
+    "session": 13,
+    "date": "2026-06-23",
+    "question": "生成AIへの指示の中に「お手本となる入力と出力の例」を数件添えることで、望む形式・トーンの回答を引き出すプロンプト手法を何と呼ぶか？",
+    "choices": [
+      "ファインチューニング",
+      "バッチ処理",
+      "フューショット・プロンプティング（Few-shot）",
+      "ストリーミング出力"
+    ],
+    "correctIndex": 2,
+    "explanation": "フューショット・プロンプティング（Few-shot）は、指示文に「こう入力したら、こう出力してほしい」という見本を数件示してから本番の依頼をする手法です。例を見せるだけでAIが形式・口調・粒度を学び、追加学習（ファインチューニング）なしに出力品質が安定します。例を出さない「ゼロショット」より精度が上がりやすいのが特徴。印刷会社でも、過去の優れた提案文やメールの「良い例」を2〜3件貼って指示すれば、自社らしい文体の下書きをAIに量産させられ、属人化しがちな文書作成を標準化できます。",
+    "category": "AI"
+  },
+  {
+    "session": 13,
+    "date": "2026-06-23",
+    "question": "店舗・EC・SNS・カタログ・DMなど複数の顧客接点を、在庫や顧客情報を統合してシームレスにつなぎ、どの接点からでも一貫した体験を提供する考え方を何と呼ぶか？",
+    "choices": [
+      "マスマーケティング",
+      "オムニチャネル",
+      "ニッチ戦略",
+      "プロダクトアウト"
+    ],
+    "correctIndex": 1,
+    "explanation": "オムニチャネルは、店舗・EC・SNS・カタログ・DMなど複数の接点を、在庫情報や顧客データを統合して連携させ、顧客がどの経路から来ても途切れない一貫した体験を提供する考え方です。単に複数チャネルを持つ「マルチチャネル」より一歩進み、接点同士がつながっている点が肝。印刷会社にとっては、紙のDM・カタログとデジタル（EC・SNS・QR）を分断せず、紙からWebへ自然に誘導し、顧客データを一元管理する提案がそのまま顧客企業の販促価値になります。自社の強みである「紙」をオムニチャネルの入口として再定義できます。",
+    "category": "マーケ"
+  },
+  {
+    "session": 13,
+    "date": "2026-06-23",
+    "question": "営業担当者がSNS（LinkedInやX等）で有益な情報発信や関係構築を行い、信頼を育てながら商談・受注につなげる営業手法を何と呼ぶか？",
+    "choices": [
+      "コールドコール",
+      "ソーシャルログイン",
+      "アフィリエイト",
+      "ソーシャルセリング（Social Selling）"
+    ],
+    "correctIndex": 3,
+    "explanation": "ソーシャルセリング（Social Selling）は、営業担当者がSNS上で役立つ情報を発信し、見込み客と日常的につながって信頼関係を築きながら商談へ育てていく営業手法です。いきなり売り込む電話営業（コールドコール）と対照的で、買い手が情報収集を済ませてから動く現代のBtoBに適しています。印刷会社でも、営業担当が事例や印刷のノウハウをSNS・自社メディアで継続発信すれば、「困ったらあの人に相談しよう」という第一想起を獲得できます。会社のニュース要約サイト運営とも相性がよく、個人の発信を組織の信頼に変える設計が効きます。",
+    "category": "SNS"
+  },
+  {
+    "session": 13,
+    "date": "2026-06-23",
+    "question": "従業員一人あたり（または労働時間あたり）でどれだけの付加価値を生み出したかを示す指標を何と呼ぶか？「付加価値 ÷ 従業員数（または労働時間）」で算出する。",
+    "choices": [
+      "自己資本比率",
+      "労働生産性（一人当たり付加価値）",
+      "流動比率",
+      "総資産回転率"
+    ],
+    "correctIndex": 1,
+    "explanation": "労働生産性は、従業員一人あたり（または一時間あたり）でどれだけの付加価値を生み出したかを示す指標で、「付加価値 ÷ 従業員数（または労働時間）」で算出します。賃上げの原資を生み、企業の競争力を測る根幹の指標です。前回学んだ「労働分配率」が分配の割合を見るのに対し、こちらは生み出す力そのものを測ります。労働集約的な印刷業では特に重要で、AIで定型業務を効率化して空いた時間を企画・高付加価値サービスに振り向ければ、分子の付加価値が増え、労働生産性を直接押し上げられます。国の補助金が掲げる目的もまさにこの向上です。",
+    "category": "経営"
+  },
+  {
+    "session": 14,
+    "date": "2026-06-30",
+    "question": "生成AIに渡す「指示文・参考資料・過去のやり取り・ツール情報」など\"文脈全体\"を、目的に合わせて設計・最適化する取り組みを何と呼ぶか？単発の指示文づくり（プロンプト）より広い概念として2026年に重視されている。",
+    "choices": [
+      "プロンプトインジェクション",
+      "コンテキストエンジニアリング",
+      "ファインチューニング",
+      "トークナイゼーション"
+    ],
+    "correctIndex": 1,
+    "explanation": "コンテキストエンジニアリングは、AIに与える「文脈（コンテキスト）」全体——指示文、参考データ、過去の会話、使えるツールやその説明——を、目的に合わせて取捨選択し最適に組み立てる取り組みです。1回の指示文を工夫する「プロンプトエンジニアリング」より広い概念で、AIエージェントが複数ステップで動く2026年には成果を左右する中核スキルとされます。印刷会社でも、自社の見積基準・過去事例・用語集をAIに正しく\"渡す\"設計をすれば、汎用AIが一気に\"自社専用の戦力\"に変わります。",
+    "category": "AI"
+  },
+  {
+    "session": 14,
+    "date": "2026-06-30",
+    "question": "プログラミングの専門知識がなくても、自然言語で「こういうものを作って」とAIに指示し、対話しながらアプリやツールを組み上げる開発スタイルを何と呼ぶか？",
+    "choices": [
+      "ペアプログラミング",
+      "ノーコード",
+      "バイブコーディング（Vibe Coding）",
+      "スクラム開発"
+    ],
+    "correctIndex": 2,
+    "explanation": "バイブコーディング（Vibe Coding）は、コードを自分で書く代わりに、AIに自然言語で目的や\"こんな雰囲気\"を伝え、対話しながら修正を重ねてソフトを作る開発スタイルです。2025年にAI研究者が広めた言葉で、Claude CodeなどのAIエージェントの普及で一気に現実的になりました。あらかじめ部品を組み合わせる「ノーコード」と違い、AIが都度コードを生成する点が特徴。当社のニュース要約サイトのような社内ツールも、現場担当者が自分のアイデアを直接形にできる時代になっています。",
+    "category": "AI"
+  },
+  {
+    "session": 14,
+    "date": "2026-06-30",
+    "question": "LINEやDM、メール、口コミなど「外から計測しにくい非公開の経路」を通じて情報やリンクが共有され、流入が発生する現象を何と呼ぶか？SNSの\"クローズド化\"で重要性が増している。",
+    "choices": [
+      "オーガニック検索",
+      "ダークソーシャル",
+      "ペイドメディア",
+      "バイラル係数"
+    ],
+    "correctIndex": 1,
+    "explanation": "ダークソーシャルは、LINE・DM・メール・チャットなど、解析ツールでは出所を追えない\"非公開の共有経路\"による流入を指します。アクセス解析では「直接流入」などに紛れ、実際は口コミで広がっているのに見えにくいのが特徴。2026年はSNSがクローズド化し、この比率がさらに高まっています。対策は、共有されやすい一次情報を用意し、計測用URLやQR、「友だちに送る」導線を意図的に設けること。紙のDMやQRを扱う印刷会社は、むしろ\"閉じた経路\"を設計しやすい立場にあります。",
+    "category": "SNS"
+  },
+  {
+    "session": 14,
+    "date": "2026-06-30",
+    "question": "実在しないが、CGや生成AIで作られた架空の人物として発信し、企業のPRやブランド広告に起用されるSNS上のキャラクターを何と呼ぶか？",
+    "choices": [
+      "アンバサダー",
+      "マイクロインフルエンサー",
+      "アバター認証",
+      "バーチャルインフルエンサー"
+    ],
+    "correctIndex": 3,
+    "explanation": "バーチャルインフルエンサーは、CGや生成AIで作られた実在しない人物がSNSで発信し、企業PRやブランド広告に起用される存在です。24時間・世界中で稼働でき、スキャンダルや高齢化のリスクがなく、世界観を完全にコントロールできるのが利点。一方で「実在しないと明示する」誠実な開示が信頼の前提になります。生成AIの進化で制作コストが下がり中小でも検討余地が出てきましたが、まずは自社らしさをどう表現するかという目的の明確化が先決です。",
+    "category": "SNS"
+  },
+  {
+    "session": 14,
+    "date": "2026-06-30",
+    "question": "売上高に対して、売上から売上原価を引いた「売上総利益（粗利）」がどれだけの割合を占めるかを示す指標を何と呼ぶか？「売上総利益 ÷ 売上高」で算出し、商品・サービスの基礎的な稼ぐ力を表す。",
+    "choices": [
+      "売上総利益率（粗利率）",
+      "自己資本比率",
+      "ROE（自己資本利益率）",
+      "流動比率"
+    ],
+    "correctIndex": 0,
+    "explanation": "売上総利益率（粗利率）は、「売上総利益（売上高−売上原価）÷ 売上高」で求め、その商品・サービスがどれだけ基礎的な利益を生むかを示す指標です。価格設定の妥当性や事業の収益体質を映す根幹の数字で、ここが薄いとどれだけ売っても利益が残りません。印刷業は受注競争で粗利が圧迫されがちですが、AIで定型業務を効率化して原価を下げ、企画・デザイン・データ活用などの高付加価値サービスを上乗せすれば、粗利率を直接押し上げられます。前回学んだ「労働生産性」を高める土台にもなる指標です。",
+    "category": "経営"
+  },
+  {
+    "session": 15,
+    "date": "2026-07-07",
+    "question": "生成AIが文章を処理する際の最小単位で、API利用料金の計算やコンテキストウィンドウの上限も、この単位で数えられるものを何と呼ぶか？",
+    "choices": [
+      "ピクセル",
+      "パラメータ",
+      "トークン",
+      "バイト"
+    ],
+    "correctIndex": 2,
+    "explanation": "トークンは、生成AIが文章を読み書きする際の最小単位です。英語では単語や単語の一部、日本語ではおおむね1文字が1〜2トークン程度に分割されます。API料金は「入力トークン数＋出力トークン数」で決まり、今回話題のClaude Sonnet 5の「100万トークン対応」「入力100万トークンあたり◯ドル」もこの単位の話です。前回学んだ「コンテキストウィンドウ」の大きさもトークン数で表されます。AIのコストと能力を数字で語るための、最も基本の物差しとして押さえておきましょう。",
+    "category": "AI"
+  },
+  {
+    "session": 15,
+    "date": "2026-07-07",
+    "question": "会社が公式に許可・管理していないAIツールを、従業員が業務で無断利用することを何と呼ぶか？機密情報の漏えいリスクとして、AI導入が進む2026年に企業で問題視されている。",
+    "choices": [
+      "ダークパターン",
+      "シャドーAI（Shadow AI）",
+      "ステルスマーケティング",
+      "ディープフェイク"
+    ],
+    "correctIndex": 1,
+    "explanation": "シャドーAIは、会社が許可・管理していないAIツールを従業員が業務で使う状態を指します。個人アカウントの無料AIに顧客名簿や見積データを貼り付ければ、意図せず社外に機密が渡るリスクがあります。怖いのは、禁止するほど\"隠れて使う\"方向に進むこと。対策の定石は、禁止一辺倒ではなく「会社公認のAIツールと利用ルールをセットで提供する」ことです。従業員170名の当社でも、勉強会などで正しい使い方を共有し、安心して使える公式ルートを整えることが最大の防御になります。",
+    "category": "AI"
+  },
+  {
+    "session": 15,
+    "date": "2026-07-07",
+    "question": "経営やマーケティングで「最終的に達成したいゴールを定量化した指標」（例：年間売上高◯億円、粗利率◯%）を何と呼ぶか？中間プロセスを測るKPIと対で使われる。",
+    "choices": [
+      "KPI（重要業績評価指標）",
+      "ROI（投資利益率）",
+      "CSF（重要成功要因）",
+      "KGI（重要目標達成指標）"
+    ],
+    "correctIndex": 3,
+    "explanation": "KGI（Key Goal Indicator）は、事業や施策の「最終ゴール」を数値で定義した指標です。例えば「年間売上10億円」「新規取引社数20社」がKGI、その達成に向けた「月間問い合わせ数」「提案件数」などの中間指標がKPI（Key Performance Indicator）です。KGIなきKPIは\"手段の目的化\"を招き、逆にKGIだけでは日々の行動につながりません。以前学んだOKRも同じ発想の目標管理手法です。社内のSNS運用やAI導入も、まず「何をKGIに置くか」から議論すると施策の優先順位が明確になります。",
+    "category": "経営"
+  },
+  {
+    "session": 15,
+    "date": "2026-07-07",
+    "question": "SNSやECサイトでリアルタイムのライブ配信を見ながら、視聴者がコメントで質問し、気に入った商品をその場で購入できる販売手法を何と呼ぶか？TikTok Shopの日本展開で再注目されている。",
+    "choices": [
+      "ライブコマース",
+      "ショールーミング",
+      "ドロップシッピング",
+      "ダイナミックプライシング"
+    ],
+    "correctIndex": 0,
+    "explanation": "ライブコマースは、ライブ配信で商品を紹介しながら、視聴者がコメントで質問し、その場で購入まで完結できる販売手法です。中国では小売の主要チャネルに成長し、日本でもTikTok Shopの上陸で一般化が現実味を帯びてきました。テレビ通販との違いは「双方向性」で、視聴者の質問に配信者が即答することで疑問がその場で解消され、購入率が高まります。印刷会社にとっては、配信を告知するチラシやQR付きPOP、配信で映える商品パッケージなど、周辺の販促物需要をセットで提案できる商機になります。",
+    "category": "SNS"
+  },
+  {
+    "session": 15,
+    "date": "2026-07-07",
+    "question": "売上総利益（粗利）から、人件費や広告費などの販売費・一般管理費を差し引いた利益が、売上高に占める割合を示す指標は？「本業でどれだけ効率よく稼げているか」を表す。",
+    "choices": [
+      "経常利益率",
+      "売上高営業利益率",
+      "ROA（総資産利益率）",
+      "当座比率"
+    ],
+    "correctIndex": 1,
+    "explanation": "売上高営業利益率は、「営業利益（売上総利益−販売費・一般管理費）÷ 売上高」で求める、本業の稼ぐ力を示す指標です。前回学んだ売上総利益率（粗利率）が「商品・サービスそのものの収益力」を表すのに対し、営業利益率はそこから間接部門のコストまで含めた\"経営全体の効率\"を映します。粗利率が高くても販管費が重ければ営業利益率は低くなります。AIによる事務・制作支援業務の効率化は販管費の圧縮に直結するため、営業利益率を直接押し上げる打ち手として投資対効果を説明しやすい領域です。",
+    "category": "経営"
+  }
+];
+
+  var CAT_COLORS = {
+    'AI':    'var(--navy)',
+    'SNS':   'var(--pink)',
+    'WEB':   'var(--sky)',
+    'マーケ': 'var(--gold)',
+    '経営':  'var(--green)'
+  };
+  var CATEGORIES = ['すべて', 'AI', 'SNS', 'WEB', 'マーケ', '経営'];
+
+  var currentCat = 'すべて';
+  var order = QUIZ_DATA.map(function(_, i) { return i; });  // 表示順(シャッフル対象)
+  var answers = {};  // dataIndex -> { selected: n, correct: bool }
+
+  function sessionKai(q) { return q.session + 8; }
+
+  function dateLabel(q) {
+    var p = q.date.split('-');
+    return parseInt(p[1], 10) + '/' + parseInt(p[2], 10);
+  }
+
+  // ===== TAB BAR =====
+  function buildTabs() {
+    var bar = document.getElementById('tabBar');
+    bar.innerHTML = '';
+    CATEGORIES.forEach(function(cat) {
+      var count = cat === 'すべて' ? QUIZ_DATA.length : QUIZ_DATA.filter(function(q) { return q.category === cat; }).length;
+      var btn = document.createElement('button');
+      btn.className = 'tab-btn' + (cat === currentCat ? ' active' : '');
+      btn.innerHTML = cat + '<span class="tab-count">' + count + '</span>';
+      btn.onclick = function() {
+        currentCat = cat;
+        buildTabs();
+        render();
+      };
+      bar.appendChild(btn);
+    });
+  }
+
+  // ===== RENDER =====
+  function render() {
+    var container = document.getElementById('quizContainer');
+    container.innerHTML = '';
+    var num = 0;
+
+    order.forEach(function(dataIdx) {
+      var q = QUIZ_DATA[dataIdx];
+      if (currentCat !== 'すべて' && q.category !== currentCat) return;
+      num++;
+
+      var item = document.createElement('div');
+      item.className = 'quiz-item';
+
+      var meta = document.createElement('div');
+      meta.className = 'quiz-meta';
+      meta.innerHTML =
+        '<span class="quiz-num">Q' + num + '</span>' +
+        '<span class="quiz-cat-tag" style="background:' + CAT_COLORS[q.category] + '">' + q.category + '</span>' +
+        '<span class="quiz-src-tag">第' + sessionKai(q) + '回 ' + dateLabel(q) + ' 出題</span>';
+      item.appendChild(meta);
+
+      var question = document.createElement('div');
+      question.className = 'quiz-question';
+      question.textContent = q.question;
+      item.appendChild(question);
+
+      var choices = document.createElement('div');
+      choices.className = 'quiz-choices';
+      q.choices.forEach(function(choiceText, ci) {
+        var btn = document.createElement('button');
+        btn.className = 'quiz-choice';
+        btn.textContent = choiceText;
+        btn.onclick = function() { answerQuiz(dataIdx, ci, item, choices); };
+        choices.appendChild(btn);
+      });
+      item.appendChild(choices);
+
+      var exp = document.createElement('div');
+      exp.className = 'quiz-explanation';
+      exp.textContent = q.explanation;
+      item.appendChild(exp);
+
+      // 回答済みなら状態を復元
+      if (answers[dataIdx]) {
+        applyAnswered(dataIdx, item, choices, false);
+      }
+
+      container.appendChild(item);
+    });
+
+    updateScore();
+  }
+
+  // ===== ANSWER =====
+  function answerQuiz(dataIdx, selectedIdx, item, choices) {
+    if (answers[dataIdx]) return;
+    var q = QUIZ_DATA[dataIdx];
+    answers[dataIdx] = { selected: selectedIdx, correct: selectedIdx === q.correctIndex };
+    applyAnswered(dataIdx, item, choices, true);
+    updateScore();
+  }
+
+  function applyAnswered(dataIdx, item, choices, animate) {
+    var q = QUIZ_DATA[dataIdx];
+    var state = answers[dataIdx];
+    var btns = choices.querySelectorAll('.quiz-choice');
+
+    btns.forEach(function(b, i) {
+      b.style.cursor = 'default';
+      if (!animate) b.style.animation = 'none';
+      if (i === q.correctIndex) {
+        b.classList.add('correct');
+        var badge = document.createElement('span');
+        badge.className = 'answer-badge badge-correct';
+        badge.textContent = '正解！';
+        b.appendChild(badge);
+      }
+    });
+
+    if (!state.correct) {
+      var wrongBtn = btns[state.selected];
+      wrongBtn.classList.add('incorrect');
+      var badge = document.createElement('span');
+      badge.className = 'answer-badge badge-incorrect';
+      badge.textContent = '不正解';
+      wrongBtn.appendChild(badge);
+    }
+
+    choices.style.pointerEvents = 'none';
+    item.querySelector('.quiz-explanation').style.display = 'block';
+  }
+
+  // ===== SCORE =====
+  function updateScore() {
+    var inView = currentCat === 'すべて'
+      ? QUIZ_DATA.map(function(_, i) { return i; })
+      : QUIZ_DATA.map(function(q, i) { return q.category === currentCat ? i : -1; }).filter(function(i) { return i >= 0; });
+
+    var answered = 0, correct = 0;
+    inView.forEach(function(i) {
+      if (answers[i]) {
+        answered++;
+        if (answers[i].correct) correct++;
+      }
+    });
+
+    document.getElementById('scoreAnswered').textContent = answered;
+    document.getElementById('scoreTotal').textContent = '/ ' + inView.length;
+    document.getElementById('scoreCorrect').textContent = correct;
+    document.getElementById('scoreRate').textContent = answered > 0 ? Math.round(correct / answered * 100) + '%' : '－';
+  }
+
+  // ===== ACTIONS =====
+  function shuffleQuestions() {
+    for (var i = order.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = order[i]; order[i] = order[j]; order[j] = tmp;
+    }
+    render();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function resetQuiz() {
+    answers = {};
+    render();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ===== QR CODE =====
+  new QRCode(document.getElementById('qrcode'), {
+    text: 'https://tokokanri10502-pixel.github.io/dms-every/quiz.html',
+    width: 200,
+    height: 200,
+    colorDark: '#000000',
+    colorLight: '#ffffff',
+    correctLevel: QRCode.CorrectLevel.H
+  });
+
+  // ===== INIT =====
+  buildTabs();
+  render();
+</script>
+</body>
+</html>
