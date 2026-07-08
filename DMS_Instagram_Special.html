@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DMS 特集 | Instagram 表示アルゴリズム最新情報会</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Cormorant+Garamond:wght@600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:  #0d2145;
+      --gold:  #b8922a;
+      --gold2: #d4aa50;
+      --gold3: #f0d080;
+      --bg:    #f8f7f4;
+      --bg2:   #ffffff;
+      --bg3:   #f0ede8;
+      --line:  #ddd8ce;
+      --text:  #1a1a2a;
+      --text2: #4a4a5a;
+      --muted:  #8a8578;
+      --green: #1a6b45;
+      --red:   #9b2020;
+      --pink:  #c0306a;
+      --sky:   #2277cc;
+      --plum:  #6a3080;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 400;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ========== HEADER ========== */
+    .header {
+      background: var(--navy);
+      padding: 48px 0 44px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .session-ghost {
+      position: absolute;
+      right: 28px;
+      top: -8px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 150px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.06);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+      font-style: italic;
+    }
+
+    .header-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 40px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold2);
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--gold);
+      margin-bottom: 18px;
+    }
+
+    .header-title {
+      font-size: 30px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.25;
+      margin-bottom: 16px;
+    }
+    .header-title .accent { color: var(--gold3); }
+
+    .header-lead {
+      font-size: 14px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.85;
+      max-width: 640px;
+      margin-bottom: 22px;
+    }
+
+    .header-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .meta-item { display: flex; align-items: center; gap: 8px; }
+
+    .meta-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold3);
+    }
+
+    .meta-value {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 2px;
+      outline: none;
+      min-width: 120px;
+    }
+    .meta-value[contenteditable="true"]:hover { outline: 1px solid var(--gold); }
+    .meta-value[contenteditable="true"]:focus  { outline: 2px solid var(--gold); background: rgba(184,146,42,0.1); }
+
+    /* ========== SECTION COMMON ========== */
+    .section { padding: 48px 0; }
+    .section-white { background: var(--bg2); }
+    .section-beige { background: var(--bg3); }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    .section-eyebrow {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .section-title { font-size: 20px; font-weight: 900; color: var(--navy); }
+    .section-desc {
+      font-size: 13px;
+      color: var(--text2);
+      line-height: 1.85;
+      margin-bottom: 28px;
+      max-width: 680px;
+    }
+
+    /* ========== KEY CALLOUT ========== */
+    .callout {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      background: linear-gradient(135deg, #0d2145 0%, #17315f 100%);
+      border-radius: 6px;
+      padding: 26px 30px;
+      margin-bottom: 36px;
+      position: relative;
+      overflow: hidden;
+    }
+    .callout-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 60px;
+      font-weight: 600;
+      color: var(--gold3);
+      line-height: 1;
+      flex-shrink: 0;
+      font-style: italic;
+    }
+    .callout-num small { font-size: 26px; font-style: normal; }
+    .callout-body { color: #fff; }
+    .callout-body strong { color: var(--gold3); font-weight: 900; }
+    .callout-title { font-size: 15px; font-weight: 900; margin-bottom: 4px; }
+    .callout-sub { font-size: 12.5px; color: rgba(255,255,255,0.78); line-height: 1.75; }
+
+    /* ========== BEFORE / AFTER ========== */
+    .ba-legend {
+      display: grid;
+      grid-template-columns: 1fr 44px 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+      align-items: center;
+    }
+    .ba-legend-chip {
+      text-align: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 7px 0;
+      border-radius: 3px;
+    }
+    .ba-legend-before { background: #e8e5df; color: var(--muted); }
+    .ba-legend-after  { background: var(--navy); color: var(--gold3); }
+    .ba-legend-sub { display:block; font-family:'Noto Sans JP',sans-serif; font-size:9.5px; letter-spacing:0.05em; font-weight:700; margin-top:2px; }
+
+    .ba-rows { display: flex; flex-direction: column; gap: 14px; }
+
+    .ba-row {
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      padding: 16px 18px 15px;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .ba-row:hover { box-shadow: 0 8px 24px rgba(13,33,69,.10); transform: translateY(-2px); }
+
+    .ba-cat {
+      display: inline-block;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--navy);
+      background: rgba(13,33,69,0.07);
+      padding: 3px 10px;
+      border-radius: 2px;
+      margin-bottom: 12px;
+    }
+
+    .ba-grid {
+      display: grid;
+      grid-template-columns: 1fr 44px 1fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .ba-cell {
+      border-radius: 4px;
+      padding: 12px 14px;
+      font-size: 13.5px;
+      line-height: 1.6;
+      display: flex;
+      align-items: center;
+    }
+    .ba-before {
+      background: #f3f1ec;
+      color: var(--muted);
+      border: 1px solid #e6e2d9;
+    }
+    .ba-before .strike { text-decoration: line-through; text-decoration-color: rgba(155,32,32,0.5); text-decoration-thickness: 1.5px; }
+    .ba-after {
+      background: linear-gradient(135deg, #fbf6e8 0%, #f6ecd0 100%);
+      color: var(--text);
+      border: 1.5px solid var(--gold2);
+      font-weight: 700;
+    }
+    .ba-after b { color: var(--gold); font-weight: 900; }
+
+    .ba-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 30px;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .ba-note {
+      margin-top: 11px;
+      padding-left: 14px;
+      border-left: 3px solid var(--gold);
+      font-size: 12px;
+      color: var(--text2);
+      line-height: 1.75;
+    }
+    .ba-note b { color: var(--navy); }
+
+    @media (max-width: 680px) {
+      .ba-legend { grid-template-columns: 1fr; gap: 6px; }
+      .ba-legend-before::after { content:' ⟶'; }
+      .ba-grid { grid-template-columns: 1fr; gap: 8px; }
+      .ba-arrow { transform: rotate(90deg); font-size: 24px; padding: 2px 0; }
+    }
+
+    /* ========== SUMMARY (今すぐの3か条) ========== */
+    .todo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 680px) { .todo-grid { grid-template-columns: 1fr; } }
+    .todo-card {
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-top: 3px solid var(--gold);
+      border-radius: 4px;
+      padding: 20px 18px;
+    }
+    .todo-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 34px;
+      font-weight: 600;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .todo-head { font-size: 14px; font-weight: 900; color: var(--navy); margin-bottom: 6px; }
+    .todo-body { font-size: 12.5px; color: var(--text2); line-height: 1.8; }
+
+    /* ========== SOURCES ========== */
+    .sources { padding: 32px 0; }
+    .sources-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 12px;
+    }
+    .sources-list { display: flex; flex-direction: column; gap: 6px; }
+    .sources-list a { font-size: 11.5px; color: var(--text2); text-decoration: none; }
+    .sources-list a:hover { color: var(--gold); text-decoration: underline; }
+
+    /* ========== QR ========== */
+    .qr-section { text-align: center; padding: 44px 0; }
+    .qr-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--text2); margin-bottom: 18px;
+    }
+    #qrcode { display: inline-block; }
+
+    /* ========== FOOTER ========== */
+    .footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.45);
+      text-align: center;
+      padding: 20px;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header">
+  <div class="session-ghost">IG</div>
+  <div class="header-inner">
+    <div class="eyebrow">DMS Special &mdash; Instagram Focus</div>
+    <h1 class="header-title">Instagram 表示アルゴリズム最新情報会<br><span class="accent">&mdash; 「いいね」の時代は終わった。</span></h1>
+    <p class="header-lead">Instagramの"表示される仕組み"は、この数年で静かに、しかし根本から変わりました。何を評価するかが変われば、伸びる投稿も変わります。今回は最新のアルゴリズムを「昔 → 今」の対比で整理し、当社と顧客の運用に何を活かすかまで落とし込みます。</p>
+    <div class="header-meta">
+      <div class="meta-item">
+        <span class="meta-label">Date</span>
+        <div class="meta-value" contenteditable="true">2026年〇月〇日（火）13:00〜</div>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Room</span>
+        <div class="meta-value" contenteditable="true">会議室名を入力</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== BEFORE / AFTER ===== -->
+<section class="section section-white">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">The Shift</span>
+      <h2 class="section-title">昔 → 今：評価の"ものさし"はこう変わった</h2>
+    </div>
+    <p class="section-desc">Instagram責任者アダム・モセリは、表示順を決める最重要シグナルとして「視聴時間」「送信数（DMシェア）」「いいね率」の3つを公式に挙げています。ポイントは、その"重みづけ"が数年前とはまったく変わったこと。左が昔の常識、右が今の正解です。</p>
+
+    <!-- Key callout -->
+    <div class="callout">
+      <div class="callout-num">3<small>〜</small>5<small>倍</small></div>
+      <div class="callout-body">
+        <div class="callout-title">今いちばん効くのは「DMで友達に送られること」</div>
+        <div class="callout-sub">モセリ本人が「ランキングで使う最大級のシグナルの一つ」と明言。<strong>DM送信（シェア）は、いいねの約3〜5倍の重み</strong>で効くと言われ、フォロワー外へ届く最大の起爆剤になっています。</div>
+      </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="ba-legend">
+      <div class="ba-legend-chip ba-legend-before">Before<span class="ba-legend-sub">〜数年前の常識</span></div>
+      <div></div>
+      <div class="ba-legend-chip ba-legend-after">Now 2026<span class="ba-legend-sub">今の正解</span></div>
+    </div>
+
+    <div class="ba-rows">
+
+      <!-- 1 -->
+      <div class="ba-row">
+        <span class="ba-cat">① 評価の主役</span>
+        <div class="ba-grid">
+          <div class="ba-cell ba-before"><span class="strike">「いいね」の数がすべて</span></div>
+          <div class="ba-arrow">&rarr;</div>
+          <div class="ba-cell ba-after"><b>保存</b>と<b>送信（DMシェア）</b>の数</div>
+        </div>
+        <div class="ba-note"><b>なぜ：</b>いいねは"軽い反応"で数を盛りやすい。保存＝「後で見返す価値」、送信＝「人に教えたい価値」で、アルゴリズムが最も信頼する"本物の反応"に評価軸が移った。</div>
+      </div>
+
+      <!-- 2 -->
+      <div class="ba-row">
+        <span class="ba-cat">② 誰に届くか</span>
+        <div class="ba-grid">
+          <div class="ba-cell ba-before"><span class="strike">フォロワーへの表示が中心</span></div>
+          <div class="ba-arrow">&rarr;</div>
+          <div class="ba-cell ba-after"><b>フォロワー外</b>（リール・発見タブ）が伸びの主戦場</div>
+        </div>
+        <div class="ba-note"><b>なぜ：</b>リールは初速の反応が良いほど、フォローしていない人へ段階的に配信される。新規獲得はもはやフォロワー数ではなく「フォロワー外にどれだけ届くか」で決まる。</div>
+      </div>
+
+      <!-- 3 -->
+      <div class="ba-row">
+        <span class="ba-cat">③ 動画の見られ方</span>
+        <div class="ba-grid">
+          <div class="ba-cell ba-before"><span class="strike">再生回数・投稿直後の初速</span></div>
+          <div class="ba-arrow">&rarr;</div>
+          <div class="ba-cell ba-after"><b>視聴完了率</b>と<b>リプレイ率</b></div>
+        </div>
+        <div class="ba-note"><b>なぜ：</b>最後まで見られたか、もう一度見られたかが最重要に。まず「最初の3秒」を越えさせることが最初の関門。冒頭で結論・つかみを出す構成が効く。</div>
+      </div>
+
+      <!-- 4 -->
+      <div class="ba-row">
+        <span class="ba-cat">④ 成果の指標</span>
+        <div class="ba-grid">
+          <div class="ba-cell ba-before"><span class="strike">投稿ごとにバラバラの指標</span></div>
+          <div class="ba-arrow">&rarr;</div>
+          <div class="ba-cell ba-after">「<b>閲覧数（Views）</b>」に統一</div>
+        </div>
+        <div class="ba-note"><b>なぜ：</b>フィード・リール・ストーリーズすべてが「どれだけ見られたか」の共通ものさしで判定される時代に。振り返りは"いいね数"ではなく"Views と 保存・送信"で見る。</div>
+      </div>
+
+      <!-- 5 -->
+      <div class="ba-row">
+        <span class="ba-cat">⑤ コンテンツの作り方</span>
+        <div class="ba-grid">
+          <div class="ba-cell ba-before"><span class="strike">他媒体の動画を使い回し・転載</span></div>
+          <div class="ba-arrow">&rarr;</div>
+          <div class="ba-cell ba-after"><b>オリジナル必須</b>（転載はAI検知で表示激減）</div>
+        </div>
+        <div class="ba-note"><b>なぜ：</b>2026年のアップデートで、TikTokのロゴ入り動画など転載はAIが自動検知し表示優先度が大幅ダウン。媒体ごとに冒頭・縦横比を作り分ける"ひと手間"が成果を分ける。</div>
+      </div>
+
+      <!-- 6 -->
+      <div class="ba-row">
+        <span class="ba-cat">⑥ 見つけてもらう工夫</span>
+        <div class="ba-grid">
+          <div class="ba-cell ba-before"><span class="strike">ハッシュタグを大量に付ける</span></div>
+          <div class="ba-arrow">&rarr;</div>
+          <div class="ba-cell ba-after">タグは<b>5〜10個に厳選</b>＋<b>キャプション内キーワード</b></div>
+        </div>
+        <div class="ba-note"><b>なぜ：</b>Instagram内検索が強化され、キャプションの言葉自体が検索対象に（Instagram内SEO）。タグの数より、誰の何に役立つかを言葉で書くことが重要になった。</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== 今すぐの3か条 ===== -->
+<section class="section section-beige">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">Action</span>
+      <h2 class="section-title">明日から効く、たった3か条</h2>
+    </div>
+    <p class="section-desc">難しい理屈を全部覚える必要はありません。上の変化を、現場のアクションに変えると次の3つに集約されます。</p>
+    <div class="todo-grid">
+      <div class="todo-card">
+        <div class="todo-num">1</div>
+        <div class="todo-head">「保存・シェアされる」を狙う</div>
+        <div class="todo-body">「いいねして！」ではなく「保存して見返してね」。役立つ情報・保存リスト・チェックリスト型の投稿が最も強い。</div>
+      </div>
+      <div class="todo-card">
+        <div class="todo-num">2</div>
+        <div class="todo-head">冒頭3秒とオリジナルにこだわる</div>
+        <div class="todo-body">最後まで見られるかが勝負。他媒体の使い回しはやめ、冒頭で結論を見せる。ロゴ入り転載は逆効果。</div>
+      </div>
+      <div class="todo-card">
+        <div class="todo-num">3</div>
+        <div class="todo-head">言葉で書いて、リールで届ける</div>
+        <div class="todo-body">タグは5〜10個に厳選し、キャプションに検索されるキーワードを。新規はリール・発見タブから来る。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SOURCES ===== -->
+<section class="section-white sources">
+  <div class="container">
+    <div class="sources-label">出典 / Sources</div>
+    <div class="sources-list">
+      <a href="https://s--line.co.jp/instagram-algorithm-2026-latest/" target="_blank">Instagramアルゴリズム2026最新版｜表示順の仕組みと攻略法（株式会社S.Line）</a>
+      <a href="https://www.comnico.jp/we-love-social/ig-algorithm" target="_blank">【2026年最新】Instagramアルゴリズム完全攻略！公式発表とプロの運用対策（comnico）</a>
+      <a href="https://buffer.com/resources/instagram-algorithms/" target="_blank">How the Instagram Algorithm Works: Your 2026 Guide（Buffer）</a>
+      <a href="https://later.com/blog/how-instagram-algorithm-works/" target="_blank">Instagram algorithm in 2026: rank signals for growth（Later）</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== QR CODE ===== -->
+<section class="section section-beige qr-section">
+  <div class="container">
+    <div class="qr-label">この資料のQRコード / GitHub Pages</div>
+    <div id="qrcode"></div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  DMS Digital Media Strategy Meeting &mdash; Instagram Special | &copy;2026
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+  // ===== QR CODE =====
+  var BASE_URL = 'https://tokokanri10502-pixel.github.io/dms-every/';
+  var fileName = location.pathname.split('/').pop() || 'DMS_Instagram_Special.html';
+  if (!fileName) fileName = 'DMS_Instagram_Special.html';
+
+  new QRCode(document.getElementById('qrcode'), {
+    text: BASE_URL + fileName,
+    width: 200,
+    height: 200,
+    colorDark: '#000000',
+    colorLight: '#ffffff',
+    correctLevel: QRCode.CorrectLevel.H
+  });
+
+  // ===== LOCALSTORAGE AUTO-SAVE =====
+  (function() {
+    var pageKey = 'dms_' + fileName.replace('.html', '');
+    var editables = document.querySelectorAll('[contenteditable="true"]');
+    editables.forEach(function(el, i) {
+      var saved = localStorage.getItem(pageKey + '_field_' + i);
+      if (saved !== null && saved !== '') el.innerHTML = saved;
+    });
+    editables.forEach(function(el, i) {
+      el.addEventListener('input', function() {
+        localStorage.setItem(pageKey + '_field_' + i, el.innerHTML);
+      });
+    });
+  })();
+</script>
+</body>
+</html>
