@@ -375,6 +375,118 @@
       line-height: 1.75;
     }
 
+    /* ========== SUMMARY ========== */
+    .summary-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(13,33,69,0.55);
+      padding: 24px 16px;
+      overflow-y: auto;
+    }
+    .summary-overlay.show { display: flex; align-items: flex-start; justify-content: center; }
+
+    .summary-panel {
+      background: var(--bg2);
+      border-radius: 6px;
+      max-width: 480px;
+      width: 100%;
+      margin: auto;
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,.35);
+      animation: panelIn .35s ease;
+    }
+    @keyframes panelIn {
+      0% { transform: translateY(24px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    .summary-head {
+      background: var(--navy);
+      padding: 26px 24px 22px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .summary-head .eyebrow { margin-bottom: 10px; }
+    .summary-title { font-size: 18px; font-weight: 900; color: #fff; }
+
+    .summary-total {
+      text-align: center;
+      padding: 24px 24px 8px;
+    }
+    .summary-rate {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 64px;
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1;
+    }
+    .summary-rate small { font-size: 26px; }
+    .summary-detail { font-size: 13px; font-weight: 700; color: var(--text2); margin-top: 6px; }
+    .summary-comment { font-size: 12px; color: var(--text2); margin-top: 10px; padding: 0 8px; }
+
+    .summary-cats { padding: 18px 24px 8px; display: flex; flex-direction: column; gap: 12px; }
+
+    .cat-row { display: flex; align-items: center; gap: 10px; }
+    .cat-name {
+      width: 58px;
+      flex-shrink: 0;
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+      text-align: center;
+      padding: 3px 0;
+      border-radius: 2px;
+    }
+    .cat-bar-track {
+      flex: 1;
+      height: 10px;
+      background: var(--bg3);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .cat-bar-fill {
+      height: 100%;
+      border-radius: 5px;
+      transition: width .6s ease;
+    }
+    .cat-nums {
+      width: 96px;
+      flex-shrink: 0;
+      text-align: right;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text2);
+    }
+    .cat-nums strong {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      color: var(--navy);
+    }
+
+    .summary-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      padding: 20px 24px 24px;
+    }
+    .summary-btn {
+      padding: 10px 22px;
+      border-radius: 3px;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .summary-btn.primary { background: var(--navy); border: 1px solid var(--navy); color: #fff; }
+    .summary-btn.primary:hover { background: #1a3260; }
+    .summary-btn.ghost { background: var(--bg2); border: 1px solid var(--line); color: var(--text2); }
+    .summary-btn.ghost:hover { border-color: var(--gold); color: var(--navy); }
+
     /* ========== MOBILE ========== */
     @media (max-width: 680px) {
       .header { padding: 32px 0 28px; }
@@ -447,6 +559,7 @@
     <div class="score-item"><span class="score-label">正解</span><span class="score-value" id="scoreCorrect">0</span></div>
     <div class="score-item"><span class="score-label">正答率</span><span class="score-value" id="scoreRate">－</span></div>
     <div class="score-actions">
+      <button class="action-btn" id="summaryBtn" style="display:none;" onclick="showSummary()">まとめ</button>
       <button class="action-btn" onclick="shuffleQuestions()">シャッフル</button>
       <button class="action-btn" onclick="resetQuiz()">リセット</button>
     </div>
@@ -459,6 +572,26 @@
     <div class="quiz-container" id="quizContainer"></div>
   </div>
 </section>
+
+<!-- ===== SUMMARY OVERLAY ===== -->
+<div class="summary-overlay" id="summaryOverlay">
+  <div class="summary-panel">
+    <div class="summary-head">
+      <div class="eyebrow">Result</div>
+      <div class="summary-title">全問終了！おつかれさまでした</div>
+    </div>
+    <div class="summary-total">
+      <div class="summary-rate"><span id="sumRate">0</span><small>%</small></div>
+      <div class="summary-detail" id="sumDetail"></div>
+      <div class="summary-comment" id="sumComment"></div>
+    </div>
+    <div class="summary-cats" id="sumCats"></div>
+    <div class="summary-actions">
+      <button class="summary-btn ghost" onclick="hideSummary()">閉じる</button>
+      <button class="summary-btn primary" onclick="hideSummary(); resetQuiz();">もう一度挑戦</button>
+    </div>
+  </div>
+</div>
 
 <!-- ===== QR CODE ===== -->
 <section class="qr-section">
@@ -1444,6 +1577,7 @@
   var currentCat = 'すべて';
   var order = QUIZ_DATA.map(function(_, i) { return i; });  // 表示順(シャッフル対象)
   var answers = {};  // dataIndex -> { selected: n, correct: bool }
+  var summaryShown = false;  // 全問回答時の自動表示を1回に制限
 
   function sessionKai(q) { return q.session + 8; }
 
@@ -1531,6 +1665,12 @@
     answers[dataIdx] = { selected: selectedIdx, correct: selectedIdx === q.correctIndex };
     applyAnswered(dataIdx, item, choices, true);
     updateScore();
+
+    // 全問回答したらまとめを表示（解説を見る間を置いて表示）
+    if (Object.keys(answers).length === QUIZ_DATA.length && !summaryShown) {
+      summaryShown = true;
+      setTimeout(showSummary, 900);
+    }
   }
 
   function applyAnswered(dataIdx, item, choices, animate) {
@@ -1581,6 +1721,66 @@
     document.getElementById('scoreTotal').textContent = '/ ' + inView.length;
     document.getElementById('scoreCorrect').textContent = correct;
     document.getElementById('scoreRate').textContent = answered > 0 ? Math.round(correct / answered * 100) + '%' : '－';
+
+    // 全問回答済みなら「まとめ」ボタンを表示
+    document.getElementById('summaryBtn').style.display =
+      Object.keys(answers).length === QUIZ_DATA.length ? '' : 'none';
+  }
+
+  // ===== SUMMARY =====
+  function calcStats(indices) {
+    var answered = 0, correct = 0;
+    indices.forEach(function(i) {
+      if (answers[i]) {
+        answered++;
+        if (answers[i].correct) correct++;
+      }
+    });
+    return { total: indices.length, answered: answered, correct: correct,
+             rate: answered > 0 ? Math.round(correct / answered * 100) : 0 };
+  }
+
+  function showSummary() {
+    var all = calcStats(QUIZ_DATA.map(function(_, i) { return i; }));
+
+    document.getElementById('sumRate').textContent = all.rate;
+    document.getElementById('sumDetail').textContent =
+      '全' + all.total + '問中 ' + all.correct + '問正解';
+
+    var comment;
+    if      (all.rate === 100) comment = '全問正解！DMSマスターです。ぜひ社内でも出題してみてください。';
+    else if (all.rate >= 90)   comment = '素晴らしい成績です。間違えた問題だけ解説を読み返せば完璧です。';
+    else if (all.rate >= 70)   comment = 'よく理解できています。正答率の低い分野を重点的に復習しましょう。';
+    else if (all.rate >= 50)   comment = '基礎は身についています。解説を読み直してもう一度挑戦してみましょう。';
+    else                       comment = 'まずは1分野ずつ、タブで絞って復習するのがおすすめです。';
+    document.getElementById('sumComment').textContent = comment;
+
+    var cats = document.getElementById('sumCats');
+    cats.innerHTML = '';
+    CATEGORIES.forEach(function(cat) {
+      if (cat === 'すべて') return;
+      var indices = QUIZ_DATA.map(function(q, i) { return q.category === cat ? i : -1; })
+                             .filter(function(i) { return i >= 0; });
+      var s = calcStats(indices);
+      var row = document.createElement('div');
+      row.className = 'cat-row';
+      row.innerHTML =
+        '<span class="cat-name" style="background:' + CAT_COLORS[cat] + '">' + cat + '</span>' +
+        '<div class="cat-bar-track"><div class="cat-bar-fill" style="width:0%;background:' + CAT_COLORS[cat] + '"></div></div>' +
+        '<span class="cat-nums"><strong>' + s.correct + '</strong>/' + s.answered + '問 ' + s.rate + '%</span>';
+      cats.appendChild(row);
+      // バーをアニメーションで伸ばす
+      var fill = row.querySelector('.cat-bar-fill');
+      setTimeout(function() { fill.style.width = s.rate + '%'; }, 60);
+    });
+
+    document.getElementById('summaryOverlay').classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function hideSummary() {
+    document.getElementById('summaryOverlay').classList.remove('show');
+    document.body.style.overflow = '';
   }
 
   // ===== ACTIONS =====
@@ -1595,6 +1795,7 @@
 
   function resetQuiz() {
     answers = {};
+    summaryShown = false;
     render();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
