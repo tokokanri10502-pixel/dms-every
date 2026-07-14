@@ -486,6 +486,66 @@
     .summary-btn.primary:hover { background: #1a3260; }
     .summary-btn.ghost { background: var(--bg2); border: 1px solid var(--line); color: var(--text2); }
     .summary-btn.ghost:hover { border-color: var(--gold); color: var(--navy); }
+    a.summary-btn { text-decoration: none; display: inline-block; }
+
+    /* ========== START (部署選択) ========== */
+    .start-note {
+      font-size: 12px;
+      color: var(--text2);
+      line-height: 1.8;
+      padding: 20px 24px 4px;
+      text-align: center;
+    }
+    .dept-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 16px 24px 24px;
+    }
+    .dept-btn {
+      padding: 13px 16px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: var(--bg);
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--navy);
+      cursor: pointer;
+      transition: all 0.15s;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .dept-btn:hover {
+      border-color: var(--gold);
+      background: rgba(184,146,42,0.07);
+    }
+
+    /* ========== SUBMIT STATUS ========== */
+    .submit-status {
+      margin: 14px 24px 0;
+      padding: 10px 14px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+      line-height: 1.7;
+    }
+    .submit-status.sending { background: rgba(13,33,69,0.06); color: var(--text2); }
+    .submit-status.ok      { background: rgba(26,107,69,0.1);  color: var(--green); }
+    .submit-status.error   { background: rgba(155,32,32,0.08); color: var(--red); }
+    .submit-status button {
+      margin-left: 8px;
+      padding: 4px 12px;
+      border: 1px solid var(--red);
+      border-radius: 3px;
+      background: var(--bg2);
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--red);
+      cursor: pointer;
+    }
 
     /* ========== MOBILE ========== */
     @media (max-width: 680px) {
@@ -573,6 +633,18 @@
   </div>
 </section>
 
+<!-- ===== START OVERLAY (部署選択) ===== -->
+<div class="summary-overlay show" id="startOverlay">
+  <div class="summary-panel">
+    <div class="summary-head">
+      <div class="eyebrow">Entry</div>
+      <div class="summary-title">WEBメディア用語テスト</div>
+    </div>
+    <p class="start-note">全60問（AI・SNS・WEB・マーケ）に挑戦します。<br>採点結果は<strong>無記名</strong>で集計されます。<br>所属部署を選ぶとスタートします。</p>
+    <div class="dept-grid" id="deptGrid"></div>
+  </div>
+</div>
+
 <!-- ===== SUMMARY OVERLAY ===== -->
 <div class="summary-overlay" id="summaryOverlay">
   <div class="summary-panel">
@@ -586,8 +658,10 @@
       <div class="summary-comment" id="sumComment"></div>
     </div>
     <div class="summary-cats" id="sumCats"></div>
+    <div class="submit-status" id="submitStatus" style="display:none;"></div>
     <div class="summary-actions">
       <button class="summary-btn ghost" onclick="hideSummary()">閉じる</button>
+      <a class="summary-btn ghost" href="results.html">集計を見る</a>
       <button class="summary-btn primary" onclick="hideSummary(); resetQuiz();">もう一度挑戦</button>
     </div>
   </div>
@@ -1461,10 +1535,18 @@
   };
   var CATEGORIES = ['すべて', 'AI', 'SNS', 'WEB', 'マーケ'];
 
+  // ===== 結果送信(Supabase) =====
+  var SUPABASE_URL = 'https://eikjognegxcvvwuqeovz.supabase.co';
+  var SUPABASE_KEY = 'sb_publishable_bkh9T0970eCRYR2chIkZ9A_Z52KizCE';
+  var DEPARTMENTS = ['営業部', '制作1部', '制作2部', '企画提案部', 'プリプレス部'];
+
   var currentCat = 'すべて';
   var order = QUIZ_DATA.map(function(_, i) { return i; });  // 表示順(シャッフル対象)
   var answers = {};  // dataIndex -> { selected: n, correct: bool }
   var summaryShown = false;  // 全問回答時の自動表示を1回に制限
+  var department = null;     // 部署(スタート時に選択)
+  var startTime = null;      // 開始時刻(所要時間計測用)
+  var submitted = localStorage.getItem('dms_quiz_submitted_v1') === '1';  // 1人1回送信
 
   function sessionKai(q) { return q.session + 8; }
 
@@ -1553,11 +1635,80 @@
     applyAnswered(dataIdx, item, choices, true);
     updateScore();
 
-    // 全問回答したらまとめを表示（解説を見る間を置いて表示）
+    // 全問回答したらまとめを表示し、結果を送信（解説を見る間を置いて表示）
     if (Object.keys(answers).length === QUIZ_DATA.length && !summaryShown) {
       summaryShown = true;
-      setTimeout(showSummary, 900);
+      setTimeout(function() {
+        showSummary();
+        submitResults();
+      }, 900);
     }
+  }
+
+  // ===== 結果送信 =====
+  function setSubmitStatus(cls, html) {
+    var el = document.getElementById('submitStatus');
+    el.style.display = '';
+    el.className = 'submit-status ' + cls;
+    el.innerHTML = html;
+  }
+
+  function submitResults() {
+    if (submitted) {
+      setSubmitStatus('ok', '結果は送信済みです（送信は1人1回）');
+      return;
+    }
+    if (!department) return;
+
+    var all = calcStats(QUIZ_DATA.map(function(_, i) { return i; }));
+    var answerList = QUIZ_DATA.map(function(q, i) {
+      return { i: i, sel: answers[i].selected, ok: answers[i].correct };
+    });
+    var payload = {
+      department: department,
+      total: all.total,
+      correct: all.correct,
+      seconds_taken: startTime ? Math.round((Date.now() - startTime) / 1000) : null,
+      answers: answerList
+    };
+
+    setSubmitStatus('sending', '結果を送信しています…');
+
+    fetch(SUPABASE_URL + '/rest/v1/dms_quiz_results', {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify(payload)
+    }).then(function(res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      submitted = true;
+      localStorage.setItem('dms_quiz_submitted_v1', '1');
+      setSubmitStatus('ok', '✅ 結果を送信しました（無記名・部署：' + department + '）');
+    }).catch(function(e) {
+      setSubmitStatus('error', '⚠️ 送信に失敗しました。電波の良い場所で再試行してください<button onclick="submitResults()">再送信</button>');
+    });
+  }
+
+  // ===== 部署選択スタート =====
+  function buildStartOverlay() {
+    var grid = document.getElementById('deptGrid');
+    DEPARTMENTS.forEach(function(dept) {
+      var btn = document.createElement('button');
+      btn.className = 'dept-btn';
+      btn.textContent = dept;
+      btn.onclick = function() {
+        department = dept;
+        startTime = Date.now();
+        document.getElementById('startOverlay').classList.remove('show');
+        document.body.style.overflow = '';
+      };
+      grid.appendChild(btn);
+    });
+    document.body.style.overflow = 'hidden';
   }
 
   function applyAnswered(dataIdx, item, choices, animate) {
@@ -1698,6 +1849,7 @@
   });
 
   // ===== INIT =====
+  buildStartOverlay();
   buildTabs();
   render();
 </script>
