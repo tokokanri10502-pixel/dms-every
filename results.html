@@ -57,6 +57,44 @@
     .back-link { display: inline-block; margin-top: 14px; font-size: 12px; font-weight: 700; color: var(--gold2); text-decoration: none; }
     .back-link:hover { text-decoration: underline; }
 
+    /* ========== DEPT TAB BAR ========== */
+    .tab-bar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 2px 8px rgba(13,33,69,.06);
+    }
+    .tab-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 10px 24px;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .tab-btn {
+      flex-shrink: 0;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      padding: 7px 16px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--bg);
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text2);
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .tab-btn:hover { border-color: var(--gold); color: var(--navy); }
+    .tab-btn.active { background: var(--navy); border-color: var(--navy); color: #fff; }
+    .tab-btn .tab-count { font-size: 11px; font-weight: 400; opacity: 0.75; margin-left: 3px; }
+
     /* ========== REFRESH BAR ========== */
     .refresh-bar { background: var(--bg3); border-bottom: 1px solid var(--line); }
     .refresh-inner {
@@ -179,6 +217,11 @@
   </div>
 </header>
 
+<!-- ===== DEPT TAB BAR ===== -->
+<nav class="tab-bar">
+  <div class="tab-inner" id="deptTabBar"></div>
+</nav>
+
 <!-- ===== REFRESH BAR ===== -->
 <div class="refresh-bar">
   <div class="refresh-inner">
@@ -205,8 +248,8 @@
     </div>
   </section>
 
-  <!-- ===== 部署別 ===== -->
-  <section class="section section-white">
+  <!-- ===== 部署別(全体表示時のみ) ===== -->
+  <section class="section section-white" id="deptSection">
     <div class="container">
       <div class="section-header">
         <span class="section-eyebrow">Department</span>
@@ -282,6 +325,9 @@
 
   function pct(n, d) { return d > 0 ? Math.round(n / d * 100) : 0; }
 
+  var allRows = [];          // 取得済みの全提出データ
+  var currentDept = '全体';  // 部門タブの選択状態
+
   function loadResults() {
     document.getElementById('lastUpdated').textContent = '読み込み中…';
     fetch(SUPABASE_URL + '/rest/v1/dms_quiz_results?select=department,total,correct,seconds_taken,answers,created_at&order=created_at.asc', {
@@ -290,7 +336,9 @@
       if (!res.ok) throw new Error('HTTP ' + res.status);
       return res.json();
     }).then(function(rows) {
-      renderAll(rows);
+      allRows = rows;
+      buildDeptTabs();
+      renderView();
       var now = new Date();
       document.getElementById('lastUpdated').textContent =
         '最終更新 ' + now.getHours() + ':' + String(now.getMinutes()).padStart(2, '0') + ':' + String(now.getSeconds()).padStart(2, '0') + '（提出 ' + rows.length + ' 件）';
@@ -299,14 +347,43 @@
     });
   }
 
+  // ===== 部門タブ =====
+  function buildDeptTabs() {
+    var bar = document.getElementById('deptTabBar');
+    bar.innerHTML = '';
+    ['全体'].concat(DEPARTMENTS).forEach(function(dept) {
+      var count = dept === '全体' ? allRows.length : allRows.filter(function(r) { return r.department === dept; }).length;
+      var btn = document.createElement('button');
+      btn.className = 'tab-btn' + (dept === currentDept ? ' active' : '');
+      btn.innerHTML = dept + '<span class="tab-count">' + count + '</span>';
+      btn.onclick = function() {
+        currentDept = dept;
+        buildDeptTabs();
+        renderView();
+      };
+      bar.appendChild(btn);
+    });
+  }
+
+  function renderView() {
+    var rows = currentDept === '全体' ? allRows : allRows.filter(function(r) { return r.department === currentDept; });
+    renderAll(rows);
+  }
+
   function renderAll(rows) {
     if (rows.length === 0) {
       document.getElementById('content').style.display = 'none';
       document.getElementById('emptyNote').style.display = '';
+      document.getElementById('emptyNote').innerHTML = currentDept === '全体'
+        ? 'まだ提出がありません。<br>テスト終了者が出ると、ここに自動で集計が表示されます。'
+        : currentDept + 'の提出はまだありません。';
       return;
     }
     document.getElementById('content').style.display = '';
     document.getElementById('emptyNote').style.display = 'none';
+
+    // 部署別セクションは「全体」表示のときだけ出す(部門絞り込み時は冗長なため)
+    document.getElementById('deptSection').style.display = currentDept === '全体' ? '' : 'none';
 
     // --- 全体サマリー ---
     var rates = rows.map(function(r) { return pct(r.correct, r.total); });
