@@ -264,7 +264,7 @@
     <div class="container">
       <div class="section-header">
         <span class="section-eyebrow">Category</span>
-        <h2 class="section-title">分野別 正答率（全体）</h2>
+        <h2 class="section-title" id="catTitle">分野別 正答率（全体）</h2>
       </div>
       <div class="bar-rows" id="catRows"></div>
     </div>
@@ -440,7 +440,8 @@
       deptDiv.appendChild(subLine);
     });
 
-    // --- 分野別(全体) ---
+    // --- 分野別(選択中の部門) ---
+    document.getElementById('catTitle').textContent = '分野別 正答率（' + currentDept + '）';
     var catDiv = document.getElementById('catRows');
     catDiv.innerHTML = '';
     CATEGORIES.forEach(function(cat) {
