@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>用語テスト 集計結果 | DMS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Cormorant+Garamond:wght@600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:  #0d2145;
+      --gold:  #b8922a;
+      --gold2: #d4aa50;
+      --gold3: #f0d080;
+      --bg:    #f8f7f4;
+      --bg2:   #ffffff;
+      --bg3:   #f0ede8;
+      --line:  #ddd8ce;
+      --text:  #1a1a2a;
+      --text2: #4a4a5a;
+      --green: #1a6b45;
+      --red:   #9b2020;
+      --pink:  #c0306a;
+      --sky:   #2277cc;
+      --plum:  #6a3080;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 400;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+    /* ========== HEADER ========== */
+    .header { background: var(--navy); padding: 44px 0 40px; position: relative; overflow: hidden; }
+    .session-ghost {
+      position: absolute; right: 32px; top: 6px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 150px; font-weight: 600;
+      color: rgba(255,255,255,0.05); line-height: 1;
+      pointer-events: none; user-select: none;
+    }
+    .header-inner { max-width: 900px; margin: 0 auto; padding: 0 40px; position: relative; z-index: 2; }
+    .eyebrow {
+      display: inline-block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--gold2); padding-bottom: 10px; border-bottom: 1px solid var(--gold); margin-bottom: 18px;
+    }
+    .header-title { font-size: 28px; font-weight: 900; color: #fff; line-height: 1.2; margin-bottom: 10px; }
+    .header-sub { font-size: 13px; color: rgba(255,255,255,0.6); }
+    .back-link { display: inline-block; margin-top: 14px; font-size: 12px; font-weight: 700; color: var(--gold2); text-decoration: none; }
+    .back-link:hover { text-decoration: underline; }
+
+    /* ========== DEPT TAB BAR ========== */
+    .tab-bar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 2px 8px rgba(13,33,69,.06);
+    }
+    .tab-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 10px 24px;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .tab-btn {
+      flex-shrink: 0;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      padding: 7px 16px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--bg);
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text2);
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .tab-btn:hover { border-color: var(--gold); color: var(--navy); }
+    .tab-btn.active { background: var(--navy); border-color: var(--navy); color: #fff; }
+    .tab-btn .tab-count { font-size: 11px; font-weight: 400; opacity: 0.75; margin-left: 3px; }
+
+    /* ========== REFRESH BAR ========== */
+    .refresh-bar { background: var(--bg3); border-bottom: 1px solid var(--line); }
+    .refresh-inner {
+      max-width: 900px; margin: 0 auto; padding: 10px 24px;
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    }
+    .refresh-note { font-size: 11px; font-weight: 700; color: var(--text2); }
+    .refresh-btn {
+      margin-left: auto;
+      padding: 6px 16px; border: 1px solid var(--line); border-radius: 3px;
+      background: var(--bg2); font-family: 'Noto Sans JP', sans-serif;
+      font-size: 11px; font-weight: 700; color: var(--text2); cursor: pointer;
+      -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+    }
+    .refresh-btn:hover { border-color: var(--gold); color: var(--navy); }
+
+    /* ========== SECTIONS ========== */
+    .section { padding: 36px 0; }
+    .section-white { background: var(--bg2); }
+    .section-beige { background: var(--bg3); }
+    .section-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 22px; }
+    .section-eyebrow {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold);
+    }
+    .section-title { font-size: 18px; font-weight: 900; color: var(--navy); }
+
+    /* ========== STAT TILES ========== */
+    .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    @media (max-width: 680px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
+    .stat-tile {
+      background: var(--bg2); border: 1px solid var(--line); border-top: 3px solid var(--gold);
+      border-radius: 3px; padding: 16px 14px; text-align: center;
+    }
+    .stat-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text2); margin-bottom: 6px; }
+    .stat-value { font-family: 'Cormorant Garamond', serif; font-size: 38px; font-weight: 600; color: var(--navy); line-height: 1; }
+    .stat-value small { font-size: 17px; }
+
+    /* ========== BAR ROWS ========== */
+    .bar-rows { display: flex; flex-direction: column; gap: 14px; }
+    .bar-row { display: flex; align-items: center; gap: 12px; }
+    .bar-name { width: 90px; flex-shrink: 0; font-size: 12px; font-weight: 700; color: var(--navy); }
+    .bar-name .tag {
+      display: inline-block; width: 100%; text-align: center;
+      font-size: 11px; font-weight: 700; color: #fff; padding: 3px 0; border-radius: 2px;
+    }
+    .bar-track { flex: 1; height: 14px; background: var(--bg3); border-radius: 7px; overflow: hidden; }
+    .section-beige .bar-track { background: var(--bg2); }
+    .bar-fill { height: 100%; border-radius: 7px; transition: width .6s ease; }
+    .bar-nums { width: 120px; flex-shrink: 0; text-align: right; font-size: 11px; font-weight: 700; color: var(--text2); }
+    .bar-nums strong { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--navy); }
+
+    @media (max-width: 580px) {
+      .bar-name { width: 74px; }
+      .bar-nums { width: 92px; }
+    }
+
+    /* ========== DEPT DETAIL ========== */
+    .dept-sub { font-size: 10.5px; color: var(--text2); margin: -8px 0 0 102px; line-height: 1.6; }
+    @media (max-width: 580px) { .dept-sub { margin-left: 86px; } }
+
+    /* ========== HISTOGRAM ========== */
+    .histo { display: flex; align-items: flex-end; gap: 10px; height: 150px; padding-top: 10px; }
+    .histo-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+    .histo-count { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 600; color: var(--navy); line-height: 1.2; }
+    .histo-bar { width: 70%; max-width: 56px; background: linear-gradient(180deg, var(--gold2), var(--gold)); border-radius: 3px 3px 0 0; transition: height .6s ease; min-height: 2px; }
+    .histo-label { font-size: 10px; font-weight: 700; color: var(--text2); margin-top: 6px; white-space: nowrap; }
+
+    /* ========== QUESTION TABLE ========== */
+    .q-list { display: flex; flex-direction: column; gap: 8px; }
+    .q-row {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--bg2); border: 1px solid var(--line); border-radius: 3px;
+      padding: 9px 12px;
+    }
+    .q-rank { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; color: var(--gold); width: 26px; flex-shrink: 0; text-align: center; }
+    .q-cat { font-size: 9px; font-weight: 700; color: #fff; padding: 2px 7px; border-radius: 2px; flex-shrink: 0; }
+    .q-text { flex: 1; font-size: 11.5px; color: var(--text); line-height: 1.5; }
+    .q-rate { font-size: 11px; font-weight: 700; color: var(--text2); flex-shrink: 0; }
+    .q-rate strong { font-family: 'Cormorant Garamond', serif; font-size: 17px; }
+    .q-rate.low strong { color: var(--red); }
+    .q-rate.high strong { color: var(--green); }
+
+    .empty-note {
+      text-align: center; padding: 40px 20px;
+      font-size: 13px; font-weight: 700; color: var(--text2);
+    }
+
+    /* ========== MOBILE ========== */
+    @media (max-width: 680px) {
+      .header { padding: 30px 0 26px; }
+      .header-inner { padding: 0 20px; }
+      .header-title { font-size: 20px; }
+      .session-ghost { font-size: 90px; right: 12px; }
+      .container { padding: 0 14px; }
+      .section { padding: 26px 0; }
+      .stat-value { font-size: 30px; }
+      .histo { gap: 6px; height: 120px; }
+      .histo-label { font-size: 9px; }
+      .q-text { font-size: 11px; }
+    }
+
+    /* ========== FOOTER ========== */
+    .footer {
+      background: var(--navy); color: rgba(255,255,255,0.45);
+      text-align: center; padding: 20px; font-size: 11px; letter-spacing: 0.1em;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header">
+  <div class="session-ghost">R</div>
+  <div class="header-inner">
+    <div class="eyebrow">Digital Media Strategy Meeting</div>
+    <h1 class="header-title">用語テスト 集計結果</h1>
+    <p class="header-sub">送信された結果を自動集計しています（無記名・部署別）。ページは30秒ごとに自動更新されます。</p>
+    <a class="back-link" href="quiz.html">← テストページへ</a>
+  </div>
+</header>
+
+<!-- ===== DEPT TAB BAR ===== -->
+<nav class="tab-bar">
+  <div class="tab-inner" id="deptTabBar"></div>
+</nav>
+
+<!-- ===== REFRESH BAR ===== -->
+<div class="refresh-bar">
+  <div class="refresh-inner">
+    <span class="refresh-note" id="lastUpdated">読み込み中…</span>
+    <button class="refresh-btn" onclick="loadResults()">今すぐ更新</button>
+  </div>
+</div>
+
+<div id="content" style="display:none;">
+
+  <!-- ===== 全体サマリー ===== -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-eyebrow">Overview</span>
+        <h2 class="section-title">全体サマリー</h2>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-tile"><div class="stat-label">提出数</div><div class="stat-value" id="statCount">0<small> 人</small></div></div>
+        <div class="stat-tile"><div class="stat-label">平均正答率</div><div class="stat-value" id="statAvg">0<small> %</small></div></div>
+        <div class="stat-tile"><div class="stat-label">最高スコア</div><div class="stat-value" id="statMax">0<small> 問</small></div></div>
+        <div class="stat-tile"><div class="stat-label">平均所要時間</div><div class="stat-value" id="statTime">－</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 部署別(全体表示時のみ) ===== -->
+  <section class="section section-white" id="deptSection">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-eyebrow">Department</span>
+        <h2 class="section-title">部署別 平均正答率</h2>
+      </div>
+      <div class="bar-rows" id="deptRows"></div>
+    </div>
+  </section>
+
+  <!-- ===== 分野別 ===== -->
+  <section class="section section-beige">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-eyebrow">Category</span>
+        <h2 class="section-title" id="catTitle">分野別 正答率（全体）</h2>
+      </div>
+      <div class="bar-rows" id="catRows"></div>
+    </div>
+  </section>
+
+  <!-- ===== 分布 ===== -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-eyebrow">Distribution</span>
+        <h2 class="section-title">スコア分布</h2>
+      </div>
+      <div class="histo" id="histo"></div>
+    </div>
+  </section>
+
+  <!-- ===== 設問別 ===== -->
+  <section class="section section-white">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-eyebrow">Review</span>
+        <h2 class="section-title">正答率が低かった問題 TOP10</h2>
+      </div>
+      <div class="q-list" id="worstList"></div>
+    </div>
+  </section>
+
+  <section class="section section-beige">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-eyebrow">Review</span>
+        <h2 class="section-title">正答率が高かった問題 TOP5</h2>
+      </div>
+      <div class="q-list" id="bestList"></div>
+    </div>
+  </section>
+
+</div>
+
+<div class="empty-note" id="emptyNote" style="display:none;">
+  まだ提出がありません。<br>テスト終了者が出ると、ここに自動で集計が表示されます。
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  DMS Digital Media Strategy Meeting | ©2026
+</footer>
+
+<script>
+  // 設問メタ(quiz.htmlと同じ並び順): c=カテゴリ, t=問題文冒頭
+  var QUIZ_META = [{"c":"WEB","t":"「インプレッション」の正しい意味はどれ？"},{"c":"マーケ","t":"ユーザーが自発的に企業へ提供する情報（アンケート回答・好みの設定など）を何と…"},{"c":"SNS","t":"Instagramの2026年アルゴリズムで重視される3つの指標として正しい…"},{"c":"WEB","t":"検索エンジンで特定のページを上位表示させるための一連の施策を何と呼ぶか？"},{"c":"WEB","t":"広告が1,000回表示されるごとにかかるコストを示す指標はどれか？"},{"c":"WEB","t":"ウェブサイト訪問者が最初に見たページだけで離脱した割合を示す指標は？"},{"c":"AI","t":"ユーザーの指示に応じて自律的にタスクを実行し、ツール連携や意思決定も行うAI…"},{"c":"WEB","t":"広告費1円あたりの売上（収益）を示す指標はどれか？"},{"c":"SNS","t":"Instagram・Meta広告で用いられる「リーチ」と「インプレッション」…"},{"c":"WEB","t":"SEOにおいて「ゼロクリック検索（Zero-Click Search）」が増…"},{"c":"WEB","t":"GA4（Google アナリティクス4）で「ユーザーの最初の流入経路」を正確…"},{"c":"AI","t":"AIに特定の役割・口調・知識を与える「プロンプト設計」において、会話の最初に…"},{"c":"WEB","t":"Web広告の効果計測で「アトリビューション」とは何を意味するか？"},{"c":"AI","t":"テキスト・画像・音声・動画など複数の情報形式を、単一のAIモデルで一括して扱…"},{"c":"AI","t":"生成AIが社内ドキュメントや外部データベースを参照しながら回答を生成する仕組…"},{"c":"マーケ","t":"自社が直接顧客から取得した行動・属性データのことを何と呼ぶか？Cookie規…"},{"c":"SNS","t":"一般ユーザーが自主的に作成・投稿するコンテンツ（口コミ写真・レビュー動画など…"},{"c":"マーケ","t":"一人の顧客が取引開始から終了までにもたらす利益の総額を示す指標はどれか？"},{"c":"AI","t":"生成AIが事実と異なる情報や、もっともらしいが誤った内容を、自信ありげに生成…"},{"c":"AI","t":"複数のAIエージェントが役割分担しながら協調し、一つの大きなタスクを処理する…"},{"c":"マーケ","t":"広告（Paid）・自社メディア（Owned）・口コミやPR（Earned）の…"},{"c":"SNS","t":"SNSのフィードやライブ配信から、アプリを離れずに直接商品を購入できる仕組み…"},{"c":"マーケ","t":"新規顧客を1人獲得するためにかかったマーケ・営業コストの総額を示す指標はどれ…"},{"c":"AI","t":"悪意ある入力文を紛れ込ませることで生成AIに本来の指示を無視させ、機密情報の…"},{"c":"AI","t":"汎用の大規模言語モデルに、自社固有のデータや業界特有の表現を追加学習させ、特…"},{"c":"WEB","t":"ChatGPTやPerplexityなど生成AI型の回答エンジンに自社情報を…"},{"c":"マーケ","t":"顧客一人ひとりのWeb閲覧・購買履歴・属性情報などを統合・名寄せして管理し、…"},{"c":"WEB","t":"広告に投下した費用に対し、いくらの売上が返ってきたかを示す指標はどれか？"},{"c":"AI","t":"AIエージェントが外部システム（CRM・Slack・ファイルサーバー等）と安…"},{"c":"AI","t":"大規模で高性能な「教師モデル」の出力を、小型で軽量な「生徒モデル」に学習させ…"},{"c":"マーケ","t":"不特定多数のリードに広く施策を打つのではなく、自社にとって重要な「特定企業（…"},{"c":"SNS","t":"SNSプラットフォームがアカウントを凍結はしないものの、検索結果やレコメンド…"},{"c":"マーケ","t":"「この商品・サービスを友人や同僚にどの程度すすめたいか」を0〜10で問い、推…"},{"c":"AI","t":"テキストや画像などのデータを「意味の近さ」を表す数値ベクトルに変換し、RAG…"},{"c":"AI","t":"AIモデルが一度に処理できる入力＋出力の文字量（トークン数）の上限のことを何…"},{"c":"マーケ","t":"小売事業者が自社の購買データ・店舗・ECサイト・デジタルサイネージなどを広告…"},{"c":"SNS","t":"SNS投稿に対する「いいね・コメント・保存・シェアなどの反応総数」を、リーチ…"},{"c":"AI","t":"人間が逐一指示しなくても、AI自身が目標達成のために計画を立て、ツールを呼び…"},{"c":"AI","t":"AIが不適切・危険・機密漏えいにつながる出力をしないよう、入力と出力に制限や…"},{"c":"WEB","t":"サイトやLPを訪れた人のうち、購入・問い合わせ・資料請求など「目的の行動」に…"},{"c":"SNS","t":"SNS上の投稿・口コミ・ハッシュタグなどを収集・分析し、自社や商品・競合がど…"},{"c":"AI","t":"AIに作業を任せつつ、重要な判断や最終的な承認は人間が行う「人間を工程に組み…"},{"c":"AI","t":"生成AIで、出力の「ランダム性・創造性の高さ」を調整するパラメータを何と呼ぶ…"},{"c":"マーケ","t":"顧客が商品・サービスを認知してから購入・利用、その後の継続に至るまでの一連の…"},{"c":"SNS","t":"フォロワー数は数千〜数万人と多くないが、特定の分野・地域で深い信頼と高い反応…"},{"c":"AI","t":"生成AIが、自分だけで答えるのではなく、外部のツールやアプリ（検索・計算・予…"},{"c":"AI","t":"生成AIに「いきなり答えを出す」のではなく「順を追って考えてから答えて」と促…"},{"c":"マーケ","t":"すぐには購入に至らない見込み客に対し、メールやコンテンツで継続的に有益な情報…"},{"c":"マーケ","t":"「多くの人が良いと言っている」「行列ができている」などの周囲の評価を手がかり…"},{"c":"AI","t":"クラウドのサーバーに送らず、スマホ・PC・機器そのものの上でAI処理を完結さ…"},{"c":"AI","t":"生成AIへの指示の中に「お手本となる入力と出力の例」を数件添えることで、望む…"},{"c":"マーケ","t":"店舗・EC・SNS・カタログ・DMなど複数の顧客接点を、在庫や顧客情報を統合…"},{"c":"SNS","t":"営業担当者がSNS（LinkedInやX等）で有益な情報発信や関係構築を行い…"},{"c":"AI","t":"生成AIに渡す「指示文・参考資料・過去のやり取り・ツール情報」など\"文脈全体…"},{"c":"AI","t":"プログラミングの専門知識がなくても、自然言語で「こういうものを作って」とAI…"},{"c":"SNS","t":"LINEやDM、メール、口コミなど「外から計測しにくい非公開の経路」を通じて…"},{"c":"SNS","t":"実在しないが、CGや生成AIで作られた架空の人物として発信し、企業のPRやブ…"},{"c":"AI","t":"生成AIが文章を処理する際の最小単位で、API利用料金の計算やコンテキストウ…"},{"c":"AI","t":"会社が公式に許可・管理していないAIツールを、従業員が業務で無断利用すること…"},{"c":"SNS","t":"SNSやECサイトでリアルタイムのライブ配信を見ながら、視聴者がコメントで質…"}];
+
+  var SUPABASE_URL = 'https://eikjognegxcvvwuqeovz.supabase.co';
+  var SUPABASE_KEY = 'sb_publishable_bkh9T0970eCRYR2chIkZ9A_Z52KizCE';
+  var DEPARTMENTS = ['営業部', '制作1部', '制作2部', '企画提案部', 'プリプレス部'];
+  var CAT_COLORS = { 'AI': 'var(--navy)', 'SNS': 'var(--pink)', 'WEB': 'var(--sky)', 'マーケ': 'var(--gold)' };
+  var CATEGORIES = ['AI', 'SNS', 'WEB', 'マーケ'];
+
+  function pct(n, d) { return d > 0 ? Math.round(n / d * 100) : 0; }
+
+  var MOCK_ROWS = [{"department":"営業部","total":60,"correct":32,"seconds_taken":480,"answers":[{"i":0,"sel":1,"ok":true},{"i":1,"sel":0,"ok":false},{"i":2,"sel":0,"ok":false},{"i":3,"sel":1,"ok":true},{"i":4,"sel":2,"ok":false},{"i":5,"sel":1,"ok":true},{"i":6,"sel":1,"ok":true},{"i":7,"sel":1,"ok":true},{"i":8,"sel":1,"ok":true},{"i":9,"sel":2,"ok":false},{"i":10,"sel":2,"ok":false},{"i":11,"sel":0,"ok":false},{"i":12,"sel":0,"ok":false},{"i":13,"sel":0,"ok":false},{"i":14,"sel":1,"ok":true},{"i":15,"sel":1,"ok":true},{"i":16,"sel":1,"ok":true},{"i":17,"sel":1,"ok":true},{"i":18,"sel":1,"ok":true},{"i":19,"sel":0,"ok":false},{"i":20,"sel":1,"ok":true},{"i":21,"sel":1,"ok":true},{"i":22,"sel":1,"ok":true},{"i":23,"sel":0,"ok":false},{"i":24,"sel":1,"ok":true},{"i":25,"sel":1,"ok":true},{"i":26,"sel":1,"ok":true},{"i":27,"sel":1,"ok":true},{"i":28,"sel":1,"ok":true},{"i":29,"sel":1,"ok":true},{"i":30,"sel":1,"ok":true},{"i":31,"sel":1,"ok":true},{"i":32,"sel":0,"ok":false},{"i":33,"sel":1,"ok":true},{"i":34,"sel":2,"ok":false},{"i":35,"sel":0,"ok":false},{"i":36,"sel":2,"ok":false},{"i":37,"sel":2,"ok":false},{"i":38,"sel":1,"ok":true},{"i":39,"sel":1,"ok":true},{"i":40,"sel":1,"ok":true},{"i":41,"sel":0,"ok":false},{"i":42,"sel":0,"ok":false},{"i":43,"sel":2,"ok":false},{"i":44,"sel":0,"ok":false},{"i":45,"sel":2,"ok":false},{"i":46,"sel":1,"ok":true},{"i":47,"sel":0,"ok":false},{"i":48,"sel":1,"ok":true},{"i":49,"sel":1,"ok":true},{"i":50,"sel":1,"ok":true},{"i":51,"sel":0,"ok":false},{"i":52,"sel":2,"ok":false},{"i":53,"sel":2,"ok":false},{"i":54,"sel":1,"ok":true},{"i":55,"sel":1,"ok":true},{"i":56,"sel":2,"ok":false},{"i":57,"sel":2,"ok":false},{"i":58,"sel":2,"ok":false},{"i":59,"sel":2,"ok":false}],"created_at":"2026-07-22T00:00:00.000Z"},{"department":"営業部","total":60,"correct":33,"seconds_taken":655,"answers":[{"i":0,"sel":1,"ok":true},{"i":1,"sel":1,"ok":true},{"i":2,"sel":1,"ok":true},{"i":3,"sel":1,"ok":true},{"i":4,"sel":1,"ok":true},{"i":5,"sel":1,"ok":true},{"i":6,"sel":1,"ok":true},{"i":7,"sel":1,"ok":true},{"i":8,"sel":1,"ok":true},{"i":9,"sel":0,"ok":false},{"i":10,"sel":1,"ok":true},{"i":11,"sel":1,"ok":true},{"i":12,"sel":0,"ok":false},{"i":13,"sel":2,"ok":false},{"i":14,"sel":1,"ok":true},{"i":15,"sel":2,"ok":false},{"i":16,"sel":1,"ok":true},{"i":17,"sel":1,"ok":true},{"i":18,"sel":0,"ok":false},{"i":19,"sel":0,"ok":false},{"i":20,"sel":0,"ok":false},{"i":21,"sel":1,"ok":true},{"i":22,"sel":0,"ok":false},{"i":23,"sel":1,"ok":true},{"i":24,"sel":0,"ok":false},{"i":25,"sel":1,"ok":true},{"i":26,"sel":0,"ok":false},{"i":27,"sel":2,"ok":false},{"i":28,"sel":1,"ok":true},{"i":29,"sel":0,"ok":false},{"i":30,"sel":0,"ok":false},{"i":31,"sel":1,"ok":true},{"i":32,"sel":2,"ok":false},{"i":33,"sel":2,"ok":false},{"i":34,"sel":1,"ok":true},{"i":35,"sel":2,"ok":false},{"i":36,"sel":1,"ok":true},{"i":37,"sel":2,"ok":false},{"i":38,"sel":1,"ok":true},{"i":39,"sel":0,"ok":false},{"i":40,"sel":1,"ok":true},{"i":41,"sel":1,"ok":true},{"i":42,"sel":1,"ok":true},{"i":43,"sel":2,"ok":false},{"i":44,"sel":1,"ok":true},{"i":45,"sel":0,"ok":false},{"i":46,"sel":0,"ok":false},{"i":47,"sel":1,"ok":true},{"i":48,"sel":1,"ok":true},{"i":49,"sel":2,"ok":false},{"i":50,"sel":1,"ok":true},{"i":51,"sel":2,"ok":false},{"i":52,"sel":1,"ok":true},{"i":53,"sel":0,"ok":false},{"i":54,"sel":2,"ok":false},{"i":55,"sel":1,"ok":true},{"i":56,"sel":1,"ok":true},{"i":57,"sel":2,"ok":false},{"i":58,"sel":1,"ok":true},{"i":59,"sel":2,"ok":false}],"created_at":"2026-07-22T00:07:00.000Z"},{"department":"営業部","total":60,"correct":48,"seconds_taken":402,"answers":[{"i":0,"sel":1,"ok":true},{"i":1,"sel":1,"ok":true},{"i":2,"sel":1,"ok":true},{"i":3,"sel":1,"ok":true},{"i":4,"sel":1,"ok":true},{"i":5,"sel":1,"ok":true},{"i":6,"sel":0,"ok":false},{"i":7,"sel":1,"ok":true},{"i":8,"sel":1,"ok":true},{"i":9,"sel":1,"ok":true},{"i":10,"sel":1,"ok":true},{"i":11,"sel":1,"ok":true},{"i":12,"sel":2,"ok":false},{"i":13,"sel":1,"ok":true},{"i":14,"sel":1,"ok":true},{"i":15,"sel":1,"ok":true},{"i":16,"sel":1,"ok":true},{"i":17,"sel":1,"ok":true},{"i":18,"sel":1,"ok":true},{"i":19,"sel":1,"ok":true},{"i":20,"sel":1,"ok":true},{"i":21,"sel":1,"ok":true},{"i":22,"sel":1,"ok":true},{"i":23,"sel":2,"ok":false},{"i":24,"sel":0,"ok":false},{"i":25,"sel":1,"ok":true},{"i":26,"sel":1,"ok":true},{"i":27,"sel":1,"ok":true},{"i":28,"sel":1,"ok":true},{"i":29,"sel":1,"ok":true},{"i":30,"sel":1,"ok":true},{"i":31,"sel":1,"ok":true},{"i":32,"sel":0,"ok":false},{"i":33,"sel":2,"ok":false},{"i":34,"sel":1,"ok":true},{"i":35,"sel":1,"ok":true},{"i":36,"sel":1,"ok":true},{"i":37,"sel":1,"ok":true},{"i":38,"sel":1,"ok":true},{"i":39,"sel":1,"ok":true},{"i":40,"sel":0,"ok":false},{"i":41,"sel":2,"ok":false},{"i":42,"sel":1,"ok":true},{"i":43,"sel":1,"ok":true},{"i":44,"sel":1,"ok":true},{"i":45,"sel":1,"ok":true},{"i":46,"sel":0,"ok":false},{"i":47,"sel":2,"ok":false},{"i":48,"sel":0,"ok":false},{"i":49,"sel":1,"ok":true},{"i":50,"sel":1,"ok":true},{"i":51,"sel":1,"ok":true},{"i":52,"sel":1,"ok":true},{"i":53,"sel":1,"ok":true},{"i":54,"sel":0,"ok":false},{"i":55,"sel":1,"ok":true},{"i":56,"sel":1,"ok":true},{"i":57,"sel":1,"ok":true},{"i":58,"sel":1,"ok":true},{"i":59,"sel":1,"ok":true}],"created_at":"2026-07-22T00:14:00.000Z"},{"department":"制作1部","total":60,"correct":42,"seconds_taken":520,"answers":[{"i":0,"sel":1,"ok":true},{"i":1,"sel":1,"ok":true},{"i":2,"sel":1,"ok":true},{"i":3,"sel":1,"ok":true},{"i":4,"sel":2,"ok":false},{"i":5,"sel":1,"ok":true},{"i":6,"sel":1,"ok":true},{"i":7,"sel":1,"ok":true},{"i":8,"sel":0,"ok":false},{"i":9,"sel":1,"ok":true},{"i":10,"sel":1,"ok":true},{"i":11,"sel":1,"ok":true},{"i":12,"sel":1,"ok":true},{"i":13,"sel":0,"ok":false},{"i":14,"sel":1,"ok":true},{"i":15,"sel":1,"ok":true},{"i":16,"sel":1,"ok":true},{"i":17,"sel":1,"ok":true},{"i":18,"sel":1,"ok":true},{"i":19,"sel":1,"ok":true},{"i":20,"sel":1,"ok":true},{"i":21,"sel":2,"ok":false},{"i":22,"sel":1,"ok":true},{"i":23,"sel":0,"ok":false},{"i":24,"sel":1,"ok":true},{"i":25,"sel":1,"ok":true},{"i":26,"sel":1,"ok":true},{"i":27,"sel":2,"ok":false},{"i":28,"sel":2,"ok":false},{"i":29,"sel":1,"ok":true},{"i":30,"sel":1,"ok":true},{"i":31,"sel":0,"ok":false},{"i":32,"sel":2,"ok":false},{"i":33,"sel":1,"ok":true},{"i":34,"sel":1,"ok":true},{"i":35,"sel":1,"ok":true},{"i":36,"sel":1,"ok":true},{"i":37,"sel":0,"ok":false},{"i":38,"sel":1,"ok":true},{"i":39,"sel":1,"ok":true},{"i":40,"sel":2,"ok":false},{"i":41,"sel":1,"ok":true},{"i":42,"sel":1,"ok":true},{"i":43,"sel":1,"ok":true},{"i":44,"sel":1,"ok":true},{"i":45,"sel":2,"ok":false},{"i":46,"sel":1,"ok":true},{"i":47,"sel":2,"ok":false},{"i":48,"sel":0,"ok":false},{"i":49,"sel":1,"ok":true},{"i":50,"sel":0,"ok":false},{"i":51,"sel":1,"ok":true},{"i":52,"sel":1,"ok":true},{"i":53,"sel":0,"ok":false},{"i":54,"sel":1,"ok":true},{"i":55,"sel":0,"ok":false},{"i":56,"sel":1,"ok":true},{"i":57,"sel":1,"ok":true},{"i":58,"sel":1,"ok":true},{"i":59,"sel":0,"ok":false}],"created_at":"2026-07-22T00:21:00.000Z"},{"department":"制作1部","total":60,"correct":34,"seconds_taken":610,"answers":[{"i":0,"sel":2,"ok":false},{"i":1,"sel":2,"ok":false},{"i":2,"sel":1,"ok":true},{"i":3,"sel":2,"ok":false},{"i":4,"sel":1,"ok":true},{"i":5,"sel":1,"ok":true},{"i":6,"sel":1,"ok":true},{"i":7,"sel":1,"ok":true},{"i":8,"sel":1,"ok":true},{"i":9,"sel":1,"ok":true},{"i":10,"sel":1,"ok":true},{"i":11,"sel":1,"ok":true},{"i":12,"sel":1,"ok":true},{"i":13,"sel":2,"ok":false},{"i":14,"sel":2,"ok":false},{"i":15,"sel":1,"ok":true},{"i":16,"sel":2,"ok":false},{"i":17,"sel":1,"ok":true},{"i":18,"sel":1,"ok":true},{"i":19,"sel":0,"ok":false},{"i":20,"sel":0,"ok":false},{"i":21,"sel":1,"ok":true},{"i":22,"sel":2,"ok":false},{"i":23,"sel":2,"ok":false},{"i":24,"sel":1,"ok":true},{"i":25,"sel":1,"ok":true},{"i":26,"sel":1,"ok":true},{"i":27,"sel":1,"ok":true},{"i":28,"sel":1,"ok":true},{"i":29,"sel":2,"ok":false},{"i":30,"sel":2,"ok":false},{"i":31,"sel":1,"ok":true},{"i":32,"sel":2,"ok":false},{"i":33,"sel":2,"ok":false},{"i":34,"sel":2,"ok":false},{"i":35,"sel":0,"ok":false},{"i":36,"sel":1,"ok":true},{"i":37,"sel":0,"ok":false},{"i":38,"sel":2,"ok":false},{"i":39,"sel":1,"ok":true},{"i":40,"sel":1,"ok":true},{"i":41,"sel":1,"ok":true},{"i":42,"sel":0,"ok":false},{"i":43,"sel":2,"ok":false},{"i":44,"sel":0,"ok":false},{"i":45,"sel":1,"ok":true},{"i":46,"sel":1,"ok":true},{"i":47,"sel":1,"ok":true},{"i":48,"sel":1,"ok":true},{"i":49,"sel":1,"ok":true},{"i":50,"sel":2,"ok":false},{"i":51,"sel":1,"ok":true},{"i":52,"sel":0,"ok":false},{"i":53,"sel":1,"ok":true},{"i":54,"sel":2,"ok":false},{"i":55,"sel":1,"ok":true},{"i":56,"sel":0,"ok":false},{"i":57,"sel":1,"ok":true},{"i":58,"sel":0,"ok":false},{"i":59,"sel":1,"ok":true}],"created_at":"2026-07-22T00:28:00.000Z"},{"department":"制作2部","total":60,"correct":51,"seconds_taken":365,"answers":[{"i":0,"sel":1,"ok":true},{"i":1,"sel":1,"ok":true},{"i":2,"sel":1,"ok":true},{"i":3,"sel":1,"ok":true},{"i":4,"sel":1,"ok":true},{"i":5,"sel":1,"ok":true},{"i":6,"sel":1,"ok":true},{"i":7,"sel":1,"ok":true},{"i":8,"sel":1,"ok":true},{"i":9,"sel":1,"ok":true},{"i":10,"sel":1,"ok":true},{"i":11,"sel":1,"ok":true},{"i":12,"sel":1,"ok":true},{"i":13,"sel":0,"ok":false},{"i":14,"sel":1,"ok":true},{"i":15,"sel":1,"ok":true},{"i":16,"sel":1,"ok":true},{"i":17,"sel":1,"ok":true},{"i":18,"sel":1,"ok":true},{"i":19,"sel":1,"ok":true},{"i":20,"sel":0,"ok":false},{"i":21,"sel":1,"ok":true},{"i":22,"sel":1,"ok":true},{"i":23,"sel":1,"ok":true},{"i":24,"sel":2,"ok":false},{"i":25,"sel":1,"ok":true},{"i":26,"sel":1,"ok":true},{"i":27,"sel":1,"ok":true},{"i":28,"sel":1,"ok":true},{"i":29,"sel":1,"ok":true},{"i":30,"sel":1,"ok":true},{"i":31,"sel":1,"ok":true},{"i":32,"sel":1,"ok":true},{"i":33,"sel":1,"ok":true},{"i":34,"sel":1,"ok":true},{"i":35,"sel":1,"ok":true},{"i":36,"sel":1,"ok":true},{"i":37,"sel":1,"ok":true},{"i":38,"sel":1,"ok":true},{"i":39,"sel":1,"ok":true},{"i":40,"sel":1,"ok":true},{"i":41,"sel":1,"ok":true},{"i":42,"sel":2,"ok":false},{"i":43,"sel":1,"ok":true},{"i":44,"sel":0,"ok":false},{"i":45,"sel":2,"ok":false},{"i":46,"sel":2,"ok":false},{"i":47,"sel":1,"ok":true},{"i":48,"sel":1,"ok":true},{"i":49,"sel":1,"ok":true},{"i":50,"sel":1,"ok":true},{"i":51,"sel":1,"ok":true},{"i":52,"sel":2,"ok":false},{"i":53,"sel":1,"ok":true},{"i":54,"sel":1,"ok":true},{"i":55,"sel":1,"ok":true},{"i":56,"sel":2,"ok":false},{"i":57,"sel":1,"ok":true},{"i":58,"sel":1,"ok":true},{"i":59,"sel":1,"ok":true}],"created_at":"2026-07-22T00:35:00.000Z"},{"department":"制作2部","total":60,"correct":35,"seconds_taken":495,"answers":[{"i":0,"sel":1,"ok":true},{"i":1,"sel":2,"ok":false},{"i":2,"sel":1,"ok":true},{"i":3,"sel":1,"ok":true},{"i":4,"sel":0,"ok":false},{"i":5,"sel":1,"ok":true},{"i":6,"sel":2,"ok":false},{"i":7,"sel":1,"ok":true},{"i":8,"sel":0,"ok":false},{"i":9,"sel":1,"ok":true},{"i":10,"sel":1,"ok":true},{"i":11,"sel":1,"ok":true},{"i":12,"sel":0,"ok":false},{"i":13,"sel":1,"ok":true},{"i":14,"sel":1,"ok":true},{"i":15,"sel":2,"ok":false},{"i":16,"sel":1,"ok":true},{"i":17,"sel":1,"ok":true},{"i":18,"sel":1,"ok":true},{"i":19,"sel":0,"ok":false},{"i":20,"sel":1,"ok":true},{"i":21,"sel":1,"ok":true},{"i":22,"sel":1,"ok":true},{"i":23,"sel":2,"ok":false},{"i":24,"sel":2,"ok":false},{"i":25,"sel":1,"ok":true},{"i":26,"sel":1,"ok":true},{"i":27,"sel":1,"ok":true},{"i":28,"sel":1,"ok":true},{"i":29,"sel":0,"ok":false},{"i":30,"sel":1,"ok":true},{"i":31,"sel":2,"ok":false},{"i":32,"sel":1,"ok":true},{"i":33,"sel":1,"ok":true},{"i":34,"sel":1,"ok":true},{"i":35,"sel":2,"ok":false},{"i":36,"sel":2,"ok":false},{"i":37,"sel":2,"ok":false},{"i":38,"sel":1,"ok":true},{"i":39,"sel":1,"ok":true},{"i":40,"sel":0,"ok":false},{"i":41,"sel":0,"ok":false},{"i":42,"sel":1,"ok":true},{"i":43,"sel":1,"ok":true},{"i":44,"sel":0,"ok":false},{"i":45,"sel":2,"ok":false},{"i":46,"sel":0,"ok":false},{"i":47,"sel":2,"ok":false},{"i":48,"sel":1,"ok":true},{"i":49,"sel":0,"ok":false},{"i":50,"sel":1,"ok":true},{"i":51,"sel":1,"ok":true},{"i":52,"sel":1,"ok":true},{"i":53,"sel":0,"ok":false},{"i":54,"sel":1,"ok":true},{"i":55,"sel":2,"ok":false},{"i":56,"sel":2,"ok":false},{"i":57,"sel":1,"ok":true},{"i":58,"sel":0,"ok":false},{"i":59,"sel":1,"ok":true}],"created_at":"2026-07-22T00:42:00.000Z"},{"department":"企画提案部","total":60,"correct":54,"seconds_taken":330,"answers":[{"i":0,"sel":1,"ok":true},{"i":1,"sel":1,"ok":true},{"i":2,"sel":1,"ok":true},{"i":3,"sel":1,"ok":true},{"i":4,"sel":1,"ok":true},{"i":5,"sel":1,"ok":true},{"i":6,"sel":1,"ok":true},{"i":7,"sel":1,"ok":true},{"i":8,"sel":1,"ok":true},{"i":9,"sel":1,"ok":true},{"i":10,"sel":1,"ok":true},{"i":11,"sel":1,"ok":true},{"i":12,"sel":1,"ok":true},{"i":13,"sel":1,"ok":true},{"i":14,"sel":1,"ok":true},{"i":15,"sel":1,"ok":true},{"i":16,"sel":1,"ok":true},{"i":17,"sel":1,"ok":true},{"i":18,"sel":1,"ok":true},{"i":19,"sel":1,"ok":true},{"i":20,"sel":1,"ok":true},{"i":21,"sel":1,"ok":true},{"i":22,"sel":1,"ok":true},{"i":23,"sel":1,"ok":true},{"i":24,"sel":1,"ok":true},{"i":25,"sel":1,"ok":true},{"i":26,"sel":1,"ok":true},{"i":27,"sel":1,"ok":true},{"i":28,"sel":1,"ok":true},{"i":29,"sel":1,"ok":true},{"i":30,"sel":1,"ok":true},{"i":31,"sel":2,"ok":false},{"i":32,"sel":1,"ok":true},{"i":33,"sel":1,"ok":true},{"i":34,"sel":1,"ok":true},{"i":35,"sel":1,"ok":true},{"i":36,"sel":1,"ok":true},{"i":37,"sel":1,"ok":true},{"i":38,"sel":0,"ok":false},{"i":39,"sel":1,"ok":true},{"i":40,"sel":0,"ok":false},{"i":41,"sel":0,"ok":false},{"i":42,"sel":1,"ok":true},{"i":43,"sel":2,"ok":false},{"i":44,"sel":1,"ok":true},{"i":45,"sel":1,"ok":true},{"i":46,"sel":2,"ok":false},{"i":47,"sel":1,"ok":true},{"i":48,"sel":1,"ok":true},{"i":49,"sel":1,"ok":true},{"i":50,"sel":1,"ok":true},{"i":51,"sel":1,"ok":true},{"i":52,"sel":1,"ok":true},{"i":53,"sel":1,"ok":true},{"i":54,"sel":1,"ok":true},{"i":55,"sel":1,"ok":true},{"i":56,"sel":1,"ok":true},{"i":57,"sel":1,"ok":true},{"i":58,"sel":1,"ok":true},{"i":59,"sel":1,"ok":true}],"created_at":"2026-07-22T00:49:00.000Z"},{"department":"企画提案部","total":60,"correct":41,"seconds_taken":445,"answers":[{"i":0,"sel":1,"ok":true},{"i":1,"sel":1,"ok":true},{"i":2,"sel":0,"ok":false},{"i":3,"sel":1,"ok":true},{"i":4,"sel":1,"ok":true},{"i":5,"sel":1,"ok":true},{"i":6,"sel":0,"ok":false},{"i":7,"sel":1,"ok":true},{"i":8,"sel":1,"ok":true},{"i":9,"sel":1,"ok":true},{"i":10,"sel":0,"ok":false},{"i":11,"sel":2,"ok":false},{"i":12,"sel":1,"ok":true},{"i":13,"sel":2,"ok":false},{"i":14,"sel":0,"ok":false},{"i":15,"sel":1,"ok":true},{"i":16,"sel":0,"ok":false},{"i":17,"sel":1,"ok":true},{"i":18,"sel":1,"ok":true},{"i":19,"sel":2,"ok":false},{"i":20,"sel":1,"ok":true},{"i":21,"sel":1,"ok":true},{"i":22,"sel":1,"ok":true},{"i":23,"sel":1,"ok":true},{"i":24,"sel":1,"ok":true},{"i":25,"sel":0,"ok":false},{"i":26,"sel":1,"ok":true},{"i":27,"sel":2,"ok":false},{"i":28,"sel":1,"ok":true},{"i":29,"sel":1,"ok":true},{"i":30,"sel":1,"ok":true},{"i":31,"sel":2,"ok":false},{"i":32,"sel":2,"ok":false},{"i":33,"sel":1,"ok":true},{"i":34,"sel":1,"ok":true},{"i":35,"sel":0,"ok":false},{"i":36,"sel":1,"ok":true},{"i":37,"sel":1,"ok":true},{"i":38,"sel":1,"ok":true},{"i":39,"sel":1,"ok":true},{"i":40,"sel":0,"ok":false},{"i":41,"sel":1,"ok":true},{"i":42,"sel":2,"ok":false},{"i":43,"sel":1,"ok":true},{"i":44,"sel":2,"ok":false},{"i":45,"sel":1,"ok":true},{"i":46,"sel":1,"ok":true},{"i":47,"sel":1,"ok":true},{"i":48,"sel":1,"ok":true},{"i":49,"sel":1,"ok":true},{"i":50,"sel":2,"ok":false},{"i":51,"sel":1,"ok":true},{"i":52,"sel":1,"ok":true},{"i":53,"sel":0,"ok":false},{"i":54,"sel":1,"ok":true},{"i":55,"sel":1,"ok":true},{"i":56,"sel":1,"ok":true},{"i":57,"sel":1,"ok":true},{"i":58,"sel":0,"ok":false},{"i":59,"sel":1,"ok":true}],"created_at":"2026-07-22T00:56:00.000Z"},{"department":"プリプレス部","total":60,"correct":31,"seconds_taken":720,"answers":[{"i":0,"sel":2,"ok":false},{"i":1,"sel":0,"ok":false},{"i":2,"sel":0,"ok":false},{"i":3,"sel":1,"ok":true},{"i":4,"sel":1,"ok":true},{"i":5,"sel":1,"ok":true},{"i":6,"sel":0,"ok":false},{"i":7,"sel":1,"ok":true},{"i":8,"sel":0,"ok":false},{"i":9,"sel":1,"ok":true},{"i":10,"sel":0,"ok":false},{"i":11,"sel":1,"ok":true},{"i":12,"sel":0,"ok":false},{"i":13,"sel":1,"ok":true},{"i":14,"sel":2,"ok":false},{"i":15,"sel":1,"ok":true},{"i":16,"sel":0,"ok":false},{"i":17,"sel":0,"ok":false},{"i":18,"sel":1,"ok":true},{"i":19,"sel":0,"ok":false},{"i":20,"sel":1,"ok":true},{"i":21,"sel":1,"ok":true},{"i":22,"sel":1,"ok":true},{"i":23,"sel":0,"ok":false},{"i":24,"sel":2,"ok":false},{"i":25,"sel":1,"ok":true},{"i":26,"sel":1,"ok":true},{"i":27,"sel":0,"ok":false},{"i":28,"sel":0,"ok":false},{"i":29,"sel":2,"ok":false},{"i":30,"sel":2,"ok":false},{"i":31,"sel":0,"ok":false},{"i":32,"sel":1,"ok":true},{"i":33,"sel":1,"ok":true},{"i":34,"sel":1,"ok":true},{"i":35,"sel":1,"ok":true},{"i":36,"sel":2,"ok":false},{"i":37,"sel":0,"ok":false},{"i":38,"sel":1,"ok":true},{"i":39,"sel":0,"ok":false},{"i":40,"sel":1,"ok":true},{"i":41,"sel":2,"ok":false},{"i":42,"sel":1,"ok":true},{"i":43,"sel":0,"ok":false},{"i":44,"sel":2,"ok":false},{"i":45,"sel":2,"ok":false},{"i":46,"sel":1,"ok":true},{"i":47,"sel":1,"ok":true},{"i":48,"sel":0,"ok":false},{"i":49,"sel":1,"ok":true},{"i":50,"sel":1,"ok":true},{"i":51,"sel":1,"ok":true},{"i":52,"sel":1,"ok":true},{"i":53,"sel":0,"ok":false},{"i":54,"sel":1,"ok":true},{"i":55,"sel":1,"ok":true},{"i":56,"sel":2,"ok":false},{"i":57,"sel":1,"ok":true},{"i":58,"sel":1,"ok":true},{"i":59,"sel":2,"ok":false}],"created_at":"2026-07-22T01:03:00.000Z"}];
+
+  var allRows = [];          // 取得済みの全提出データ
+  var currentDept = '全体';  // 部門タブの選択状態
+
+  function loadResults() {
+    document.getElementById('lastUpdated').textContent = '読み込み中…';
+    Promise.resolve(MOCK_ROWS).then(function(rows) {
+      allRows = rows;
+      buildDeptTabs();
+      renderView();
+      var now = new Date();
+      document.getElementById('lastUpdated').textContent =
+        '最終更新 ' + now.getHours() + ':' + String(now.getMinutes()).padStart(2, '0') + ':' + String(now.getSeconds()).padStart(2, '0') + '（提出 ' + rows.length + ' 件）';
+    }).catch(function(e) {
+      document.getElementById('lastUpdated').textContent = '⚠️ 読み込みに失敗しました（' + e.message + '）';
+    });
+  }
+
+  // ===== 部門タブ =====
+  function buildDeptTabs() {
+    var bar = document.getElementById('deptTabBar');
+    bar.innerHTML = '';
+    ['全体'].concat(DEPARTMENTS).forEach(function(dept) {
+      var count = dept === '全体' ? allRows.length : allRows.filter(function(r) { return r.department === dept; }).length;
+      var btn = document.createElement('button');
+      btn.className = 'tab-btn' + (dept === currentDept ? ' active' : '');
+      btn.innerHTML = dept + '<span class="tab-count">' + count + '</span>';
+      btn.onclick = function() {
+        currentDept = dept;
+        buildDeptTabs();
+        renderView();
+      };
+      bar.appendChild(btn);
+    });
+  }
+
+  function renderView() {
+    var rows = currentDept === '全体' ? allRows : allRows.filter(function(r) { return r.department === currentDept; });
+    renderAll(rows);
+  }
+
+  function renderAll(rows) {
+    if (rows.length === 0) {
+      document.getElementById('content').style.display = 'none';
+      document.getElementById('emptyNote').style.display = '';
+      document.getElementById('emptyNote').innerHTML = currentDept === '全体'
+        ? 'まだ提出がありません。<br>テスト終了者が出ると、ここに自動で集計が表示されます。'
+        : currentDept + 'の提出はまだありません。';
+      return;
+    }
+    document.getElementById('content').style.display = '';
+    document.getElementById('emptyNote').style.display = 'none';
+
+    // 部署別セクションは「全体」表示のときだけ出す(部門絞り込み時は冗長なため)
+    document.getElementById('deptSection').style.display = currentDept === '全体' ? '' : 'none';
+
+    // --- 全体サマリー ---
+    var rates = rows.map(function(r) { return pct(r.correct, r.total); });
+    var avgRate = Math.round(rates.reduce(function(a, b) { return a + b; }, 0) / rows.length);
+    var maxCorrect = Math.max.apply(null, rows.map(function(r) { return r.correct; }));
+    var times = rows.map(function(r) { return r.seconds_taken; }).filter(function(t) { return t != null && t > 0; });
+    var timeStr = '－';
+    if (times.length > 0) {
+      var avgSec = Math.round(times.reduce(function(a, b) { return a + b; }, 0) / times.length);
+      timeStr = Math.floor(avgSec / 60) + '<small> 分</small>' + (avgSec % 60) + '<small> 秒</small>';
+    }
+    document.getElementById('statCount').innerHTML = rows.length + '<small> 人</small>';
+    document.getElementById('statAvg').innerHTML = avgRate + '<small> %</small>';
+    document.getElementById('statMax').innerHTML = maxCorrect + '<small> / ' + (rows[0].total || 60) + '</small>';
+    document.getElementById('statTime').innerHTML = timeStr;
+
+    // --- 部署別 ---
+    var deptDiv = document.getElementById('deptRows');
+    deptDiv.innerHTML = '';
+    DEPARTMENTS.forEach(function(dept) {
+      var sub = rows.filter(function(r) { return r.department === dept; });
+      var row = document.createElement('div');
+      row.className = 'bar-row';
+      if (sub.length === 0) {
+        row.innerHTML =
+          '<span class="bar-name">' + dept + '</span>' +
+          '<div class="bar-track"><div class="bar-fill" style="width:0%"></div></div>' +
+          '<span class="bar-nums">提出なし</span>';
+        deptDiv.appendChild(row);
+        return;
+      }
+      var avg = Math.round(sub.map(function(r) { return pct(r.correct, r.total); }).reduce(function(a, b) { return a + b; }, 0) / sub.length);
+      row.innerHTML =
+        '<span class="bar-name">' + dept + '</span>' +
+        '<div class="bar-track"><div class="bar-fill" style="width:0%;background:linear-gradient(90deg,var(--gold2),var(--gold))"></div></div>' +
+        '<span class="bar-nums"><strong>' + avg + '%</strong> (' + sub.length + '人)</span>';
+      deptDiv.appendChild(row);
+      var fill = row.querySelector('.bar-fill');
+      setTimeout(function() { fill.style.width = avg + '%'; }, 60);
+
+      // 部署内の分野別平均
+      var parts = CATEGORIES.map(function(cat) {
+        var ok = 0, cnt = 0;
+        sub.forEach(function(r) {
+          (r.answers || []).forEach(function(a) {
+            if (QUIZ_META[a.i] && QUIZ_META[a.i].c === cat) { cnt++; if (a.ok) ok++; }
+          });
+        });
+        return cat + ' ' + pct(ok, cnt) + '%';
+      });
+      var subLine = document.createElement('div');
+      subLine.className = 'dept-sub';
+      subLine.textContent = parts.join(' ／ ');
+      deptDiv.appendChild(subLine);
+    });
+
+    // --- 分野別(選択中の部門) ---
+    document.getElementById('catTitle').textContent = '分野別 正答率（' + currentDept + '）';
+    var catDiv = document.getElementById('catRows');
+    catDiv.innerHTML = '';
+    CATEGORIES.forEach(function(cat) {
+      var ok = 0, cnt = 0;
+      rows.forEach(function(r) {
+        (r.answers || []).forEach(function(a) {
+          if (QUIZ_META[a.i] && QUIZ_META[a.i].c === cat) { cnt++; if (a.ok) ok++; }
+        });
+      });
+      var rate = pct(ok, cnt);
+      var row = document.createElement('div');
+      row.className = 'bar-row';
+      row.innerHTML =
+        '<span class="bar-name"><span class="tag" style="background:' + CAT_COLORS[cat] + '">' + cat + '</span></span>' +
+        '<div class="bar-track"><div class="bar-fill" style="width:0%;background:' + CAT_COLORS[cat] + '"></div></div>' +
+        '<span class="bar-nums"><strong>' + rate + '%</strong></span>';
+      catDiv.appendChild(row);
+      var fill = row.querySelector('.bar-fill');
+      setTimeout(function() { fill.style.width = rate + '%'; }, 60);
+    });
+
+    // --- スコア分布 ---
+    var buckets = [
+      { label: '〜49%',   min: 0,  max: 49 },
+      { label: '50〜59%', min: 50, max: 59 },
+      { label: '60〜69%', min: 60, max: 69 },
+      { label: '70〜79%', min: 70, max: 79 },
+      { label: '80〜89%', min: 80, max: 89 },
+      { label: '90%〜',   min: 90, max: 100 }
+    ];
+    var counts = buckets.map(function(b) {
+      return rates.filter(function(r) { return r >= b.min && r <= b.max; }).length;
+    });
+    var maxCount = Math.max.apply(null, counts.concat([1]));
+    var histo = document.getElementById('histo');
+    histo.innerHTML = '';
+    buckets.forEach(function(b, i) {
+      var col = document.createElement('div');
+      col.className = 'histo-col';
+      col.innerHTML =
+        '<div class="histo-count">' + (counts[i] || '') + '</div>' +
+        '<div class="histo-bar" style="height:2px"></div>' +
+        '<div class="histo-label">' + b.label + '</div>';
+      histo.appendChild(col);
+      var bar = col.querySelector('.histo-bar');
+      var h = counts[i] > 0 ? Math.max(8, Math.round(counts[i] / maxCount * 100)) : 2;
+      setTimeout(function() { bar.style.height = h + '%'; }, 60);
+    });
+
+    // --- 設問別 ---
+    var qStats = QUIZ_META.map(function(m, i) {
+      var ok = 0, cnt = 0;
+      rows.forEach(function(r) {
+        (r.answers || []).forEach(function(a) { if (a.i === i) { cnt++; if (a.ok) ok++; } });
+      });
+      return { i: i, cat: m.c, text: m.t, rate: pct(ok, cnt), cnt: cnt };
+    }).filter(function(q) { return q.cnt > 0; });
+
+    function qRow(q, rank, cls) {
+      var div = document.createElement('div');
+      div.className = 'q-row';
+      div.innerHTML =
+        '<span class="q-rank">' + rank + '</span>' +
+        '<span class="q-cat" style="background:' + CAT_COLORS[q.cat] + '">' + q.cat + '</span>' +
+        '<span class="q-text">' + q.text + '</span>' +
+        '<span class="q-rate ' + cls + '"><strong>' + q.rate + '%</strong></span>';
+      return div;
+    }
+
+    var worst = qStats.slice().sort(function(a, b) { return a.rate - b.rate; }).slice(0, 10);
+    var worstDiv = document.getElementById('worstList');
+    worstDiv.innerHTML = '';
+    worst.forEach(function(q, i) { worstDiv.appendChild(qRow(q, i + 1, 'low')); });
+
+    var best = qStats.slice().sort(function(a, b) { return b.rate - a.rate; }).slice(0, 5);
+    var bestDiv = document.getElementById('bestList');
+    bestDiv.innerHTML = '';
+    best.forEach(function(q, i) { bestDiv.appendChild(qRow(q, i + 1, 'high')); });
+  }
+
+  loadResults();
+  /* preview: auto-reload off */
+</script>
+</body>
+</html>
